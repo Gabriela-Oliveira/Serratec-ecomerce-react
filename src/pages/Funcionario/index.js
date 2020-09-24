@@ -1,7 +1,7 @@
-import React , { useState, useCallback , useEffect } from 'react-router-dom';
+import React , { useState, useCallback , useEffect } from 'react';
 
 import api from '../../services/api';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 import './styles';
 
@@ -12,13 +12,17 @@ const Funcionario = () => {
     const [ mostrarFuncionario, setMostrarFuncionario ] = useState({});
     const [ nomeFuncionario, setNomeFuncionario ] = useState('');
     const [ cpfFuncionario, setCpfFuncionario ] = useState('');
+    const [ cpfCliente, setCpfCliente ] = useState('');
+    const [ emailCliente, setEmailCliente ] = useState('');
+    const [ nomeCliente , setNomeCliente ] = useState('');
+    const [ usuarioCliente, setUsuarioCliente ] = useState('');
     const [ erroMensagem,  setErroMensagem ] = useState('');
     
 
        const mostrarClientes = useCallback(
            async () => {
                try {
-                   const response = await api.get(`/funcionario`);
+                   const response = await api.get(`/cliente`);
                    setMostrarCliente(response.data);
 
                    console.log("Clientes", response.data);
@@ -30,30 +34,15 @@ const Funcionario = () => {
            },[]
        );
 
-       const mostrarClienteId = useCallback (
-
-        async (idCliente) => {
-            try {
-                const resposta = await api.get(`/funcionario/${idCliente}`);
-                setMostrarClienteID(resposta.data);
-                console.log("Cliente Achado por Id ", resposta.data);
-
-            } catch (error) {
-                console.log("Error ao tentar achar cliente pelo ID ");
-                setErroMensagem(error);
-            }
-        },[]
-       );
-
        useEffect(() => {
         mostrarClientes()
        },[mostrarClientes])
 
        const mostrarTodosFuncionarios = useCallback(
 
-            async (idFuncionario) => {
+            async () => {
                 try {
-                    const resposta = await api.get(`/funcionario/${idFuncionario}`);
+                    const resposta = await api.get(`/funcionario`);
                     console.log("Funcionario encontrado com sucesso");
                 } catch (error) {
                     console.log("Erro ao encontrar Funcionario");
@@ -88,4 +77,49 @@ const Funcionario = () => {
            },[]
 
        )
+           
+       const altualizarCliente = useCallback(
+           async (idCliente) => {
+               const parametros = {
+                   ...mostrarCliente,
+                   cpf: cpfCliente,
+                   email: emailCliente,
+                   nome: nomeCliente,
+                   usuario: usuarioCliente 
+               }
+               try {
+                   await api.put(`/cliente/${idCliente}`, parametros)
+               } catch (error) {
+                   setErroMensagem(error)
+               }
+           }, []
+       );
+
+       const removerCliente = useCallback(
+           async (idCliente) => {
+               try {
+                   await api.delete(`/funcionario/${idCliente}`);
+               } catch (error) {
+                   setErroMensagem(error);
+               }
+           }
+       );
+
+       return (
+           <>
+            <h1>hello word menozada</h1>
+            <div className="lista-cliente">
+                {mostrarCliente.map(cliente =>(
+                    <article key={cliente._id}>
+
+                    <strong>{cliente.nome}</strong>
+                    
+                    </article>
+                ))}
+            </div>
+            
+           </>
+       )
 }
+
+export default Funcionario;
