@@ -3,13 +3,13 @@ import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import Dashboard from '../pages/Dashboard';
-import Cadastro_Cliente from '../pages/Cadastro_Cliente';
-import Cadastro_Endereco from '../pages/Cadastro_Endereco';
-import Cadastro_Funcionario from '../pages/Cadastro_Funcionario';
-import Login_Cliente from '../pages/Login_Cliente';
-import Login_Funcionario from '../pages/Login_Funcionario';
+import Cadastro_Cliente from '../pages/Cadastro/Cadastro_Cliente';
+import Cadastro_Endereco from '../pages/Cadastro/Cadastro_Endereco';
+import Cadastro_Funcionario from '../pages/Cadastro/Cadastro_Funcionario';
+import Login_Cliente from '../pages/Login/Login_Cliente';
+import Login_Funcionario from '../pages/Login/Login_Funcionario';
+import Produto from '../pages/Produtos/Produto/index';
 import Produto_Id from '../pages/Produtos/Produto_Id';
-import Produto from '../pages/Produtos/Produto';
 
 const Routes = () => (
 

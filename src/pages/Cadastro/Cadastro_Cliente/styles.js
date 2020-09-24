@@ -68,26 +68,32 @@ export const Form = styled.div`
         }
     }
 
-
 `;
 
-export const Button = styled.button`
-    display: flex;
-    outline: 0;
-    justify-content: center;
-    align-items: center;
-    margin: 20px auto;
-    border: 0;
-    background: #6558F5;
-    color: white;
-    width: 150px;
-    height: 30px;
-    transition: 500ms;
-    border-radius: 3px;
+export const Body = styled.div`
+    a#link-continuar {
+        display: flex;
+        outline: 0;
+        justify-content: center;
+        align-items: center;
+        margin: 20px auto;
+        border: 0;
+        background: #6558F5;
+        color: white;
+        width: 150px;
+        height: 30px;
+        transition: 500ms;
+        border-radius: 3px;
+        text-decoration: none;
 
-    &:hover {
-        background: #8DD7CF;
-        color: black;
+        &:hover {
+            background: #7e00d5;
+        }
+    }
+
+    a#link-to-vendedor {
+        text-decoration: none;
+        border: 0;
     }
 `;
 
