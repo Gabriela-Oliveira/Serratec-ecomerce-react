@@ -1,33 +1,33 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { Link } from 'react-router-dom';
-import api from '../../services/api';
+import api from '../../../services/api';
 
-import '../../assets/Logo.png';
+// import logoImg from '../../../assets';
 
 import {
-    Tituto,
-    Produto,
+    Titulo,
+    Produtos,
     ErroMensagem,
     Header
 } from './styles';
 
-const Produto = () => {
-    const [produtos, serProdutos] = useState([]);
-    const [errorMensagem, setErroMensagem] = useState("");
+const Produto_ = () => {
+    const [produtos, setProdutos] = useState([]);
+    const [erroMensagem, setErroMensagem] = useState("");
 
     const mostraProdutos = useCallback(
         async () => {
             try {
-                const resposta = await api.get(`produtos`);
+                const resposta = await api.get(`/produtos`);
                 setProdutos(resposta.data);
 
                 console.log("resposta", resposta);
 
             } catch (error) {
-                console.log("Erros devs nao preparados para usar a api", erro);
+                console.log("Erros devs nao preparados para usar a api", error);
                 setErroMensagem(error);
             }    
-        },[],
+        },[]
     );
 
     useEffect(() => {
@@ -38,21 +38,21 @@ const Produto = () => {
         async (idProduto) => {
             try {
                 const resposta = await api.get(`/produtos/${idProduto}`);
-                setTarefas(resposta.data);
+                setProdutos(resposta.data);
 
                 console.log("resposta", resposta);
                 
             } catch (error) {
-                console.log("Erros devs nao preparados para usar a api", erro);
-                setErroMensagem(error);
+                console.log("Erros devs nao preparados para usar a api", error);
+                setErroMensagem("ERRO teste");
             }    
-        },[],
+        },[]
     ); 
 
     return (
         <>
           <Header>
-            <img src={logoImg} alt="Lista de Produtos" />
+            {/* <img src={logoImg} alt="Lista de Produtos" /> */}
     
             <ul>
               <li>
@@ -63,20 +63,21 @@ const Produto = () => {
             </ul>
           </Header>
     
-          <Title>E-comerce Jonsons</Title>
+          <Titulo>E-comerce Jonsons</Titulo>
        
-          {errorMessage &&
-            <ErrorMessage>{errorMessage}</ErrorMessage>
-          }
+          {/* {ErroMensagem &&
+            <ErroMensagem>{erroMensagem}</ErroMensagem>
+          } */}
     
-          <Tasks>
+          <>
             { produtos.map(produtos => (
               <div key={produtos.id}>
+                <strong>{produtos.nome}</strong>
                 <strong>{produtos.descricao}</strong>
               </div>
             ))}
             
-          </Tasks>
+          </>
         </>
       )
 }
