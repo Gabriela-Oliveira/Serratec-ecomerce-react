@@ -13,7 +13,7 @@ const Categoria = () => {
     const [ novaDescricao, setNovaDescricao ] = useState('');
     const [ erroMensagem, setErroMensagem ] = useState('');
 
-    const [ pedido, setPedido ] = useState(new Pedido())
+    const [ pedido, setPedido ] = useState(new Pedido());
     const mostrarCategorias = useCallback(
         async () => {
             try {
