@@ -5,6 +5,7 @@ import React, {
 } from 'react';//dev que e dev sempre deve indentar o codigo. nao precisa indentar altomaticamente
 
 import api from '../../services/api';
+import Pedido from '../../models/Pedido';
 const Categoria = () => {
 
     const [ categorias, setCategoria ] = useState([]);
@@ -12,7 +13,7 @@ const Categoria = () => {
     const [ novaDescricao, setNovaDescricao ] = useState('');
     const [ erroMensagem, setErroMensagem ] = useState('');
 
-    
+    const [ pedido, setPedido ] = useState(new Pedido())
     const mostrarCategorias = useCallback(
         async () => {
             try {
