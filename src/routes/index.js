@@ -3,13 +3,14 @@ import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import Dashboard from '../pages/Dashboard';
-import Cadastro_Cliente from '../pages/Cadastro/Cadastro_Cliente';
-import Cadastro_Endereco from '../pages/Cadastro/Cadastro_Endereco';
-import Cadastro_Funcionario from '../pages/Cadastro/Cadastro_Funcionario';
-import Login_Cliente from '../pages/Login/Login_Cliente';
-import Login_Funcionario from '../pages/Login/Login_Funcionario';
-import Produto_ from '../pages/Produtos/Produto/index';
-// import Produto_Id from '../pages/Produtos/Produto_Id';
+
+import Cadastro_Cliente from '../pages/Cadastro_Cliente';
+import Cadastro_Endereco from '../pages/Cadastro_Endereco';
+import Cadastro_Funcionario from '../pages/Cadastro_Funcionario';
+import Login_Cliente from '../pages/Login_Cliente';
+import Login_Funcionario from '../pages/Login_Funcionario';
+import Funcionario from '../pages/Funcionario';
+
 
 const Routes = () => (
 
@@ -24,9 +25,7 @@ const Routes = () => (
             <Route path="/Cfuncionario" component={Cadastro_Funcionario} />
             <Route path="/Lcliente" component={Login_Cliente} />
             <Route path="/Lfuncionario" component={Login_Funcionario} />
-            <Route path="/produto" component={Produto_} />
-            {/* <Route path="/produto/:id" component={Produto_Id} />
-             */}
+            <Route path="/funcionario" component={Funcionario} />
         </Switch>
 
     </BrowserRouter>
