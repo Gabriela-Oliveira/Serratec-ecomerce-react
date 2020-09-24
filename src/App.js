@@ -1,12 +1,21 @@
 import React from 'react';
 
 import GlobalStyles from './styles/global';
+
+
+import { BrowserRouter } from 'react-router-dom';
+
+import Routes from './routes';
+// import GlobalStyle from './styles/global';
+
 function App() {
   return (
     <>
-    <h1>Hello Boys and Girl</h1>
+      <BrowserRouter>
+          <Routes />
+      </BrowserRouter>
+      {/* <GlobalStyle /> */}
 
-    <GlobalStyles />
     </>
   )
 }

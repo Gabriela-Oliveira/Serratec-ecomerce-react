@@ -83,7 +83,7 @@ const Funcionario = () => {
                   mostrarFuncionario();
 
               } catch (error) {
-                  
+                  erroMensagem('Erro Funcionario ')
               }
            },[]
 
