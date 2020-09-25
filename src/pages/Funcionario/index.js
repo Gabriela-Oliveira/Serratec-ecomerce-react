@@ -48,33 +48,33 @@ const Funcionario = () => {
             },[]
         );
 
-        const altualizarCliente = useCallback(
-          async (idCliente) => {
+      //   const altualizarCliente = useCallback(
+      //     async (idCliente) => {
 
-            const parametros = {
-              nome: nome,
-              usuario: nomeUsuario,
-              cpf: cpf,
-              email: email,
-              dataNascimento: "1992-02-01T00:00:00Z",
-              endereco: { 
-              rua: "Rua Jonsons", 
-              numero: "0", 
-              complemento: "Casa", 
-              bairro: "Parque do Ingá", 
-              cidade: "Teresopolis", 
-              estado: "RJ", 
-              cep: "25961225"
-            }};
-              try {
-                  await api.put(`/cliente/${idCliente}`, parametros)
+      //       const parametros = {
+      //         nome: nome,
+      //         usuario: nomeUsuario,
+      //         cpf: cpf,
+      //         email: email,
+      //         dataNascimento: "1992-02-01T00:00:00Z",
+      //         endereco: { 
+      //         rua: "Rua Jonsons", 
+      //         numero: "0", 
+      //         complemento: "Casa", 
+      //         bairro: "Parque do Ingá", 
+      //         cidade: "Teresopolis", 
+      //         estado: "RJ", 
+      //         cep: "25961225"
+      //       }};
+      //         try {
+      //             await api.put(`/cliente/${idCliente}`, parametros)
                   
-              } catch (error) {
-                  setErroMensagem(error);
-              }
-              mostrarCliente();
-          }, []
-      );
+      //         } catch (error) {
+      //             setErroMensagem(error);
+      //         }
+      //         mostrarCliente();
+      //     }, []
+      // );
 
 
        const removerCliente = async (cliente) => {
@@ -168,7 +168,7 @@ const Funcionario = () => {
              
               onChange={e => setMostrarCliente(e.nome)}
               type="text"
-              placeholder="Digite a nova tarefa aqui..." 
+              placeholder="Digite sua pesquisa..." 
             />
     
             <button type="submit">Criar</button>
@@ -221,7 +221,7 @@ const Funcionario = () => {
                                     type="text"
                                     placeholder="CPF" 
                                   />
-                                  <button onClick={()=>altualizarCliente}>dale</button>
+                                  {/* <button onClick={()=>altualizarCliente}>dale</button> */}
 
                                 </span>
                               </div>
