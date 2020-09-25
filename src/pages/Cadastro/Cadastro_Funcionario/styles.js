@@ -48,7 +48,6 @@ export const Container = styled.div`
 export const Form = styled.form`
     width: 100%;
 
-
     button#link-continuar {
         display: flex;
         outline: 0;
@@ -68,9 +67,7 @@ export const Form = styled.form`
             background: #7e00d5;
         }
     } 
-
 `;
-
 
 export const Footer = styled.footer`
     display: flex;
@@ -85,8 +82,6 @@ export const Infos = styled.div`
     margin: 0px auto;
     background: #B2ACFA;
 
-     
-
     input {
         height: 30px;
         width: 350px;
@@ -96,9 +91,7 @@ export const Infos = styled.div`
         border: 0;
         text-align: center;
 
-        & + input + input {
-            margin-top: 10px;
-        }
+    
     }
 
     span {
@@ -109,5 +102,4 @@ export const Infos = styled.div`
             width: 20px;
         }
     }
-
 `;

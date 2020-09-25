@@ -16,6 +16,7 @@ export default createGlobalStyle`
     height: 100%;
   }
 
+<<<<<<< HEAD
   body, input, button {
     font: 16px sans-serif;
   }
@@ -30,3 +31,9 @@ export default createGlobalStyle`
     padding: 40px 20px;
   }
 `;
+=======
+// html , body , #root {
+//     height: 100%;
+// }
+// ` ;
+>>>>>>> c48ff62f94be3ed19d016464f100b682861318cc
