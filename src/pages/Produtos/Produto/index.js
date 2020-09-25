@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { Link } from 'react-router-dom';
-import "~slick-carousel/slick/slick.css"; 
+
+// import "~slick-carousel/slick/slick.css"; 
 // import Slider from "react-slick";
 // import Slider from '@bit/akiran.react-slick.slider';
 import api from '../../../services/api';
@@ -19,7 +19,7 @@ const Produto_ = () => {
     const [produtos, setProdutos] = useState([]);
     const [erroMensagem, setErroMensagem] = useState("");
     const [produtoId, setProdutoId] = useState({});
-    const [produtoNome, setNome] = useState({});
+    const [produtoNome, setProdutoNome] = useState({});
 
     const configuracao = {
       dots: true,
@@ -71,30 +71,59 @@ const Produto_ = () => {
       // mostraProdutosID(1);
     }, [mostraProdutos, mostraProdutosID]);
 
-    function procurarPorNome(nome){
-      let items = [];
+    // function procurarPorNome(e){
+    //   e.preventDefault();
+    //   let items = [];
 
-      for (let produto of produtos){
-        if(produto.nome.indexOf(nome) != -1){
-          items.push(produto);
-        }
-      }
-      console.log(items);
-    }
+    //   for (let produto of produtos){
+    //     if(produto.nome.toLowerCase().indexOf(nome) != -1){
+    //       items.push("/produto");
+    //     }
+    //   }
+    //   console.log(items);
+    // }
+
     
+    // function procurarPorNome(nome){
+    //   $(document).ready(function(){
+    //     $("#myInput").on("keyup", function() {
+    //       var value = $(this).val().toLowerCase();
+    //       $("produtos").filter(function() {
+    //         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    //       });
+    //     });
+    //   });
+
+    // }
 
     return (
         <>
+
           <Header>
-              <img src={logoImg} alt="Lista de Produtos" />
-                            
+
+            <img src={logoImg} alt="Lista de Produtos" />
+
+            {/* <form onSubmit={procurarPorNome(e)}>           
               <input 
-                value={produtoId}
-                onChange={e => setProdutoId(e.target.value)}
+                value={produtoNome}
+                onChange={e => setProdutoNome(e.target.value)}
                 type="text" 
                 placeholder="Digite uma busca..." 
               />
               <button type="submit">Buscar</button>
+            </form> */}
+
+
+             <div class="container">
+                            
+                <input class="form-control" id="myInput" type="text" placeholder="Pesquisa..."/>
+                <button class="btn">I am a button</button>
+
+              </div> 
+            
+           
+          
+
             
                         
           </Header>
@@ -150,5 +179,3 @@ const Produto_ = () => {
 }
        
 export default Produto_;
-
-

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import "~slick-carousel/slick/slick.css"; 
-import "~slick-carousel/slick/slick-theme.css";
+// import "~slick-carousel/slick/slick.css"; 
+// import "~slick-carousel/slick/slick-theme.css";
 
 export const Header = styled.div`
     
@@ -53,10 +53,10 @@ export const ErroMensagem = styled.div`
 export const Form = styled.div`
     display: flex;`    
 
-export const Slider = styled.div`
-    margin: 0 auto;
-    padding: 0px 40px 40px 40px;
-    width: 400px;
-  `
+// export const Slider = styled.div`
+//     margin: 0 auto;
+//     padding: 0px 40px 40px 40px;
+//     width: 400px;
+//   `
      
     
