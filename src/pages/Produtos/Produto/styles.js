@@ -20,6 +20,17 @@ export const Header = styled.div`
         margin-right: 50px;
         
     }  */
+
+    /* button {
+        padding: 10px;
+    border-radius: 5px;
+    border: 0;
+    background: #da552f;
+    color: #FFF;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    } */
 `;
 
 
