@@ -1,10 +1,10 @@
 import React , { useState, useCallback , useEffect } from 'react';
+import { FiCircle, FiCheckCircle, FiDelete } from "react-icons/fi";
 
 import api from '../../services/api';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-import './styles';
-
+import { Tasks } from './styles';
 const Funcionario = () => {
 
     const [ mostrarCliente, setMostrarCliente ] = useState([]);
@@ -90,8 +90,9 @@ const Funcionario = () => {
                try {
                    await api.put(`/cliente/${idCliente}`, parametros)
                } catch (error) {
-                   setErroMensagem(error)
+                   setErroMensagem(error);
                }
+               mostrarCliente();
            }, []
        );
 
@@ -102,24 +103,51 @@ const Funcionario = () => {
                } catch (error) {
                    setErroMensagem(error);
                }
-           }
+               
+           },[]
        );
 
        return (
-           <>
-            <h1>hello word menozada</h1>
-            <div className="lista-cliente">
-                {mostrarCliente.map(cliente =>(
-                    <article key={cliente._id}>
-
-                    <strong>{cliente.nome}</strong>
-                    
-                    </article>
-                ))}
-            </div>
-            
-           </>
-       )
+        <>
+          {/* <Header title="Lista de Tarefas" />
+    
+          <Form onSubmit={handleAddTask}>
+            <Input 
+              value={newTask} 
+              onChange={e => setNewTask(e.target.value)}
+              type="text"
+              placeholder="Digite a nova tarefa aqui..." 
+            />
+    
+            <button type="submit">Criar</button>
+          </Form> */}
+    
+          {/* { errorMessage && 
+            <ErrorMessage>{errorMessage}</ErrorMessage>
+          } */}
+    
+          <Tasks>
+            { mostrarTodosFuncionarios.map((funcionario) => (
+                <div key={funcionario.id}>
+                  <strong>{funcionario.nome}</strong>
+                  <span>
+                    { funcionario.nome ? (
+                      <>
+                        <FiDelete size={22} onClick={() => removerCliente(funcionario)} style={{marginRight: 10}} />
+                      <b>remover</b>
+                        <FiCheckCircle size={22} onClick={() => altualizarCliente(funcionario)} />
+                      <b>atualizar</b>  
+                      </>
+                    ) : (
+                      <FiCircle size={22} onClick={() => altualizarCliente(funcionario)} />
+                    )}
+                  </span>
+                </div>
+              )
+            ) }
+          </Tasks>
+        </>
+      )
 }
 
 export default Funcionario;

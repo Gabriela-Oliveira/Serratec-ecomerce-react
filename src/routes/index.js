@@ -3,7 +3,6 @@ import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import Dashboard from '../pages/Dashboard';
-
 import Cadastro_Cliente from '../pages/Cadastro/Cadastro_Cliente';
 import Cadastro_Funcionario from '../pages/Cadastro/Cadastro_Funcionario';
 import Login_Cliente from '../pages/Login/Login_Cliente';

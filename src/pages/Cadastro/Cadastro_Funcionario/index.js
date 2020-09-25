@@ -20,7 +20,7 @@ const Cadastro_Cliente = () => {
     if (!nome) return;
     if (!cpf) return;
 
-    console.log("Tentando cadastrar... \nNome:", nome, "\nCpf: ", cpf );
+    console.log("Cadastrando... \nNome:", nome, "\nCpf: ", cpf );
 
     const parametros = {
       nome: nome,
@@ -28,12 +28,16 @@ const Cadastro_Cliente = () => {
     };
 
     try {
-      await api.post("/cliente", parametros);
+
+      await api.post("funcionario", parametros);
       history.push("/produto");
       console.log("cadastro realizado com sucesso!");
+
     } catch (erro) {
-      console.log("Deu erro");
+
+      console.log("Deu erro no cadastro");
     } finally {
+
       setNome("");
       setCpf("");
     }

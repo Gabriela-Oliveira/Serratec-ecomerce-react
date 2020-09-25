@@ -11,8 +11,11 @@ export const Body = styled.div`
 export const Header = styled.div`
     display: flex;
     justify-content: space-between;
+    align-items: center;
     background: #8DD7CF;
     border: 1px solid #1AAE9F;
+    height: 15vh;
+
 
     h1 {
         margin-left: 30px;
