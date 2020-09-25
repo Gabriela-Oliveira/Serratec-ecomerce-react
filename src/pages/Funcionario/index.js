@@ -47,11 +47,18 @@ const Funcionario = () => {
                 }
             },[]
         );
+            const [nome, setNome] = useState('');
+            const [nomeUsuario, setNomeUsuario] = useState('');
+            const [cpf, setCpf] = useState('');
+            const [email, setEmail] = useState('');
 
+            
         const altualizarCliente = useCallback(
           async (idCliente) => {
-
+            
+            
             const parametros = {
+              ...mostrarCliente,
               nome: nome,
               usuario: nomeUsuario,
               cpf: cpf,
@@ -68,7 +75,6 @@ const Funcionario = () => {
             }};
               try {
                   await api.put(`/cliente/${idCliente}`, parametros)
-                  
               } catch (error) {
                   setErroMensagem(error);
               }
@@ -201,39 +207,59 @@ const Funcionario = () => {
                 </div>
               )
             ) }
+                
           </Tasks>
             <div class="modal" id="myModal">
-                            <div class="modal-dialog">
-                            <div class="modal-content">
+                <div class="modal-dialog">
+                <div class="modal-content">
 
-                              
-                              <div class="modal-header">
-                                <h4 class="modal-title">Cliente</h4>
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                              </div>
+                  
+                  <div class="modal-header">
+                    <h4 class="modal-title">Cliente</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
 
-                            
-                              <div class="modal-body">
-                                <span>
-                                <input 
-                                    value={cpfCliente} 
-                                    onChange={e => setCpfCliente(e.target.value)}
-                                    type="text"
-                                    placeholder="CPF" 
-                                  />
-                                  <button onClick={()=>altualizarCliente}>dale</button>
+                
+                  <div class="modal-body">
+                    
+                    <form onSubmit={e => altualizarCliente(e)}>
+                    <input 
+                        value={nome} 
+                        onChange={e => setNome(e.target.value)}
+                        type="text"
+                        placeholder="Nome" 
+                      />
+                      <input 
+                        value={nomeUsuario} 
+                        onChange={e => setNomeUsuario(e.target.value)}
+                        type="text"
+                        placeholder="Usuario" 
+                      />
+                      <input 
+                        value={cpf} 
+                        onChange={e => setCpf(e.target.value)}
+                        type="text"
+                        placeholder="CPF" 
+                      />
+                      <input 
+                        value={email} 
+                        onChange={e => setEmail(e.target.value)}
+                        type="text"
+                        placeholder="Email" 
+                      />
+                      <button onClick={altualizarCliente}>Atualizar</button>
+                      
+                    </form>
+                  </div>
 
-                                </span>
-                              </div>
+                
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                  </div>
 
-                            
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                              </div>
-
-                            </div>
-                          </div>
-                        </div>
+                </div>
+              </div>
+            </div>
         </>
       )
 }
