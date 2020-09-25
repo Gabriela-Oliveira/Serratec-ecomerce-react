@@ -5,7 +5,7 @@ import styled from 'styled-components';
 export const Header = styled.div`
     
     display: flex;
-    /* justify-content: space-between; */
+    justify-content: space-between;
     background: #8DD7CF;
     border: 1px solid #1AAE9F;
 
@@ -33,6 +33,9 @@ export const Header = styled.div`
     cursor: pointer;
     } */
 `;
+
+export const Carousel = styled.div`
+display: flex;`
 
 export const Main = styled.div`
     display: flex;`

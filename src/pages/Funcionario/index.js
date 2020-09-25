@@ -48,33 +48,33 @@ const Funcionario = () => {
             },[]
         );
 
-        const altualizarCliente = useCallback(
-          async (idCliente) => {
+      //   const altualizarCliente = useCallback(
+      //     async (idCliente) => {
 
-            const parametros = {
-              nome: nome,
-              usuario: nomeUsuario,
-              cpf: cpf,
-              email: email,
-              dataNascimento: "1992-02-01T00:00:00Z",
-              endereco: { 
-              rua: "Rua Jonsons", 
-              numero: "0", 
-              complemento: "Casa", 
-              bairro: "Parque do Ingá", 
-              cidade: "Teresopolis", 
-              estado: "RJ", 
-              cep: "25961225"
-            }};
-              try {
-                  await api.put(`/cliente/${idCliente}`, parametros)
+      //       const parametros = {
+      //         nome: nome,
+      //         usuario: nomeUsuario,
+      //         cpf: cpf,
+      //         email: email,
+      //         dataNascimento: "1992-02-01T00:00:00Z",
+      //         endereco: { 
+      //         rua: "Rua Jonsons", 
+      //         numero: "0", 
+      //         complemento: "Casa", 
+      //         bairro: "Parque do Ingá", 
+      //         cidade: "Teresopolis", 
+      //         estado: "RJ", 
+      //         cep: "25961225"
+      //       }};
+      //         try {
+      //             await api.put(`/cliente/${idCliente}`, parametros)
                   
-              } catch (error) {
-                  setErroMensagem(error);
-              }
-              mostrarCliente();
-          }, []
-      );
+      //         } catch (error) {
+      //             setErroMensagem(error);
+      //         }
+      //         mostrarCliente();
+      //     }, []
+      // );
 
 
        const removerCliente = async (cliente) => {
@@ -163,7 +163,7 @@ const Funcionario = () => {
             </Link>
             </header> 
     
-          <form onSubmit={mostrarCliente}>
+          {/* <form onSubmit={mostrarCliente}>
             <input 
              
               onChange={e => setMostrarCliente(e.nome)}
@@ -172,7 +172,7 @@ const Funcionario = () => {
             />
     
             <button type="submit">Criar</button>
-          </form>
+          </form> */}
     
           {/* { errorMessage && 
             <ErrorMessage>{errorMessage}</ErrorMessage>
@@ -221,7 +221,7 @@ const Funcionario = () => {
                                     type="text"
                                     placeholder="CPF" 
                                   />
-                                  <button onClick={()=>altualizarCliente}>dale</button>
+                                  {/* <button onClick={()=>altualizarCliente}>dale</button> */}
 
                                 </span>
                               </div>

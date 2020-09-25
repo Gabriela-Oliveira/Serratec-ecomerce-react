@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
+// import Carousel from 'react-bootstrap/Carousel'
 
-// import "~slick-carousel/slick/slick.css"; 
-// import Slider from "react-slick";
-// import Slider from '@bit/akiran.react-slick.slider';
+// import Select from 'react-select';
 import api from '../../../services/api';
 import logoImg from '../../../assets/Logo.png';
 
@@ -10,7 +9,7 @@ import logoImg from '../../../assets/Logo.png';
 
 import {
     // Produtos,
-    ErroMensagem,
+    // ErroMensagem,
     Header,
     Main
 } from './styles';
@@ -19,18 +18,10 @@ const Produto_ = () => {
     const [produtos, setProdutos] = useState([]);
     const [erroMensagem, setErroMensagem] = useState("");
     const [produtoId, setProdutoId] = useState({});
-    const [produtoNome, setProdutoNome] = useState({});
-
-    const configuracao = {
-      dots: true,
-      arrows: false,
-      infinite: true,
-      speed: 600,
-      fade: true,
-      cssEase: 'linear',
-      autoplay: true,
-      autoplaySpeed: 2500,
-    };
+    const [produtoNome, setProdutoNome] = useState("");
+    const [produtoFiltro, setProdutoFiltro] = useState([]);
+    const [categoria, setCategoria] = useState([]);
+    // const [index, setIndex] = useState(0);
 
     const mostraProdutos = useCallback(
         async () => {
@@ -47,7 +38,20 @@ const Produto_ = () => {
         },[]
     );
 
-    
+    const mostraCategoria = useCallback(
+      async () => {
+          try {
+              const resposta = await api.get(`/categoria`);
+              setCategoria(resposta.data);
+
+              console.log("resposta", resposta);
+
+          } catch (error) {
+              console.log("Erros devs nao preparados para usar a api", error);
+              setErroMensagem(error);
+          }    
+      },[]
+  );
 
     const mostraProdutosID = useCallback(
         async (idProduto) => {
@@ -63,38 +67,34 @@ const Produto_ = () => {
             }    
         },[]
     ); 
+ 
 
     
 
-    useEffect(() => {
-      mostraProdutos();
-      // mostraProdutosID(1);
-    }, [mostraProdutos, mostraProdutosID]);
+    function procurarPorNome(e){
+      e.preventDefault();
+      setProdutoNome(e.target.value);
+      let items = [];
 
-    // function procurarPorNome(e){
-    //   e.preventDefault();
-    //   let items = [];
+      for (let produto of produtos){
+        if(produto.nome.toLowerCase().indexOf(produtoNome) != -1){
+          items.push(produto);
+        }
+      }
+      setProdutoFiltro(items);
+    }
 
-    //   for (let produto of produtos){
-    //     if(produto.nome.toLowerCase().indexOf(nome) != -1){
-    //       items.push("/produto");
-    //     }
-    //   }
-    //   console.log(items);
-    // }
+       
+      // const handleSelect = (selectedIndex, e) => {
+      //   setIndex(selectedIndex);
+      // };
 
-    
-    // function procurarPorNome(nome){
-    //   $(document).ready(function(){
-    //     $("#myInput").on("keyup", function() {
-    //       var value = $(this).val().toLowerCase();
-    //       $("produtos").filter(function() {
-    //         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-    //       });
-    //     });
-    //   });
-
-    // }
+      useEffect(() => {
+        mostraProdutos();
+        mostraCategoria();
+        // mostraProdutosID(3);
+        // handleSelect();
+      }, [mostraProdutos,  mostraCategoria, mostraProdutosID]);  
 
     return (
         <>
@@ -103,62 +103,83 @@ const Produto_ = () => {
 
             <img src={logoImg} alt="Lista de Produtos" />
 
-            {/* <form onSubmit={procurarPorNome(e)}>           
+            <form onSubmit={ e => procurarPorNome(e)}>           
               <input 
                 value={produtoNome}
-                onChange={e => setProdutoNome(e.target.value)}
+                onChange={e => procurarPorNome(e)}
                 type="text" 
                 placeholder="Digite uma busca..." 
               />
               <button type="submit">Buscar</button>
-            </form> */}
+            </form>
 
-
-             <div class="container">
-                            
-                <input class="form-control" id="myInput" type="text" placeholder="Pesquisa..."/>
-                <button class="btn">I am a button</button>
-
-              </div> 
-            
-           
-          
-
-            
+            <form>
+            <select value={categoria}>
+              {categoria.map((categoria)=> {
+                return(
+                <option>{categoria.nome}</option>
+                )
+              }
+                
+              )}
                         
+            </select>
+            </form>
+          
           </Header>
-      
-       
-       
-          <ErroMensagem></ErroMensagem>
+          <Main>       
 
-          {/* <Main> */}
+      {/* <Carousel activeIndex={index} onSelect={handleSelect}>
+      <Carousel.Item>
+        <img
+          className="d-block w-100"
+          src="holder.js/800x400?text=First slide&bg=373940"
+          alt="First slide"
+        />
+        <Carousel.Caption>
+          <h3>First slide label</h3>
+          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+        </Carousel.Caption>
+      </Carousel.Item>
+      <Carousel.Item>
+        <img
+          className="d-block w-100"
+          src="holder.js/800x400?text=Second slide&bg=282c34"
+          alt="Second slide"
+        />
 
-{/*          
-				<div>
-        <h2> Single Item</h2>
-        <Slider {...configuracao}>
-          <div>
-            <h3>1</h3>
-          </div>
-          <div>
-            <h3>2</h3>
-          </div>
-          <div>
-            <h3>3</h3>
-          </div>
-          <div>
-            <h3>4</h3>
-          </div>
-          <div>
-            <h3>5</h3>
-          </div>
-          <div>
-            <h3>6</h3>
-          </div>
-        </Slider>
-      </div> */}
-              
+        <Carousel.Caption>
+          <h3>Second slide label</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </Carousel.Caption>
+      </Carousel.Item>
+      <Carousel.Item>
+        <img
+          className="d-block w-100"
+          src="holder.js/800x400?text=Third slide&bg=20232a"
+          alt="Third slide"
+        />
+
+        <Carousel.Caption>
+          <h3>Third slide label</h3>
+          <p>
+            Praesent commodo cursus magna, vel scelerisque nisl consectetur.
+          </p>
+        </Carousel.Caption>
+      </Carousel.Item>
+    </Carousel> 
+  
+
+     */}
+
+          
+           { produtoFiltro.map(produto => (
+              <div key={produto.id}>
+                <img src={produto.fotoLink}/> 
+                <strong>{produto.nome}</strong>
+                <strong>{produto.descricao}</strong>
+              </div>
+            ))}
 
             <h1>{produtoId.nome}</h1>
             { produtos.map(produto => (
@@ -168,13 +189,10 @@ const Produto_ = () => {
                 <strong>{produto.descricao}</strong>
               </div>
             ))}
-
-          {/* </Main> */}
-           
-        
-           
+          
+          </Main>
+          
           </>
-        
       )
 }
        
