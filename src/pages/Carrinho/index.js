@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
-import moment from 'moment';
+// import moment from 'moment';
 
-import Item from '../../components/Item';
+// import Item from '../../components/Item';
 
 const Carrinho = () => {
     const [usuario, setUsuario] = useState({'id': 1, 'nome': 'Guilherme'});

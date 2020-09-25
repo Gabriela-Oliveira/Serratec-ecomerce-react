@@ -8,7 +8,8 @@ import {
     Titulo,
     // Produtos,
     ErroMensagem,
-    Header
+    Header,
+    // Main
 } from './styles';
 
 const Produto_ = () => {
@@ -75,14 +76,24 @@ const Produto_ = () => {
         {/* <Titulo>E-comerce Jonsons</Titulo> */}
        
           <ErroMensagem></ErroMensagem>
-           
-        <h1>{produtoId.nome}</h1>
+
+          {/* <Main> */}
+
+
+
+            <h1>{produtoId.nome}</h1>
             { produtos.map(produto => (
               <div key={produto.id}>
+                <img src={produto.fotoLink}/> 
+                {/* <strong>{produto.fotoLink}</strong> */}
                 <strong>{produto.nome}</strong>
                 <strong>{produto.descricao}</strong>
               </div>
             ))}
+
+          {/* </Main> */}
+           
+        
            
           </>
         
