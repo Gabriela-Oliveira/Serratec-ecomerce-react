@@ -4,7 +4,9 @@ import { Link, useHistory } from "react-router-dom";
 
 import { TiArrowRightThick } from "react-icons/ti";
 
-import { Header, Container, Form, Body, Footer, Infos } from "./styles";
+import { Container, Form, Body, Footer, Infos } from "./styles";
+
+import Header from '../../../components/Topo/Header';
 
 import api from "../../../services/api";
 
@@ -55,11 +57,12 @@ const Cadastro_Cliente = () => {
     }};    
 
     try {
+      
       await api.post("cliente", parametros);
       history.push("/produto");
       console.log("cadastro realizado com sucesso!");
     } catch (erro) {
-      console.log("Deu erro");
+      console.log("Deu erro no cadastro");
     } finally {
       setNome("");
       setNomeUsuario("");
@@ -72,11 +75,8 @@ const Cadastro_Cliente = () => {
 
   return (
     <Body>
-      <Header>
-        <h1>Logo</h1>
-        <h2>Cadastro de cliente</h2>
-      </Header>
-
+      <Header nome={"cliente"}/>
+        
       <Container>
         <h3>Complete com seu dados</h3>
         <Link id="link-to-vendedor" to="/Cfuncionario">
