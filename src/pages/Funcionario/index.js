@@ -2,8 +2,6 @@ import React , { useState, useCallback , useEffect } from 'react';
 import { FiCircle, FiCheckCircle, FiDelete } from "react-icons/fi";
 import { Link } from 'react-router-dom';
 
-
-
 import api from '../../services/api';
 // import { Link } from 'react-router-dom';
 import { Form, Header , Tasks } from './styles';
@@ -197,6 +195,7 @@ const Funcionario = () => {
                       </>
                     ) : (
                       <FiCircle size={22} onClick={() => alert('helllo world')} />
+                      
                     )}
                   </span>
                 </div>
