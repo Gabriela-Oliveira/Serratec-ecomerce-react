@@ -7,6 +7,7 @@ const Carrinho = () => {
     const [usuario, setUsuario] = useState({'id': 1, 'nome': 'Guilherme'});
     const [items, setItems] = useState([]);
     const [pedido, setPedido] = useState({});
+    const [qntItens, setQntItens] = useState(0);
     let lista = [{
         "id": 1,
         "nome": "Cadeira bx9",
@@ -77,12 +78,25 @@ const Carrinho = () => {
 
     const criarPedido =
         () => {
-            let pedido1 = {
-                "id": 1,
-                "usuario": usuario.nome,
-                "items": items
+            let listaItems = JSON.parse(localStorage.getItem('@ECOMMERCE:produto'.split(',')));
+            let listaAuxiliar = [];
+            let produtoVenda = {};
+
+            for(let item of listaItems){
+                const { id, nome, valor, qntEstoque} = item;
+
+                produtoVenda = {
+                    idProduto: id,
+                    nomeProduto: nome,
+                    qtdItens: 1,
+                    valor: valor,
+                    subTotal: valor * qntItens
+                }
+                
+                listaAuxiliar.push(produtoVenda);
             }
-            setPedido(pedido1);
+
+            console.log(listaAuxiliar);
         }
 
 
@@ -100,6 +114,7 @@ const Carrinho = () => {
 
             })
         }
+        <button onClick={criarPedido}></button>
         </>
     )
 }
