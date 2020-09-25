@@ -1,15 +1,18 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { Link } from 'react-router-dom';
+import "~slick-carousel/slick/slick.css"; 
+// import Slider from "react-slick";
+// import Slider from '@bit/akiran.react-slick.slider';
 import api from '../../../services/api';
-
 import logoImg from '../../../assets/Logo.png';
 
+
+
 import {
-    Titulo,
     // Produtos,
     ErroMensagem,
     Header,
-    // Main
+    Main
 } from './styles';
 
 const Produto_ = () => {
@@ -17,6 +20,17 @@ const Produto_ = () => {
     const [erroMensagem, setErroMensagem] = useState("");
     const [produtoId, setProdutoId] = useState({});
     const [produtoNome, setNome] = useState({});
+
+    const configuracao = {
+      dots: true,
+      arrows: false,
+      infinite: true,
+      speed: 600,
+      fade: true,
+      cssEase: 'linear',
+      autoplay: true,
+      autoplaySpeed: 2500,
+    };
 
     const mostraProdutos = useCallback(
         async () => {
@@ -57,35 +71,70 @@ const Produto_ = () => {
       // mostraProdutosID(1);
     }, [mostraProdutos, mostraProdutosID]);
 
+    function procurarPorNome(nome){
+      let items = [];
+
+      for (let produto of produtos){
+        if(produto.nome.indexOf(nome) != -1){
+          items.push(produto);
+        }
+      }
+      console.log(items);
+    }
+    
+
     return (
         <>
           <Header>
               <img src={logoImg} alt="Lista de Produtos" />
                             
-              {/* <input 
+              <input 
                 value={produtoId}
                 onChange={e => setProdutoId(e.target.value)}
                 type="text" 
                 placeholder="Digite uma busca..." 
               />
-              <button type="submit">Buscar</button> */}
+              <button type="submit">Buscar</button>
             
                         
           </Header>
       
-        {/* <Titulo>E-comerce Jonsons</Titulo> */}
+       
        
           <ErroMensagem></ErroMensagem>
 
           {/* <Main> */}
 
-
+{/*          
+				<div>
+        <h2> Single Item</h2>
+        <Slider {...configuracao}>
+          <div>
+            <h3>1</h3>
+          </div>
+          <div>
+            <h3>2</h3>
+          </div>
+          <div>
+            <h3>3</h3>
+          </div>
+          <div>
+            <h3>4</h3>
+          </div>
+          <div>
+            <h3>5</h3>
+          </div>
+          <div>
+            <h3>6</h3>
+          </div>
+        </Slider>
+      </div> */}
+              
 
             <h1>{produtoId.nome}</h1>
             { produtos.map(produto => (
               <div key={produto.id}>
                 <img src={produto.fotoLink}/> 
-                {/* <strong>{produto.fotoLink}</strong> */}
                 <strong>{produto.nome}</strong>
                 <strong>{produto.descricao}</strong>
               </div>
