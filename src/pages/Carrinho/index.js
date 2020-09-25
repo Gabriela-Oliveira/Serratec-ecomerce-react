@@ -55,8 +55,6 @@ const Carrinho = () => {
     }, []
     );
 
-
-
     function remover_da_lista(id) {
         let listaItems = JSON.parse(localStorage.getItem('@ECOMMERCE:produto').split(','));
         let itemASerRemovido = listaItems.find(item => item.id === id);
@@ -103,6 +101,5 @@ const Carrinho = () => {
         </>
     )
 }
-
 
 export default Carrinho;

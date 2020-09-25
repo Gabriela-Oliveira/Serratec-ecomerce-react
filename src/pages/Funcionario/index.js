@@ -1,8 +1,6 @@
 import React , { useState, useCallback , useEffect } from 'react';
 import { FiCircle, FiCheckCircle, FiDelete } from "react-icons/fi";
 
-
-
 import api from '../../services/api';
 import { Link } from 'react-router-dom';
 
@@ -141,7 +139,7 @@ const Funcionario = () => {
                       <b>atualizar</b>  
                       </>
                     ) : (
-                      <FiCircle size={22} onClick={() => altualizarCliente(cliente)} />
+                      <FiCircle size={22} onClick={() => altualizarCliente(funcionario)} />
                     )}
                   </span>
                 </div>

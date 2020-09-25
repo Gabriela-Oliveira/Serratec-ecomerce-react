@@ -24,31 +24,38 @@ const Cadastro_Cliente = () => {
     if (!nome) return;
     if (!nomeUsuario) return;
     if (!cpf) return;
-    if (!dataNascimento) return;
+    // if (!dataNascimento) return;
     if (!email) return;
     if (!senha) return;
 
     console.log(
       "Cadastrado: ",
-      nome,
-      nomeUsuario,
-      cpf,
-      dataNascimento,
-      email,
-      senha
+      "\nNome: ",nome,
+      "\nNome de Usuario: ",nomeUsuario,
+      "\nCPF: ",cpf,
+      "\nData de Nascimento: ",dataNascimento,
+      "\nEmail: ",email,
+      "\nSenha: ","**************"
     );
 
     const parametros = {
       nome: nome,
-      nomeUsuario: nomeUsuario,
+      usuario: nomeUsuario,
       cpf: cpf,
-      dataNascimento: dataNascimento,
       email: email,
-      senha: senha,
-    };
+      dataNascimento: "1992-02-01T00:00:00Z",
+      endereco: { 
+        rua: "Rua Jonsons", 
+        numero: "0", 
+        complemento: "Casa", 
+        bairro: "Parque do Ingá", 
+        cidade: "Teresopolis", 
+        estado: "RJ", 
+        cep: "25961225"
+    }};    
 
     try {
-      await api.post("/cliente", parametros);
+      await api.post("cliente", parametros);
       history.push("/produto");
       console.log("cadastro realizado com sucesso!");
     } catch (erro) {
