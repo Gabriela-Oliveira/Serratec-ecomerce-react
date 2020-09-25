@@ -141,7 +141,7 @@ const Funcionario = () => {
                       <b>atualizar</b>  
                       </>
                     ) : (
-                      <FiCircle size={22} onClick={() => altualizarCliente(cliente)} />
+                      <FiCircle size={22} onClick={() => altualizarCliente()} />
                     )}
                   </span>
                 </div>
