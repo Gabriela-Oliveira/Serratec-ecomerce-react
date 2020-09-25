@@ -4,7 +4,9 @@ import { Link, useHistory } from "react-router-dom";
 
 import { TiArrowRightThick } from "react-icons/ti";
 
-import { Header, Container, Form, Body, Footer, Infos } from "./styles";
+import { Container, Form, Body, Footer, Infos } from "./styles";
+
+import Header from '../../../components/Topo/Header';
 
 import api from "../../../services/api";
 
@@ -20,7 +22,7 @@ const Cadastro_Cliente = () => {
     if (!nome) return;
     if (!cpf) return;
 
-    console.log("Tentando cadastrar... \nNome:", nome, "\nCpf: ", cpf );
+    console.log("Cadastrando... \nNome:", nome, "\nCpf: ", cpf );
 
     const parametros = {
       nome: nome,
@@ -28,12 +30,16 @@ const Cadastro_Cliente = () => {
     };
 
     try {
-      await api.post("/cliente", parametros);
-      history.push("/produto");
+
+      await api.post("funcionario", parametros);
+      history.push("/funcionario");
       console.log("cadastro realizado com sucesso!");
+
     } catch (erro) {
-      console.log("Deu erro");
+
+      console.log("Deu erro no cadastro");
     } finally {
+
       setNome("");
       setCpf("");
     }
@@ -41,10 +47,7 @@ const Cadastro_Cliente = () => {
 
   return (
     <Body>
-      <Header>
-        <h1>Logo</h1>
-        <h2>Cadastro de funcionario</h2>
-      </Header>
+      <Header nome={"funcionario"} />
 
       <Container>
         <h3>Complete com seu dados</h3>

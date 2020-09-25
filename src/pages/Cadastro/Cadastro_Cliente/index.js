@@ -4,7 +4,9 @@ import { Link, useHistory } from "react-router-dom";
 
 import { TiArrowRightThick } from "react-icons/ti";
 
-import { Header, Container, Form, Body, Footer, Infos } from "./styles";
+import { Container, Form, Body, Footer, Infos } from "./styles";
+
+import Header from '../../../components/Topo/Header';
 
 import api from "../../../services/api";
 
@@ -24,35 +26,43 @@ const Cadastro_Cliente = () => {
     if (!nome) return;
     if (!nomeUsuario) return;
     if (!cpf) return;
-    if (!dataNascimento) return;
+    // if (!dataNascimento) return;
     if (!email) return;
     if (!senha) return;
 
     console.log(
       "Cadastrado: ",
-      nome,
-      nomeUsuario,
-      cpf,
-      dataNascimento,
-      email,
-      senha
+      "\nNome: ",nome,
+      "\nNome de Usuario: ",nomeUsuario,
+      "\nCPF: ",cpf,
+      "\nData de Nascimento: ",dataNascimento,
+      "\nEmail: ",email,
+      "\nSenha: ","**************"
     );
 
     const parametros = {
       nome: nome,
-      nomeUsuario: nomeUsuario,
+      usuario: nomeUsuario,
       cpf: cpf,
-      dataNascimento: dataNascimento,
       email: email,
-      senha: senha,
-    };
+      dataNascimento: "1992-02-01T00:00:00Z",
+      endereco: { 
+        rua: "Rua Jonsons", 
+        numero: "0", 
+        complemento: "Casa", 
+        bairro: "Parque do Ingá", 
+        cidade: "Teresopolis", 
+        estado: "RJ", 
+        cep: "25961225"
+    }};    
 
     try {
-      await api.post("/cliente", parametros);
+      
+      await api.post("cliente", parametros);
       history.push("/produto");
       console.log("cadastro realizado com sucesso!");
     } catch (erro) {
-      console.log("Deu erro");
+      console.log("Deu erro no cadastro");
     } finally {
       setNome("");
       setNomeUsuario("");
@@ -65,11 +75,8 @@ const Cadastro_Cliente = () => {
 
   return (
     <Body>
-      <Header>
-        <h1>Logo</h1>
-        <h2>Cadastro de cliente</h2>
-      </Header>
-
+      <Header nome={"cliente"}/>
+        
       <Container>
         <h3>Complete com seu dados</h3>
         <Link id="link-to-vendedor" to="/Cfuncionario">
