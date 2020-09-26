@@ -12,11 +12,11 @@ const Funcionario = () => {
     const [ mostrarFuncionario, setMostrarFuncionario ] = useState({});
     const [ nomeFuncionario, setNomeFuncionario ] = useState('');
     const [ cpfFuncionario, setCpfFuncionario ] = useState('');
-    const [ cpfCliente, setCpfCliente ] = useState('');
-    const [ emailCliente, setEmailCliente ] = useState('');
-    const [ nomeCliente , setNomeCliente ] = useState('');
-    const [ usuarioCliente, setUsuarioCliente ] = useState('');
     const [ erroMensagem,  setErroMensagem ] = useState('');
+    const [nome, setNome] = useState('');
+    const [nomeUsuario, setNomeUsuario] = useState('');
+    const [cpf, setCpf] = useState('');
+    const [email, setEmail] = useState('');
     
 
        const mostrarClientes = useCallback(
@@ -47,67 +47,36 @@ const Funcionario = () => {
                 }
             },[]
         );
-            const [nome, setNome] = useState('');
-            const [nomeUsuario, setNomeUsuario] = useState('');
-            const [cpf, setCpf] = useState('');
-            const [email, setEmail] = useState('');
 
-      //   const altualizarCliente = useCallback(
-      //     async (idCliente) => {
+        const teste = async (idCliente) => {
+          const parametros = {
+            nome: nome,
+            usuario: nomeUsuario,
+            cpf: cpf,
+            email: email,
+            dataNascimento: "1992-02-01T00:00:00Z",
+            endereco: {
+              rua: "Rua dos Bobos",
+              numero: "0",
+              complemento: "",
+              bairro: "Castanheira",
+              cidade: "Metropolis",
+              estado: "SP",
+              cep: "23451234"
+              
+            }
+          }
+          try {
+              await api.put(`cliente/${idCliente}`, parametros)
+              console.log(parametros)
+          } catch (error) {
+              setErroMensagem(error);
+          }finally{
+            mostrarClientes();
+          }
+          
+        }
 
-      //       const parametros = {
-      //         nome: nome,
-      //         usuario: nomeUsuario,
-      //         cpf: cpf,
-      //         email: email,
-      //         dataNascimento: "1992-02-01T00:00:00Z",
-      //         endereco: { 
-      //         rua: "Rua Jonsons", 
-      //         numero: "0", 
-      //         complemento: "Casa", 
-      //         bairro: "Parque do Ingá", 
-      //         cidade: "Teresopolis", 
-      //         estado: "RJ", 
-      //         cep: "25961225"
-      //       }};
-      //         try {
-      //             await api.put(`/cliente/${idCliente}`, parametros)
-                  
-      //         } catch (error) {
-      //             setErroMensagem(error);
-      //         }
-      //         mostrarCliente();
-      //     }, []
-      // );
-            
-        const altualizarCliente = useCallback(
-          async (idCliente) => {
-            
-            
-            const parametros = {
-              ...mostrarCliente,
-              nome: nome,
-              usuario: nomeUsuario,
-              cpf: cpf,
-              email: email,
-              dataNascimento: "1992-02-01T00:00:00Z",
-              endereco: { 
-              rua: "Rua Jonsons", 
-              numero: "0", 
-              complemento: "Casa", 
-              bairro: "Parque do Ingá", 
-              cidade: "Teresopolis", 
-              estado: "RJ", 
-              cep: "25961225"
-            }};
-              try {
-                  await api.put(`/cliente/${idCliente}`, parametros)
-              } catch (error) {
-                  setErroMensagem(error);
-              }
-              mostrarCliente();
-          }, []
-      );
 
 
        const removerCliente = async (cliente) => {
@@ -180,13 +149,8 @@ const Funcionario = () => {
 
        )
            
-      const criarModal = () => {
-        return (
-          <>
-          
-          </>
-         ) 
-      }
+       const [resetar, setResete] = useState(null);
+           
        return (
         <>
           <header title="Lista de Tarefas">
@@ -195,22 +159,7 @@ const Funcionario = () => {
               Logout
             </Link>
             </header> 
-    
-          {/* <form onSubmit={mostrarCliente}>
-            <input 
-             
-              onChange={e => setMostrarCliente(e.nome)}
-              type="text"
-              placeholder="Digite sua pesquisa..." 
-            />
-    
-            <button type="submit">Criar</button>
-          </form> */}
-    
-          {/* { errorMessage && 
-            <ErrorMessage>{errorMessage}</ErrorMessage>
-          } */}
-    
+  
           <Tasks>
             { mostrarCliente.map((cliente) => (
                 <div key={cliente.id}>
@@ -221,14 +170,12 @@ const Funcionario = () => {
                         <FiDelete size={22} onClick={() => removerCliente(cliente)} style={{marginRight: 10}} />
                    
                         {/* <FiCheckCircle size={22} onClick={() => criarModal()} /> */}
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                          
+                        <button onClick={() => setResete(cliente.id)}type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                          chamar
                         </button>
-                        
                       </>
                     ) : (
                       <FiCircle size={22} onClick={() => alert('helllo world')} />
-                      
                     )}
                   </span>
                 </div>
@@ -249,7 +196,7 @@ const Funcionario = () => {
 
                   <div class="modal-body">
 
-                    <form onSubmit={}>
+                    <form>
                     <input 
                         value={nome} 
                         onChange={e => setNome(e.target.value)}
@@ -274,8 +221,9 @@ const Funcionario = () => {
                         type="text"
                         placeholder="Email" 
                       />
-                      <button onClick={altualizarCliente}>Atualizar</button>
-
+                     <button type="button" onClick={() => teste(resetar)}> 
+                          atualizar
+                     </button>
                     </form>
                   </div>
 
