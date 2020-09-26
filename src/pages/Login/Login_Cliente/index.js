@@ -79,7 +79,12 @@ const Login_Cliente = () => {
             />
             <button onClick={(e) => logIn(e)}>{carregando ? 'Carregando...' : 'Entrar'}</button>
 
-            { errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage> }
+            { errorMessage &&                 
+                <ErrorMessage>
+                  <i class="fas fa-exclamation-triangle"></i>{errorMessage}
+                </ErrorMessage>
+            }
+            
         </div>
 
 
