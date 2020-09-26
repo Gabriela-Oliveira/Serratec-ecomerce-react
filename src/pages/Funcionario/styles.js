@@ -1,7 +1,22 @@
 import styled from 'styled-components';
 import { shade } from 'polished';
 
-export const Header = styled.form``
+export const Header = styled.form`
+    display: flex;
+    justify-content: center;
+      h2 {
+        margin: auto;
+        margin-top: 2rem;
+      }
+      a {
+        text-decoration: none;
+      }
+    .logo {
+      margin: auto;
+      margin-top: 2rem;
+    }
+  
+`
 export const Form = styled.form`
   margin-top: 25px;
   max-width: 700px;
@@ -44,9 +59,60 @@ export const ErrorMessage = styled.span`
 
 export const Tasks = styled.div`
   margin-top: 40px;
-  max-width: 700px;
+  width: auto;
+
+  .teste {
+    margin-left: 20rem;
+    margin-bottom: 1rem;
+    width: 7rem;
+    border: none;
+    transition: background-color 0.2s;
+    background: rgb(1,88,191);
+    border-radius: 3px;
+    color: #fff;
+    text-decoration:none;
+    outline: none;
+    
+  }
+  .teste:hover {
+    background: rgba(1,88,191,0.3);
+    color: #3d3d4d;
+  }
+  .teste1 {
+    margin-left: 2rem;
+    margin-bottom: 1rem;
+    width: 9rem;
+    border: none;
+    transition: background-color 0.2s;
+    background: rgb(1,88,191);
+    border-radius: 3px;
+    color: #fff;
+    outline: none;
+  }
+  .teste1:hover {
+    background: rgba(1,88,191,0.3);
+    color: #3d3d4d;
+  }
+
+  .teste2 {
+    margin-left: 2rem;
+    margin-bottom: 1rem;
+    width: 7rem;
+    border: none;
+    transition: background-color 0.2s;
+    background: rgb(1,88,191);
+    border-radius: 3px;
+    color: #fff;
+    outline: none;
+  }
+  .teste2:hover {
+    background: rgba(1,88,191,0.3);
+    color: #3d3d4d;
+  }
+
 
   div {
+    width: 100%;
     background: #fff;
     border-radius: 5px;
     padding: 25px;
@@ -54,25 +120,33 @@ export const Tasks = styled.div`
     display: flex;
     align-items: center;
     transition: border-color 0.3s linear 0.1s ,transform 0.3s;
-
+    margin-bottom: 20px;
     & + div{
-      margin-top: 16px;
+      margin-bottom: 20px;
+
     }
 
     &:hover{
-      transform: translateX(10px);
-      border-bottom: 2px solid #04d361;
+      border-bottom: 2px solid #0158BF;
     }
 
-    strong{
-      font-size: 20px;
-      color: #3d3d4d;
-      margin-right: 25px;
-    }
+    strong {
+        font-size: 20px;
+        color: #3d3d4d;
+        margin-right: 25px;
+      }
 
     span {
+      display: flex;
+      justify-content:center;
       margin-left: auto;
+      flex-wrap:wrap;
     }
+    p {
+        display: flex;
+        flex-wrap:wrap;
+        margin: auto;
+      }
 
     svg {
       color: #cbcbd6;
