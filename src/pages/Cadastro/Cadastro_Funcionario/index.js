@@ -32,6 +32,7 @@ const Cadastro_Funcionario = () => {
     try {
 
       await api.post("funcionario", parametros);
+      localStorage.setItem("@ECOMMERCE:funcionario", JSON.stringify(parametros));
       history.push("/funcionario");
       console.log("cadastro realizado com sucesso!");
 

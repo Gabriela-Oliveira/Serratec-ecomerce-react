@@ -4,9 +4,9 @@ import React, { useState, useCallback, useMemo, useEffect } from 'react';
 // import Item from '../../components/Item';
 
 const Carrinho = () => {
-    const [usuario, setUsuario] = useState({'id': 1, 'nome': 'Guilherme'});
+    const [usuario, setUsuario] = useState(JSON.parse(localStorage.getItem('@ECOMERCE:clliente')));
     const [items, setItems] = useState([]);
-    const [itemsPedidoFormato, setItemsPedidoFormato] = useState(JSON.parse(localStorage.getItem('@ECOMMERCE:listaPedido')));
+    const [itemsPedidoFormato, setItemsPedidoFormato] = useState([]);
     const [pedido, setPedido] = useState({});
     const [subTotal, setSubTotal] = useState(1);
     const [qntItens, setQntItens] = useState(1);
@@ -54,54 +54,73 @@ const Carrinho = () => {
         () => {
             let listaItems = localStorage.getItem('@ECOMMERCE:produto').split(',');
             setItems(JSON.parse(listaItems));
-
             
     }, []
     );
 
-    const criarModeloProduto = useCallback(
-     (listaProdutos1) => {
-        let listaProdutos = [];
-        for(let produto of listaProdutos1){
-            listaProdutos.push(produto);
-        }
-        console.log(listaProdutos);
-        console.log(itemsPedidoFormato)
-        }, []
-    );
+    const setarModelo = (algo) => {
+        setItemsPedidoFormato(algo);
+    }
 
-    const criarPedido = useCallback(
-    () => { 
-        // let listaItems = [...items];
-        // let listaItemsFormatoPedido = [];
-        // let produtoVenda = {};
-
-        // for(let item of listaItems){
-        //     const { id, nome, valor, qntEstoque} = item;
-
-        //     produtoVenda = {
-
-        //     }
-
-        //     listaItemsFormatoPedido.push(produtoVenda);
+    const criarModeloProduto = useCallback (
+        () => {
+            let listaProdutos = [];
             
-        // }
-        // setItemsPedidoFormato(listaItemsFormatoPedido);
-        
-    
-    }, [items]
-    );
+            
+            for(let produto of items){
 
+                const { id, nome, valor } = produto;
 
+                let quantidade = qntItens;
+
+                let produtoModelo = {
+                idProduto: id,
+                nomeProduto: nome,
+                qtdItens: quantidade,
+                valor: valor,
+                subTotal
+                }
+
+                listaProdutos.push(produtoModelo);
+            }
+            console.log(listaProdutos);
+            localStorage.setItem('@ECOMMERCE:listaPedido', JSON.stringify(listaProdutos));
+            setarModelo(localStorage.getItem('@ECOMMERCE:alteracoes') ? JSON.parse(localStorage.getItem('@ECOMMERCE:alteracoes')) : listaProdutos);
+            console.log(localStorage.getItem('@ECOMMERCE:alteracoes'));
+        }, [items]
+    )
+
+    const criarPedido =
+    () => { 
+        let listinha = [...itemsPedidoFormato];
+        let lista2 = [...items];
+        let pedido11 = {
+            dataPedido: "2020-08-30T20:10:10Z",
+            pedidoStatus: "ENTREGUE",
+            idCliente: usuario.id,
+            nomeCliente: usuario.nome,
+            itens: itemsPedidoFormato
+        };
+        listinha.forEach(item => {
+            let produtoAtualizado = lista2.find(produto => item.idProduto === produto.id);
+            if(!produtoAtualizado) return;
+            const { qtdEstoque, ...rest } = produtoAtualizado;
+
+            produtoAtualizado = {
+                rest,
+                qtdEstoque: qtdEstoque - item.qtdItens
+            }
+            console.log(produtoAtualizado);
+        })
+        console.log(pedido11);
+    }
 
     function remover_da_lista(id) {
-        let listaItems = JSON.parse(localStorage.getItem('@ECOMMERCE:produto').split(','));
-        let itemASerRemovido = listaItems.find(item => item.id === id);
-        listaItems.splice(listaItems.indexOf(itemASerRemovido), 1);
-
-        localStorage.setItem('@ECOMMERCE:produto', JSON.stringify(listaItems));
-        setItems( JSON.parse(localStorage.getItem('@ECOMMERCE:produto').split(',')));
-        console.log(listaItems);
+        let itemASerRemovido = itemsPedidoFormato.find(item => item.idProduto === id);
+        itemsPedidoFormato.splice(itemsPedidoFormato.indexOf(itemASerRemovido), 1);
+        localStorage.setItem('@ECOMMERCE:alteracoes', JSON.stringify(itemsPedidoFormato));
+        localStorage.setItem('@ECOMMERCE:produto', JSON.stringify(items));
+        obterProdutos();
     }
 
     useEffect(
@@ -115,30 +134,11 @@ const Carrinho = () => {
 
     useEffect(
         () => {
-            let listaProdutos = [];
-            
-            for(let produto of items){
+            setItemsPedidoFormato(JSON.parse(localStorage.getItem('@ECOMMERCE:listaPedido')))
 
-                const { id, nome, valor } = produto;
-
-                let quantidade = qntItens;
-
-                let produtoModelo = {
-                idProduto: id,
-                nomeProduto: nome,
-                qtdItens: quantidade,
-                valor: valor,
-                subTotal: valor
-                }
-
-                listaProdutos.push(produtoModelo);
-            }
-            console.log(listaProdutos);
-            localStorage.setItem('@ECOMMERCE:listaPedido', JSON.stringify(listaProdutos));
-            console.log(itemsPedidoFormato);
+           criarModeloProduto();
         }, [items]
     )
-    let listinha = localStorage.getItem('@ECOMMERCE:alteracoes') ? JSON.parse(localStorage.getItem('@ECOMMERCE:alteracoes')) : JSON.parse(localStorage.getItem('@ECOMMERCE:listaPedido'))
 
     return(
         <>
@@ -146,7 +146,7 @@ const Carrinho = () => {
 
         {
             
-            listinha.map(item => {
+            itemsPedidoFormato.map(item => {
                 return(
                     <>
                     <h1>{item.nomeProduto}</h1>
@@ -159,7 +159,7 @@ const Carrinho = () => {
                         item.qtdItens++;
                         setSubTotal(item.valor * item.qtdItens);
                         console.log(item.nomeProduto + ' ' + item.qtdItens);
-                        console.log(item.subTotal = item.valor * item.qtdItens);
+                        item.subTotal = item.valor * item.qtdItens;
                         localStorage.setItem('@ECOMMERCE:alteracoes', JSON.stringify(itemsPedidoFormato));
                     }
                     }>Somar</button>
@@ -169,16 +169,20 @@ const Carrinho = () => {
                         item.qtdItens--;
                         setSubTotal(item.valor * item.qtdItens);
                         console.log(item.nomeProduto + ' ' + item.qtdItens);
-                        console.log(item.subTotal = item.valor * item.qtdItens);
+                        item.subTotal = item.valor * item.qtdItens;
                         localStorage.setItem('@ECOMMERCE:alteracoes', JSON.stringify(itemsPedidoFormato));
 
                     }}
                     >Subtrair</button>
+
+                    <button onClick={() => remover_da_lista(item.idProduto)}>Apagar</button>
                     </>
                 )
 
             })
         }
+
+        <button onClick={() => criarPedido()}>pedido</button>
 
         </>
     )
