@@ -59,6 +59,7 @@ const Cadastro_Cliente = () => {
     try {
       
       await api.post("cliente", parametros);
+      localStorage.setItem("@ECOMERCE:clliente", JSON.stringify(parametros));
       history.push("/produto");
       console.log("cadastro realizado com sucesso!");
     } catch (erro) {
