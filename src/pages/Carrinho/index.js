@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
 // import moment from 'moment';
 
-// import Item from '../../components/Item';
+import { Item, Carrinho as Container } from './styles';
 
 const Carrinho = () => {
     const [usuario, setUsuario] = useState(JSON.parse(localStorage.getItem('@ECOMMERCE:cliente')));
@@ -66,7 +66,6 @@ const Carrinho = () => {
         () => {
             let listaProdutos = [];
             
-            
             for(let produto of items){
 
                 const { id, nome, valor } = produto;
@@ -78,7 +77,7 @@ const Carrinho = () => {
                 nomeProduto: nome,
                 qtdItens: quantidade,
                 valor: valor,
-                subTotal
+                subTotal: valor
                 }
 
                 listaProdutos.push(produtoModelo);
@@ -137,22 +136,22 @@ const Carrinho = () => {
             setItemsPedidoFormato(JSON.parse(localStorage.getItem('@ECOMMERCE:listaPedido')))
 
            criarModeloProduto();
-        }, [items]
+        }, [items,obterProdutos]
     )
 
     return(
         <>
         <h1>Teste</h1>
 
+        <Container>
         {
-            
             itemsPedidoFormato.map(item => {
                 return(
-                    <>
+                    <Item>
                     <h1>{item.nomeProduto}</h1>
-                    <h2>{item.valor}</h2>
+                    <h3>{item.valor}</h3>
                     <h3>{item.subTotal}</h3>
-                    <h3>{item.qtdItens}</h3>
+                    <div>
                     <button onClick={() =>{
                         let itemAchado = items.find(itemzada => itemzada.id === item.idProduto);
                         if(item.qtdItens === itemAchado.qtdEstoque) return;
@@ -162,8 +161,8 @@ const Carrinho = () => {
                         item.subTotal = item.valor * item.qtdItens;
                         localStorage.setItem('@ECOMMERCE:alteracoes', JSON.stringify(itemsPedidoFormato));
                     }
-                    }>Somar</button>
-
+                    }>+</button>
+                        <h3>{item.qtdItens}</h3>
                     <button onClick={() => {
                         if(item.qtdItens === 1) return; 
                         item.qtdItens--;
@@ -171,19 +170,20 @@ const Carrinho = () => {
                         console.log(item.nomeProduto + ' ' + item.qtdItens);
                         item.subTotal = item.valor * item.qtdItens;
                         localStorage.setItem('@ECOMMERCE:alteracoes', JSON.stringify(itemsPedidoFormato));
-
                     }}
-                    >Subtrair</button>
+                    >-</button>
+                    </div>
 
-                    <button onClick={() => remover_da_lista(item.idProduto)}>Apagar</button>
-                    </>
+                    <button onClick={() => remover_da_lista(item.idProduto)}>Excluir</button>
+                    </Item>
                 )
 
             })
         }
+        </Container>
 
-        <button onClick={() => criarPedido()}>pedido</button>
-
+        
+<button onClick={() => criarPedido()}>pedido</button>
         </>
     )
 }
