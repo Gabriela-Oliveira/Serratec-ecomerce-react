@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Header = styled.div`
-    
+    overflow-x: auto;
     display: flex;
     justify-content: space-between;
     background: #8DD7CF;
@@ -31,46 +31,56 @@ export const Header = styled.div`
     }    
 `;
 
-export const Main = styled.div`
-
-    .carousel-inner{
-        width: 100%;
+export const Container = styled.div`
+    overflow-x: auto;
+    div.carousel-item{
+        margin-left: 6%;
     }
+
+    img{
+        width: 90%;
+    }`   
+
+export const Main = styled.div`
+    overflow-x: auto;
+    display:flex;
 
     .produtos{
         width: 200px;
 
     }
-
-      
-`;
-
-
-
-
-
-
-
-
-export const Carousel = styled.div`
-display: flex;`
-
-// export const Main = styled.div`
-//     display: flex;`
-
-export const Footer = styled.footer`
-    display: flex;
-    justify-content: center;
-`;
-
-export const Container = styled.div`
-    display: flex;
-    flex-wrap: wrap; 
     
-    img {
-        width:800px;
+    container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-left: 50px;
+        margin-right: 50px;
+        /* margin-top: 50px; */
+        margin-bottom: 50px;
+        text-align: center;
+    }
 
-    }`  
+    .block{
+        margin-top: 30px;
+    }
+
+    .block:hover{
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    strong{
+        margin: 30px
+    }
+
+        
+`;
+
+   
+
+     
+
+    
 
 export const ErroMensagem = styled.div`
     display: flex;`
