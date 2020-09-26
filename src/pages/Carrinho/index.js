@@ -4,7 +4,7 @@ import React, { useState, useCallback, useMemo, useEffect } from 'react';
 // import Item from '../../components/Item';
 
 const Carrinho = () => {
-    const [usuario, setUsuario] = useState(JSON.parse(localStorage.getItem('@ECOMERCE:clliente')));
+    const [usuario, setUsuario] = useState(JSON.parse(localStorage.getItem('@ECOMMERCE:cliente')));
     const [items, setItems] = useState([]);
     const [itemsPedidoFormato, setItemsPedidoFormato] = useState([]);
     const [pedido, setPedido] = useState({});
