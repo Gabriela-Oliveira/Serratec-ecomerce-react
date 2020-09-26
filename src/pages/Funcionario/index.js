@@ -249,7 +249,7 @@ const Funcionario = () => {
 
                   <div class="modal-body">
 
-                    <form onSubmit={}>
+                    <form>
                     <input 
                         value={nome} 
                         onChange={e => setNome(e.target.value)}
