@@ -52,6 +52,33 @@ const Funcionario = () => {
             const [cpf, setCpf] = useState('');
             const [email, setEmail] = useState('');
 
+      //   const altualizarCliente = useCallback(
+      //     async (idCliente) => {
+
+      //       const parametros = {
+      //         nome: nome,
+      //         usuario: nomeUsuario,
+      //         cpf: cpf,
+      //         email: email,
+      //         dataNascimento: "1992-02-01T00:00:00Z",
+      //         endereco: { 
+      //         rua: "Rua Jonsons", 
+      //         numero: "0", 
+      //         complemento: "Casa", 
+      //         bairro: "Parque do Ingá", 
+      //         cidade: "Teresopolis", 
+      //         estado: "RJ", 
+      //         cep: "25961225"
+      //       }};
+      //         try {
+      //             await api.put(`/cliente/${idCliente}`, parametros)
+                  
+      //         } catch (error) {
+      //             setErroMensagem(error);
+      //         }
+      //         mostrarCliente();
+      //     }, []
+      // );
             
         const altualizarCliente = useCallback(
           async (idCliente) => {
@@ -169,7 +196,7 @@ const Funcionario = () => {
             </Link>
             </header> 
     
-          <form onSubmit={mostrarCliente}>
+          {/* <form onSubmit={mostrarCliente}>
             <input 
              
               onChange={e => setMostrarCliente(e.nome)}
@@ -178,7 +205,7 @@ const Funcionario = () => {
             />
     
             <button type="submit">Criar</button>
-          </form>
+          </form> */}
     
           {/* { errorMessage && 
             <ErrorMessage>{errorMessage}</ErrorMessage>
@@ -208,21 +235,21 @@ const Funcionario = () => {
               )
             ) }
                 
-          </Tasks>
+                </Tasks>
             <div class="modal" id="myModal">
                 <div class="modal-dialog">
                 <div class="modal-content">
 
-                  
+
                   <div class="modal-header">
                     <h4 class="modal-title">Cliente</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                   </div>
 
-                
+
                   <div class="modal-body">
-                    
-                    <form onSubmit={e => altualizarCliente(e)}>
+
+                    <form onSubmit={}>
                     <input 
                         value={nome} 
                         onChange={e => setNome(e.target.value)}
@@ -248,11 +275,11 @@ const Funcionario = () => {
                         placeholder="Email" 
                       />
                       <button onClick={altualizarCliente}>Atualizar</button>
-                      
+
                     </form>
                   </div>
 
-                
+
                   <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                   </div>

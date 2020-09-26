@@ -12,7 +12,6 @@ import Funcionario from '../pages/Funcionario';
 import Produto from '../pages/Produtos/Produto';
 import Produto_Id from '../pages/Produtos/Produto_Id';
 
-
 const Routes = () => (
 
     <BrowserRouter>
