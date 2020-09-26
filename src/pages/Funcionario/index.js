@@ -1,5 +1,6 @@
 import React , { useState, useCallback , useEffect } from 'react';
-import { FiCircle, FiCheckCircle, FiDelete } from "react-icons/fi";
+import { FiCircle,  FiDelete } from "react-icons/fi";
+import {GrDocumentUpdate} from "react-icons/gr";
 import { Link } from 'react-router-dom';
 
 import api from '../../services/api';
@@ -9,14 +10,14 @@ const Funcionario = () => {
 
     const [ mostrarCliente, setMostrarCliente ] = useState([]);
     const [ mostrarClienteID, setMostrarClienteID ] = useState({});
-    const [ mostrarFuncionario, setMostrarFuncionario ] = useState({});
+    const [ mostrarFuncionario, setMostrarFuncionario ] = useState([]);
     const [ nomeFuncionario, setNomeFuncionario ] = useState('');
     const [ cpfFuncionario, setCpfFuncionario ] = useState('');
-    const [ cpfCliente, setCpfCliente ] = useState('');
-    const [ emailCliente, setEmailCliente ] = useState('');
-    const [ nomeCliente , setNomeCliente ] = useState('');
-    const [ usuarioCliente, setUsuarioCliente ] = useState('');
     const [ erroMensagem,  setErroMensagem ] = useState('');
+    const [nome, setNome] = useState('');
+    const [nomeUsuario, setNomeUsuario] = useState('');
+    const [cpf, setCpf] = useState('');
+    const [email, setEmail] = useState('');
     
 
        const mostrarClientes = useCallback(
@@ -47,67 +48,36 @@ const Funcionario = () => {
                 }
             },[]
         );
-            const [nome, setNome] = useState('');
-            const [nomeUsuario, setNomeUsuario] = useState('');
-            const [cpf, setCpf] = useState('');
-            const [email, setEmail] = useState('');
 
-      //   const altualizarCliente = useCallback(
-      //     async (idCliente) => {
+        const teste = async (idCliente) => {
+          const parametros = {
+            nome: nome,
+            usuario: nomeUsuario,
+            cpf: cpf,
+            email: email,
+            dataNascimento: "1992-02-01T00:00:00Z",
+            endereco: {
+              rua: "Rua dos Bobos",
+              numero: "0",
+              complemento: "",
+              bairro: "Castanheira",
+              cidade: "Metropolis",
+              estado: "SP",
+              cep: "23451234"
+              
+            }
+          }
+          try {
+              await api.put(`cliente/${idCliente}`, parametros)
+              console.log(parametros)
+          } catch (error) {
+              setErroMensagem(error);
+          }finally{
+            mostrarClientes();
+          }
+          
+        }
 
-      //       const parametros = {
-      //         nome: nome,
-      //         usuario: nomeUsuario,
-      //         cpf: cpf,
-      //         email: email,
-      //         dataNascimento: "1992-02-01T00:00:00Z",
-      //         endereco: { 
-      //         rua: "Rua Jonsons", 
-      //         numero: "0", 
-      //         complemento: "Casa", 
-      //         bairro: "Parque do Ingá", 
-      //         cidade: "Teresopolis", 
-      //         estado: "RJ", 
-      //         cep: "25961225"
-      //       }};
-      //         try {
-      //             await api.put(`/cliente/${idCliente}`, parametros)
-                  
-      //         } catch (error) {
-      //             setErroMensagem(error);
-      //         }
-      //         mostrarCliente();
-      //     }, []
-      // );
-            
-        const altualizarCliente = useCallback(
-          async (idCliente) => {
-            
-            
-            const parametros = {
-              ...mostrarCliente,
-              nome: nome,
-              usuario: nomeUsuario,
-              cpf: cpf,
-              email: email,
-              dataNascimento: "1992-02-01T00:00:00Z",
-              endereco: { 
-              rua: "Rua Jonsons", 
-              numero: "0", 
-              complemento: "Casa", 
-              bairro: "Parque do Ingá", 
-              cidade: "Teresopolis", 
-              estado: "RJ", 
-              cep: "25961225"
-            }};
-              try {
-                  await api.put(`/cliente/${idCliente}`, parametros)
-              } catch (error) {
-                  setErroMensagem(error);
-              }
-              mostrarCliente();
-          }, []
-      );
 
 
        const removerCliente = async (cliente) => {
@@ -123,22 +93,22 @@ const Funcionario = () => {
 
     useEffect(() => {
       mostrarClientes();
+      mostrarTodosFuncionarios();
      },[mostrarClientes])
 
 
-       const mostrarTodosFuncionarios = useCallback(
+       const mostrarTodosFuncionarios = 
 
             async () => {
                 try {
-                    const resposta = await api.get(`/funcionario`);
+                    const resposta = await api.get(`funcionario`);
                     console.log("Funcionario encontrado com sucesso");
+                    setMostrarFuncionario(resposta.data);
                 } catch (error) {
                     console.log("Erro ao encontrar Funcionario");
                     erroMensagem(error);
                 }
-            },[]
-
-       )
+          }
 
        const mostrarTodosFuncionariosId = useCallback(
 
@@ -180,63 +150,76 @@ const Funcionario = () => {
 
        )
            
-      const criarModal = () => {
-        return (
-          <>
-          
-          </>
-         ) 
-      }
+       const [resetar, setResete] = useState(null);
+           
        return (
         <>
-          <header title="Lista de Tarefas">
+          <Header title="Lista de Tarefas">
             <h2>LOGO</h2>
-            <Link to="/">
+            <Link className="logo" to="/">
               Logout
             </Link>
-            </header> 
-    
-          {/* <form onSubmit={mostrarCliente}>
-            <input 
-             
-              onChange={e => setMostrarCliente(e.nome)}
-              type="text"
-              placeholder="Digite sua pesquisa..." 
-            />
-    
-            <button type="submit">Criar</button>
-          </form> */}
-    
-          {/* { errorMessage && 
-            <ErrorMessage>{errorMessage}</ErrorMessage>
-          } */}
-    
+            </Header> 
           <Tasks>
-            { mostrarCliente.map((cliente) => (
+          <button className="teste" type="button" >Lista Cliente</button>
+          <button className="teste1" type="button" >Lista Funcionario</button>
+          <button className="teste2" type="button" >Lista Produtos</button>
+
+            <ul class="nav nav-tabs">
+              <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#home">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#menu1">Menu 1</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#menu2">Menu 2</a>
+              </li>
+            </ul>
+
+            <div class="tab-content">
+              <form class="tab-pane container active" id="home">
+              { mostrarCliente.map((cliente) => (
                 <div key={cliente.id}>
+                  <p>nome:</p>
                   <strong>{cliente.nome}</strong>
+                  <p>usuario:</p>
+                  <strong>{cliente.usuario}</strong>
+                  <p>cpf:</p>
+                  <strong>{cliente.cpf}</strong>
+                  <p>email:</p>
+                  <strong>{cliente.email}</strong>
                   <span>
                     { cliente.nome ? (
                       <>
                         <FiDelete size={22} onClick={() => removerCliente(cliente)} style={{marginRight: 10}} />
                    
                         {/* <FiCheckCircle size={22} onClick={() => criarModal()} /> */}
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                          
-                        </button>
-                        
+                        <GrDocumentUpdate onClick={() => setResete(cliente.id)} type="button" data-toggle="modal" data-target="#myModal">
+                          chamar
+                        </GrDocumentUpdate>
                       </>
+                      
                     ) : (
                       <FiCircle size={22} onClick={() => alert('helllo world')} />
-                      
                     )}
                   </span>
                 </div>
               )
             ) }
+              </form>
+              <div class="tab-pane container fade" id="menu1">...</div>
+              <div class="tab-pane container fade" id="menu2">...</div>
+            </div>
+            
                 
+<<<<<<< HEAD
                  </Tasks>
             {/* <div class="modal" id="myModal">
+=======
+            </Tasks>
+            <div class="modal" id="myModal">
+>>>>>>> ce4c549743c178bedefb97bdb3133e82936fdc6a
                 <div class="modal-dialog">
                 <div class="modal-content">
 
@@ -249,7 +232,7 @@ const Funcionario = () => {
 
                   <div class="modal-body">
 
-                    <form onSubmit={}>
+                    <form>
                     <input 
                         value={nome} 
                         onChange={e => setNome(e.target.value)}
@@ -274,8 +257,9 @@ const Funcionario = () => {
                         type="text"
                         placeholder="Email" 
                       />
-                      <button onClick={altualizarCliente}>Atualizar</button>
-
+                     <button type="button" onClick={() => teste(resetar)}> 
+                          atualizar
+                     </button>
                     </form>
                   </div>
 
@@ -286,7 +270,23 @@ const Funcionario = () => {
 
                 </div>
               </div>
+<<<<<<< HEAD
             </div> */}
+=======
+            </div>
+
+            { 
+            mostrarFuncionario.map( funcinario =>{
+              return (
+              <div key={funcinario.id}>
+          
+              <strong>{funcinario.nome}</strong>
+        
+              
+              </div>
+              )
+            })}
+>>>>>>> ce4c549743c178bedefb97bdb3133e82936fdc6a
         </>
       ) 
 } 
