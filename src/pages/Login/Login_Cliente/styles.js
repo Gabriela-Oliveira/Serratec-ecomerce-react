@@ -57,6 +57,13 @@ export const Container = styled.div`
     }
 `;
 
-export const ErrorMessage = styled.span`
-    color: red;
+export const ErrorMessage = styled.div`
+    justify-content: center;
+    align-items: center;
+    background: red;
+    color: black;
+    font-weight: bold;
+    width: 30rem;
+    border-radius: 12px;
+    margin: 0;
 `;
