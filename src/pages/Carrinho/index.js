@@ -1,12 +1,12 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
-import moment from 'moment';
+// import moment from 'moment';
 
 // import Item from '../../components/Item';
 
 const Carrinho = () => {
-    const [usuario, setUsuario] = useState({'id': 1, 'nome': 'Guilherme'});
+    const [usuario, setUsuario] = useState(JSON.parse(localStorage.getItem('@ECOMMERCE:user')));
     const [items, setItems] = useState([]);
-    const [itemsPedidoFormato, setItemsPedidoFormato] = useState(localStorage.getItem('@ECOMMERCE:alteracoes') ? JSON.parse(localStorage.getItem('@ECOMMERCE:alteracoes')) : JSON.parse(localStorage.getItem('@ECOMMERCE:listaPedido')));
+    const [itemsPedidoFormato, setItemsPedidoFormato] = useState([]);
     const [pedido, setPedido] = useState({});
     const [subTotal, setSubTotal] = useState(1);
     const [qntItens, setQntItens] = useState(1);
@@ -54,14 +54,18 @@ const Carrinho = () => {
         () => {
             let listaItems = localStorage.getItem('@ECOMMERCE:produto').split(',');
             setItems(JSON.parse(listaItems));
-
             
     }, []
     );
 
-    const criarModeloProduto =
+    const setarModelo = (algo) => {
+        setItemsPedidoFormato(algo);
+    }
+
+    const criarModeloProduto = useCallback (
         () => {
             let listaProdutos = [];
+            
             
             for(let produto of items){
 
@@ -81,18 +85,20 @@ const Carrinho = () => {
             }
             console.log(listaProdutos);
             localStorage.setItem('@ECOMMERCE:listaPedido', JSON.stringify(listaProdutos));
-            console.log(itemsPedidoFormato);
-        }
+            setarModelo(localStorage.getItem('@ECOMMERCE:alteracoes') ? JSON.parse(localStorage.getItem('@ECOMMERCE:alteracoes')) : listaProdutos);
+            console.log(localStorage.getItem('@ECOMMERCE:alteracoes'));
+        }, [items]
+    )
 
     const criarPedido =
     () => { 
         let listinha = [...itemsPedidoFormato];
         let lista2 = [...items];
         let pedido11 = {
-            dataPedido: moment().format(),
+            dataPedido: "2020-08-30T20:10:10Z",
             pedidoStatus: "ENTREGUE",
-            idCliente: 1,
-            nomeCliente: "Jose das Coves",
+            idCliente: usuario.id,
+            nomeCliente: usuario.nome,
             itens: itemsPedidoFormato
         };
         listinha.forEach(item => {
@@ -107,15 +113,14 @@ const Carrinho = () => {
             console.log(produtoAtualizado);
         })
         console.log(pedido11);
-
     }
 
     function remover_da_lista(id) {
         let itemASerRemovido = itemsPedidoFormato.find(item => item.idProduto === id);
         itemsPedidoFormato.splice(itemsPedidoFormato.indexOf(itemASerRemovido), 1);
         localStorage.setItem('@ECOMMERCE:alteracoes', JSON.stringify(itemsPedidoFormato));
-        setItems( JSON.parse(localStorage.getItem('@ECOMMERCE:alteracoes').split(',')));
-        console.log(itemsPedidoFormato);
+        localStorage.setItem('@ECOMMERCE:produto', JSON.stringify(items));
+        obterProdutos();
     }
 
     useEffect(
@@ -129,6 +134,8 @@ const Carrinho = () => {
 
     useEffect(
         () => {
+            setItemsPedidoFormato(JSON.parse(localStorage.getItem('@ECOMMERCE:listaPedido')))
+
            criarModeloProduto();
         }, [items]
     )
@@ -136,7 +143,6 @@ const Carrinho = () => {
     return(
         <>
         <h1>Teste</h1>
-
 
         {
             
@@ -177,6 +183,7 @@ const Carrinho = () => {
         }
 
         <button onClick={() => criarPedido()}>pedido</button>
+
         </>
     )
 }
