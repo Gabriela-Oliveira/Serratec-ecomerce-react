@@ -75,7 +75,7 @@ const Cadastro_Cliente = () => {
 
   return (
     <Body>
-      <Header nome={"cliente"}/>
+      <Header nome={"Cadastro de cliente"}/>
         
       <Container>
         <h3>Complete com seu dados</h3>

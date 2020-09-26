@@ -10,7 +10,7 @@ import Header from '../../../components/Topo/Header';
 
 import api from "../../../services/api";
 
-const Cadastro_Cliente = () => {
+const Cadastro_Funcionario = () => {
   const history = useHistory();
 
   const [nome, setNome] = useState("");
@@ -47,7 +47,7 @@ const Cadastro_Cliente = () => {
 
   return (
     <Body>
-      <Header nome={"funcionario"} />
+      <Header nome={"Cadastro de funcionario"} />
 
       <Container>
         <h3>Complete com seu dados</h3>
@@ -87,4 +87,4 @@ const Cadastro_Cliente = () => {
   );
 };
 
-export default Cadastro_Cliente;
+export default Cadastro_Funcionario;

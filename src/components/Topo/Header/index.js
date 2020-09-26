@@ -6,7 +6,7 @@ const Header = (props) => {
     return(
         <Container>
             <h1>Logo</h1>
-            <h2>Cadastro de {props.nome}</h2>
+            <h2>{props.nome}</h2>
         </Container>
     )
 }
