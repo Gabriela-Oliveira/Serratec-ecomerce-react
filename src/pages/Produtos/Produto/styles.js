@@ -1,6 +1,4 @@
 import styled from 'styled-components';
-// import "~slick-carousel/slick/slick.css"; 
-// import "~slick-carousel/slick/slick-theme.css";
 
 export const Header = styled.div`
     
@@ -12,43 +10,67 @@ export const Header = styled.div`
     img {
         width: 15%;
         margin-left: 30px;
-        color: #293845;
     }
 
-    /* input {
-        margin-top: 40px;
-        margin-bottom: -12px;
-        margin-right: 50px;
-        
-    }  */
+    .meio{
+        margin-top: 30px;
+    }
 
-    /* button {
-        padding: 10px;
-    border-radius: 5px;
-    border: 0;
-    background: #da552f;
-    color: #FFF;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    } */
+    .filtro{
+        width: 82%;
+    }
+
+    select {
+        margin-top: 20px;
+        width: 50%;
+    }
+
+    .direita{
+        margin-top: 30px;
+        margin-right: 30px;
+    }    
 `;
+
+export const Main = styled.div`
+
+    .carousel-inner{
+        width: 100%;
+    }
+
+    .produtos{
+        width: 200px;
+
+    }
+
+      
+`;
+
+
+
+
+
+
+
 
 export const Carousel = styled.div`
 display: flex;`
 
-export const Main = styled.div`
-    display: flex;`
+// export const Main = styled.div`
+//     display: flex;`
 
 export const Footer = styled.footer`
     display: flex;
     justify-content: center;
 `;
-// export const Header = styled.div`
-//     display: flex;`
 
-// export const Slider = styled.div`
-//     display: flex;`  
+export const Container = styled.div`
+    display: flex;
+    flex-wrap: wrap; 
+    
+    img {
+        width:800px;
+
+    }`  
 
 export const ErroMensagem = styled.div`
     display: flex;`
@@ -56,10 +78,4 @@ export const ErroMensagem = styled.div`
 export const Form = styled.div`
     display: flex;`    
 
-// export const Slider = styled.div`
-//     margin: 0 auto;
-//     padding: 0px 40px 40px 40px;
-//     width: 400px;
-//   `
-     
-    
+   

@@ -235,8 +235,8 @@ const Funcionario = () => {
               )
             ) }
                 
-                </Tasks>
-            <div class="modal" id="myModal">
+                 </Tasks>
+            {/* <div class="modal" id="myModal">
                 <div class="modal-dialog">
                 <div class="modal-content">
 
@@ -286,9 +286,9 @@ const Funcionario = () => {
 
                 </div>
               </div>
-            </div>
+            </div> */}
         </>
-      )
-}
+      ) 
+} 
 
 export default Funcionario;
