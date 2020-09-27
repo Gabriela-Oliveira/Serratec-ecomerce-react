@@ -50,6 +50,7 @@ const Login_Funcionario = () => {
                 setCarregando(false);
                 setCpf("");
                 setNomeFuncionario("");
+                localStorage.setItem("@ECOMMERCE:funcionario ", JSON.stringify(func));
                 history.push("/funcionario")
     
             } else {
