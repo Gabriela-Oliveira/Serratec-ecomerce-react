@@ -2,7 +2,6 @@ import React , { useState, useCallback , useEffect } from 'react';
 import { FiCircle,  FiDelete } from "react-icons/fi";
 import {GrDocumentUpdate} from "react-icons/gr";
 import { Link } from 'react-router-dom';
-
 import api from '../../services/api';
 // import { Link } from 'react-router-dom';
 import { Form, Header , Tasks } from './styles';
@@ -19,7 +18,7 @@ const Funcionario = () => {
     const [cpf, setCpf] = useState('');
     const [email, setEmail] = useState('');
     
-
+//carregar a pagina . fazer
        const mostrarClientes = useCallback(
            async () => {
                try {
@@ -90,6 +89,7 @@ const Funcionario = () => {
     useEffect(() => {
       mostrarClientes();
       mostrarTodosFuncionarios();
+      listaProdutos();
      },[mostrarClientes])
 
        const mostrarTodosFuncionarios = 
@@ -193,34 +193,35 @@ const Funcionario = () => {
           console.log("tamos tentando familia",parametros)
       } catch (error) {
           setErroMensagem(error);
-      }finally{
-        produto();
       }
       }
        const removerProduto = async (produto) => {
         try {
-            await api.delete(`funcionario/${produto.id}`);
-            console.log("funcionario deletado com sucesso")
+            await api.delete(`produto/${produto.id}`);
+            console.log("produto deletado com sucesso")
         } catch (error) {
             setErroMensagem(error);
+        }finally {
+          listaProdutos();
         }
-        produto();
-        }
+  
+      }
         
            
        const [resetar, setResete] = useState(null);
        const [resetarF, setReseteF] = useState(null);
        const [resetarP, setReseteP] = useState(null);
        
-       return (
+      return (
         <>
-          <Header title="Lista de Tarefas">
+        <Header title="Lista de Tarefas">
             <h2>LOGO</h2>
             <Link className="logo" to="/">
               Logout
             </Link>
-            </Header> 
-          <Tasks>
+            </Header>
+
+            <Tasks>
 
             <ul class="nav nav-tabs">
               <li class="nav-item teste">
@@ -323,59 +324,52 @@ const Funcionario = () => {
             })}
               </form>
             </div>
-            
             </Tasks>
-            <div class="modal fade" id="cliente">
-                <div class="modal-dialog">
+            
+            <div class="modal" id="cliente">
+
+            <div class="modal-dialog">
                 <div class="modal-content">
-
-
-                  <div class="modal-header">
+                <div class="modal-header">
                     <h4 class="modal-title">Cliente</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                   </div>
-
-
                   <div class="modal-body">
-
                     <form>
-                    <input 
-                        value={nome} 
-                        onChange={e => setNome(e.target.value)}
-                        type="text"
-                        placeholder="Nome" 
-                      />
                       <input 
-                        value={nomeUsuario} 
-                        onChange={e => setNomeUsuario(e.target.value)}
-                        type="text"
-                        placeholder="Usuario" 
-                      />
-                      <input 
-                        value={cpf} 
-                        onChange={e => setCpf(e.target.value)}
-                        type="text"
-                        placeholder="CPF" 
-                      />
-                      <input 
-                        value={email} 
-                        onChange={e => setEmail(e.target.value)}
-                        type="text"
-                        placeholder="Email" 
-                      />
-                     <button type="button" onClick={() => atualizarCliente(resetar)}> 
-                          atualizar
-                     </button>
+                          value={nome} 
+                          onChange={e => setNome(e.target.value)}
+                          type="text"
+                          placeholder="Nome" 
+                        />
+                        <input 
+                          value={nomeUsuario} 
+                          onChange={e => setNomeUsuario(e.target.value)}
+                          type="text"
+                          placeholder="Usuario" 
+                        />
+                        <input 
+                          value={cpf} 
+                          onChange={e => setCpf(e.target.value)}
+                          type="text"
+                          placeholder="CPF" 
+                        />
+                        <input 
+                          value={email} 
+                          onChange={e => setEmail(e.target.value)}
+                          type="text"
+                          placeholder="Email" 
+                        />
+                      <button type="button" onClick={() => atualizarCliente(resetar)}> 
+                            atualizar
+                      </button>
                     </form>
                   </div>
-
-
                   <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                   </div>
-
+                  </div>
                 </div>
-              </div>
             </div>
             <div class="modal fade" id="funcionario">
                 <div class="modal-dialog">
@@ -429,7 +423,7 @@ const Funcionario = () => {
 
                     <input 
                         value={produtoNome} 
-                        onChange={e => setProduto(e.target.value)}
+                        onChange={e => setProdutoNome(e.target.value)}
                         type="text"
                         placeholder="Nome" 
                       />
@@ -447,7 +441,6 @@ const Funcionario = () => {
                 </div>
               </div>
             </div>
-            
         </>
       )
 }

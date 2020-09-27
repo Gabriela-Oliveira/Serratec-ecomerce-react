@@ -1,9 +1,7 @@
 import styled from 'styled-components';
-// import "~slick-carousel/slick/slick.css"; 
-// import "~slick-carousel/slick/slick-theme.css";
 
 export const Header = styled.div`
-    
+    overflow-x: auto;
     display: flex;
     justify-content: space-between;
     background: #8DD7CF;
@@ -12,43 +10,77 @@ export const Header = styled.div`
     img {
         width: 15%;
         margin-left: 30px;
-        color: #293845;
     }
 
-    /* input {
-        margin-top: 40px;
-        margin-bottom: -12px;
-        margin-right: 50px;
-        
-    }  */
+    .meio{
+        margin-top: 30px;
+    }
 
-    /* button {
-        padding: 10px;
-    border-radius: 5px;
-    border: 0;
-    background: #da552f;
-    color: #FFF;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    } */
+    .filtro{
+        width: 82%;
+    }
+
+    select {
+        margin-top: 20px;
+        width: 50%;
+    }
+
+    .direita{
+        margin-top: 30px;
+        margin-right: 30px;
+    }    
 `;
 
-export const Carousel = styled.div`
-display: flex;`
+export const Container = styled.div`
+    overflow-x: auto;
+    div.carousel-item{
+        margin-left: 6%;
+    }
+
+    img{
+        width: 90%;
+    }`   
 
 export const Main = styled.div`
-    display: flex;`
+    overflow-x: auto;
+    display:flex;
 
-export const Footer = styled.footer`
-    display: flex;
-    justify-content: center;
+    .produtos{
+        width: 200px;
+
+    }
+    
+    container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-left: 50px;
+        margin-right: 50px;
+        /* margin-top: 50px; */
+        margin-bottom: 50px;
+        text-align: center;
+    }
+
+    .block{
+        margin-top: 30px;
+    }
+
+    .block:hover{
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    strong{
+        margin: 30px
+    }
+
+        
 `;
-// export const Header = styled.div`
-//     display: flex;`
 
-// export const Slider = styled.div`
-//     display: flex;`  
+   
+
+     
+
+    
 
 export const ErroMensagem = styled.div`
     display: flex;`
@@ -56,10 +88,4 @@ export const ErroMensagem = styled.div`
 export const Form = styled.div`
     display: flex;`    
 
-// export const Slider = styled.div`
-//     margin: 0 auto;
-//     padding: 0px 40px 40px 40px;
-//     width: 400px;
-//   `
-     
-    
+   
