@@ -7,8 +7,7 @@ const Carrinho = () => {
     const [usuario, setUsuario] = useState(JSON.parse(localStorage.getItem('@ECOMMERCE:cliente')));
     const [items, setItems] = useState([]);
     const [itemsPedidoFormato, setItemsPedidoFormato] = useState([]);
-    const [pedido, setPedido] = useState({});
-    const [subTotal, setSubTotal] = useState(1);
+    const [subTotal1, setSubTotal1] = useState(1);
     const [qntItens, setQntItens] = useState(1);
     let lista = [{
         "id": 1,
@@ -52,15 +51,11 @@ const Carrinho = () => {
 
     const obterProdutos = useCallback(
         () => {
-            let listaItems = localStorage.getItem('@ECOMMERCE:produto').split(',');
+            let listaItems = localStorage.getItem('@ECOMMERCE:produto') ? localStorage.getItem('@ECOMMERCE:produto').split(',') : [];
             setItems(JSON.parse(listaItems));
             
     }, []
     );
-
-    const setarModelo = (algo) => {
-        setItemsPedidoFormato(algo);
-    }
 
     const criarModeloProduto = useCallback (
         () => {
@@ -70,23 +65,25 @@ const Carrinho = () => {
 
                 const { id, nome, valor } = produto;
 
-                let quantidade = qntItens;
+                // let quantidade = qntItens;
+                
 
                 let produtoModelo = {
                 idProduto: id,
                 nomeProduto: nome,
-                qtdItens: quantidade,
+                qtdItens: 1,
                 valor: valor,
                 subTotal: valor
                 }
+                
 
                 listaProdutos.push(produtoModelo);
             }
             console.log(listaProdutos);
             localStorage.setItem('@ECOMMERCE:listaPedido', JSON.stringify(listaProdutos));
-            setarModelo(localStorage.getItem('@ECOMMERCE:alteracoes') ? JSON.parse(localStorage.getItem('@ECOMMERCE:alteracoes')) : listaProdutos);
+            setItemsPedidoFormato(localStorage.getItem('@ECOMMERCE:alteracoes') ? JSON.parse(localStorage.getItem('@ECOMMERCE:alteracoes')) : listaProdutos);
             console.log(localStorage.getItem('@ECOMMERCE:alteracoes'));
-        }, [items]
+        }, [itemsPedidoFormato]
     )
 
     const criarPedido =
@@ -114,11 +111,41 @@ const Carrinho = () => {
         console.log(pedido11);
     }
 
-    function remover_da_lista(id) {
+    const remover_da_lista = (id) => {
         let itemASerRemovido = itemsPedidoFormato.find(item => item.idProduto === id);
         itemsPedidoFormato.splice(itemsPedidoFormato.indexOf(itemASerRemovido), 1);
         localStorage.setItem('@ECOMMERCE:alteracoes', JSON.stringify(itemsPedidoFormato));
         localStorage.setItem('@ECOMMERCE:produto', JSON.stringify(items));
+        obterProdutos();
+    }
+
+    const somar = (item) => {
+        let itemAchado = items.find(itemProcurado => itemProcurado.id === item.idProduto);
+        if(item.qtdItens === itemAchado.qtdEstoque) return;
+        item.qtdItens++;
+        item.subTotal = item.valor * item.qtdItens;
+        setSubTotal1(item.valor * item.qtdItens);
+        console.log(item.nomeProduto + ' ' + item.qtdItens);
+        localStorage.setItem('@ECOMMERCE:alteracoes', JSON.stringify(itemsPedidoFormato));
+    }
+
+    const subtrair = (item) => {
+        if(item.qtdItens === 1) return; 
+        item.qtdItens--;
+        item.subTotal = item.valor * item.qtdItens;
+        setSubTotal1(item.valor * item.qtdItens);
+        console.log(item.nomeProduto + ' ' + item.qtdItens);
+        localStorage.setItem('@ECOMMERCE:alteracoes', JSON.stringify(itemsPedidoFormato));
+    }
+
+    const cancelarPedido = () => {
+        items.splice(0, items.length);
+        itemsPedidoFormato.splice(0, itemsPedidoFormato.length);
+        localStorage.removeItem('@ECOMMERCE:produto');
+        localStorage.removeItem('@ECOMMERCE:listaPedido');
+        localStorage.removeItem('@ECOMMERCE:alteracoes');
+        localStorage.setItem('@ECOMMERCE:produto', JSON.stringify([]));
+        
         obterProdutos();
     }
 
@@ -136,7 +163,7 @@ const Carrinho = () => {
             setItemsPedidoFormato(JSON.parse(localStorage.getItem('@ECOMMERCE:listaPedido')))
 
            criarModeloProduto();
-        }, [items,obterProdutos]
+        }, [items]
     )
 
     return(
@@ -145,36 +172,27 @@ const Carrinho = () => {
 
         <Container>
         {
+            !localStorage.getItem('@ECOMMERCE:listaPedido') ? <h1> Nada por aqui </h1> :
             itemsPedidoFormato.map(item => {
                 return(
                     <Item>
-                    <h1>{item.nomeProduto}</h1>
-                    <h3>{item.valor}</h3>
-                    <h3>{item.subTotal}</h3>
+                    <strong>{item.nomeProduto}</strong>
+                    <strong>{item.valor}</strong>
+                    <strong>{item.subTotal}</strong>
                     <div>
-                    <button onClick={() =>{
-                        let itemAchado = items.find(itemzada => itemzada.id === item.idProduto);
-                        if(item.qtdItens === itemAchado.qtdEstoque) return;
-                        item.qtdItens++;
-                        setSubTotal(item.valor * item.qtdItens);
-                        console.log(item.nomeProduto + ' ' + item.qtdItens);
-                        item.subTotal = item.valor * item.qtdItens;
-                        localStorage.setItem('@ECOMMERCE:alteracoes', JSON.stringify(itemsPedidoFormato));
+                    <button onClick={ () => {
+                        subtrair(item)
                     }
-                    }>+</button>
-                        <h3>{item.qtdItens}</h3>
+                    }>-</button>
+                        <strong>{item.qtdItens}</strong>
                     <button onClick={() => {
-                        if(item.qtdItens === 1) return; 
-                        item.qtdItens--;
-                        setSubTotal(item.valor * item.qtdItens);
-                        console.log(item.nomeProduto + ' ' + item.qtdItens);
-                        item.subTotal = item.valor * item.qtdItens;
-                        localStorage.setItem('@ECOMMERCE:alteracoes', JSON.stringify(itemsPedidoFormato));
+                        somar(item);
+
                     }}
-                    >-</button>
+                    >+</button>
                     </div>
 
-                    <button onClick={() => remover_da_lista(item.idProduto)}>Excluir</button>
+                    <button className="excluir" onClick={() => remover_da_lista(item.idProduto)}>Excluir</button>
                     </Item>
                 )
 
@@ -182,7 +200,7 @@ const Carrinho = () => {
         }
         </Container>
 
-        
+    <button onClick={cancelarPedido}>Cancelar Pedido</button>
 <button onClick={() => criarPedido()}>pedido</button>
         </>
     )
