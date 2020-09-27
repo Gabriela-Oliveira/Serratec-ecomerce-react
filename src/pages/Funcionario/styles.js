@@ -67,11 +67,12 @@ export const Tasks = styled.div`
     width: 7rem;
     border: none;
     transition: background-color 0.2s;
-    background: rgb(1,88,191);
+    background: rgba(1,88,191,0.6);
     border-radius: 3px;
-    color: #fff;
+    color: #ffff;
     text-decoration:none;
     outline: none;
+    border-bottom: none;
     
   }
   .teste:hover {
@@ -81,12 +82,13 @@ export const Tasks = styled.div`
   .teste1 {
     margin-left: 2rem;
     margin-bottom: 1rem;
-    width: 9rem;
+    width: 7rem;
     border: none;
     transition: background-color 0.2s;
-    background: rgb(1,88,191);
+    background: rgba(1,88,191,0.6);
     border-radius: 3px;
-    color: #fff;
+    color: #ffff;
+    text-decoration:none;
     outline: none;
   }
   .teste1:hover {
@@ -100,9 +102,10 @@ export const Tasks = styled.div`
     width: 7rem;
     border: none;
     transition: background-color 0.2s;
-    background: rgb(1,88,191);
+    background: rgba(1,88,191,0.6);
+    color: #ffff;
     border-radius: 3px;
-    color: #fff;
+    text-decoration: none;
     outline: none;
   }
   .teste2:hover {
@@ -111,7 +114,7 @@ export const Tasks = styled.div`
   }
 
 
-  div {
+  div.formulario {
     width: 100%;
     background: #fff;
     border-radius: 5px;
@@ -119,11 +122,11 @@ export const Tasks = styled.div`
     text-decoration: none;
     display: flex;
     align-items: center;
-    transition: border-color 0.3s linear 0.1s ,transform 0.3s;
+    
     margin-bottom: 20px;
-    & + div{
+    & + div.formulario{
       margin-bottom: 20px;
-
+      transition: border-color 0.3s linear 0.1s ,transform 0.3s;
     }
 
     &:hover{
@@ -134,6 +137,7 @@ export const Tasks = styled.div`
         font-size: 20px;
         color: #3d3d4d;
         margin-right: 25px;
+        margin-left: 4rem;
       }
 
     span {
@@ -153,5 +157,8 @@ export const Tasks = styled.div`
       cursor: pointer;
     }
     
+  }
+  .tab-content {
+    width:100%;
   }
 `;
