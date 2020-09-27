@@ -25,6 +25,7 @@ export const Header = styled.div`
         width: 50%;
         border-radius: 6px;  
         border: none;
+        cursor: pointer;
     }
 
     .direita{
@@ -37,8 +38,41 @@ export const Header = styled.div`
         width: 82%;
         border-radius: 6px; 
         border: none;
+            padding-left: 2px;
     }
+
+
+    p{
+        transition: 0.4s;
+    }
+
+    p:hover{
+        transform:translateX(6px);
+        text-decoration:none;
+        cursor: pointer;
+    }
+
+    
+        a:link{
+            color: #ffffff; 
+            text-decoration:none;
+        }
+        a:visited{
+            color: #ffffff; 
+            text-decoration:none;
+        } 
+        a:hover{
+            color: #ffffff; 
+            text-decoration:none;
+        } 
+        a:active{
+            color: #ffffff; 
+            text-decoration:none;
+        }
+    
+    
 `;
+
 
 export const Container = styled.div`
     overflow-x: auto;
@@ -48,6 +82,7 @@ export const Container = styled.div`
 
     .carousel-inner{
         margin-top: 20px;
+        padding-bottom: 20px;
     }
 
     img{
@@ -102,6 +137,17 @@ export const Main = styled.div`
     .modal-footer{
         text-align: center; 
         width: 100%;
+    }
+
+    .btn{
+        background: #0158BF;
+        cursor: pointer;
+        color:#ffffff;
+        transition: 0.4s;
+    }
+
+    .btn:hover{
+        transform:translateX(2px);
     }
 
 `;
