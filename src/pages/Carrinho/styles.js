@@ -9,6 +9,8 @@ export const Item = styled.div`
     align-items: center;
     background-color: #fff;
 
+    margin-top: 20px;
+
     div{
         display: flex;
         justify-content: space-between;
