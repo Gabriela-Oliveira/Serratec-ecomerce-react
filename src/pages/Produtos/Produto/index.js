@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { BiUserCircle, BiCart } from "react-icons/bi";
+import { BiUserCircle, BiCart, BiSearchAlt2 } from "react-icons/bi";
+
+import Modal from 'react-bootstrap/Modal'
 
 import img1 from '../img/1.png'
 import img2 from '../img/2.png'
 import img3 from '../img/3.png'
 import api from '../../../services/api';
-import logoImg from '../../../assets/Logo.png';
+import logoImg from '../../../assets/Logo1.png';
 
 import {
     // Produtos,
@@ -73,6 +75,7 @@ const Produto_ = () => {
     function procurarPorNome(e){
       e.preventDefault();
       setProdutoNome(e.target.value);
+      !e.target.value ? window.location.reload(): 
       console.log(produtoNome);
       let items = [];
 
@@ -103,8 +106,10 @@ const Produto_ = () => {
       useEffect(() => {
         mostraProdutos();
         mostraCategoria();
-        // mostraProdutosID(3);
+        mostraProdutosID(3);
       }, [mostraProdutos,  mostraCategoria, mostraProdutosID]);  
+
+      
 
     return (
         <>
@@ -122,7 +127,7 @@ const Produto_ = () => {
                     type="text" 
                     placeholder="Digite uma busca..." 
                   />
-                  <button type="submit">Buscar</button>
+                  {/* <button type="submit"><i class="BiUserCircle"></i></button> */}
                 </form>
 
                 {/* <form>
@@ -190,36 +195,71 @@ const Produto_ = () => {
           <Main>  
 
             { categoriaFiltro.map(categoria => (
-              <div class="blockId" key={categoria.id}>
+              <div class="block" data-toggle="modal" data-target="#myModal" key={categoria.id}>
                 <img src={categoria.fotoLink}/> 
                 <strong>{categoria.nome}</strong>
                 <strong>{categoria.descricao}</strong>
               </div>
-            ))}   
+            ))}
+            
+            <container>  
            { produtoFiltro.map(produto => (
-              <div class="blockId" key={produto.id}>
-                <img src={produto.fotoLink}/> 
-                <strong>{produto.nome}</strong>
-                <strong>{produto.descricao}</strong>
-                <strong>{produto.valor}</strong>
+              <div class="block" data-toggle="modal" data-target="#myModal" key={produto.id}>
+                <img class="imagemId" src={produto.fotoLink}/> 
+                <p>{produto.nome}</p>
+                <p>{produto.descricao}</p>
+                <strong>Valor: R${produto.valor},00</strong>
               </div>
             ))}
 
             {/* <h1>{produtoId.nome}</h1> */}
-            <container>
-            { produtos.map(produto => (
-              <div class="block" key={produto.id}>
-                <img class="produtos" src={produto.fotoLink}/> <br/>
-                <strong>{produto.nome}</strong><br/>
-                <strong>{produto.descricao}</strong><br/>
-                <strong>{produto.valor}</strong>
+           
+            
+              { produtos.map(produto => (
+                <div onClick={() => mostraProdutosID(produto.id)} data-toggle="modal" data-target="#myModal"class="block" key={produto.id}>
+                  <img class="produtos" src={produto.fotoLink}/> <br/>
+                  <p>{produto.nome}</p>
+                  <p>{produto.descricao}</p><br/>
+                  <strong>Valor: R${produto.valor},00</strong>
+                </div>
+              ))}
+            </container>
+          
+            <div class="modal" id="myModal">
+                  <div class="modal-dialog">
+                  <div class="modal-content">
+
+            <div class="modal-header">
+              <h4 class="modal-title">{produtoId.nome}</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+
+            <div class="modal-body">
+
+              <img class="produtos" src={produtoId.fotoLink}/> <br/><br/>
+              <p className="descricao">{produtoId.descricao}</p>
+              <strong>Valor: R${produtoId.valor},00</strong>   
+                
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" >Adicionar no Carrinho</button>
+                <button type="button" class="btn btn-danger" >Comprar</button>
+            </div>
+
               </div>
-            ))}
-          </container>
-          </Main>
+            </div>
+          </div>
+          </Main>   
           
           </>
       )
+
+      
+
+               
+            
 }
        
 export default Produto_;

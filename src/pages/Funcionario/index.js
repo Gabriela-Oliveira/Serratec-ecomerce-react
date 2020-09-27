@@ -213,13 +213,8 @@ const Funcionario = () => {
             </div>
             
                 
-<<<<<<< HEAD
-                 </Tasks>
-            {/* <div class="modal" id="myModal">
-=======
             </Tasks>
             <div class="modal" id="myModal">
->>>>>>> ce4c549743c178bedefb97bdb3133e82936fdc6a
                 <div class="modal-dialog">
                 <div class="modal-content">
 
@@ -270,9 +265,6 @@ const Funcionario = () => {
 
                 </div>
               </div>
-<<<<<<< HEAD
-            </div> */}
-=======
             </div>
 
             { 
@@ -286,7 +278,6 @@ const Funcionario = () => {
               </div>
               )
             })}
->>>>>>> ce4c549743c178bedefb97bdb3133e82936fdc6a
         </>
       ) 
 } 
