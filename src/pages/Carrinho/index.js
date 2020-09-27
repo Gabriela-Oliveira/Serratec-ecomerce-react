@@ -5,64 +5,57 @@ import api from '../../services/api'
 
 import { Item, Carrinho as Container } from './styles';
 import Header from '../../components/Topo/Header';
+import Pedido from '../../components/Pedido';
 
 const Carrinho = () => {
-    const [usuario, setUsuario] = useState({id: 1});
+    const [usuario, setUsuario] = useState({id: 1, nome: 'salve rapaziada'});
     const [pedidos, setPedidos] = useState([]);
     const [items, setItems] = useState([]);
     const [itemsPedidoFormato, setItemsPedidoFormato] = useState([]);
     const [subTotal, setSubTotal] = useState(1);
-    let lista = [{
-        "id": 1,
-        "nome": "Cadeira bx9",
-        "descricao": "adeira ergonomica confortavel",
-        "qtdEstoque": 5,
-        "valor": 849.9,
-        "idCategoria": 2,
-        "nomeCategoria": "ESCRITORIO",
-        "idFuncionario": 3,
-        "nomeFuncionario": "Joaquim Manoel",
-        "dataFabricacao": "2019-10-01T00:00:00Z",
-        "fotoLink": "http://residencia-ecommerce.us-east-1.elasticbeanstalk.com/produto/1/foto"
-      },
-      {
-        "id": 2,
-        "nome": "Escrivaniha 1000",
-        "descricao": "escrivainha para computador",
-        "qtdEstoque": 4,
-        "valor": 1850.0,
-        "idCategoria": 2,
-        "nomeCategoria": "ESCRITORIO",
-        "idFuncionario": 3,
-        "nomeFuncionario": "Joaquim Manoel",
-        "dataFabricacao": "2019-08-11T00:00:00Z",
-        "fotoLink": "http://residencia-ecommerce.us-east-1.elasticbeanstalk.com/produto/2/foto"
-      },
-      {
-        "id": 3,
-        "nome": "Do Inferno",
-        "descricao": "Quadrinho do Alan More",
-        "qtdEstoque": 2,
-        "valor": 150.0,
-        "idCategoria": 3,
-        "nomeCategoria": "LIVRARIA",
-        "idFuncionario": 2,
-        "nomeFuncionario": "Maria Jos��",
-        "dataFabricacao": "2017-12-21T00:00:00Z",
-        "fotoLink": "http://residencia-ecommerce.us-east-1.elasticbeanstalk.com/produto/3/foto"
-      }];
+    let lista = [
+        {
+            "id": 9,
+            "nome": "A Batalha do Apocalipse",
+            "descricao": "Melhor livro que voce deve ler",
+            "qtdEstoque": 22,
+            "valor": 55.0,
+            "idCategoria": 3,
+            "nomeCategoria": "LIVRARIA",
+            "idFuncionario": 2,
+            "nomeFuncionario": "Maria Jos��",
+            "dataFabricacao": "2009-01-21T00:00:00Z",
+            "fotoLink": "http://residencia-ecommerce.us-east-1.elasticbeanstalk.com/produto/9/9/foto"
+          },
+          {
+            "id": 7,
+            "nome": "Fita Crepe",
+            "descricao": "Fita crepe simples",
+            "qtdEstoque": 11,
+            "valor": 1.3,
+            "idCategoria": 2,
+            "nomeCategoria": "ESCRITORIO",
+            "idFuncionario": 1,
+            "nomeFuncionario": "Josescleitos",
+            "dataFabricacao": "2012-12-15T00:00:00Z",
+            "fotoLink": "http://residencia-ecommerce.us-east-1.elasticbeanstalk.com/produto/7/foto"
+          }
+
+    ]
 
       const buscarPedidos = useCallback(
         async () => {
           try {
+            let listaPedidos = []
             const resposta = await api.get('pedido');
-            
+    
             resposta.data.map(item => {
-                if(item.idCliente === usuario.id) setPedidos(item);
-            })
-            
-            
 
+                if(item.idCliente === usuario.id) listaPedidos.push(item);
+            })
+
+            localStorage.setItem('@ECOMMERCE:pedidosCliente', JSON.stringify(listaPedidos));
+            
           } catch (error) {
               console.log(error);
           }
@@ -105,32 +98,92 @@ const Carrinho = () => {
 
         }, [itemsPedidoFormato]
     )
+        //quando clica no botão eu quero que crie um pedido novo com apenas 1 item que vai ser passado
+        // const criarPedido2 = (produto) => {
+        //     const { id, nome, valor } = produto;
 
+        //     let lista = [];
+
+        //     let produtoModelo = {
+        //         idProduto: id,
+        //         nomeProduto: nome,
+        //         qtdItens: 1,
+        //         valor: valor,
+        //         subTotal: valor
+        //         }
+        //         lista.push(produtoModelo);
+            
+        //         let pedido = {
+        //             dataPedido: "2020-08-30T20:10:10Z",
+        //             pedidoStatus: "EM_ANDAMENTO",
+        //             idCliente: usuario.id,
+        //             nomeCliente: usuario.nome,
+        //             itens: lista
+        //         }; 
+
+        //         console.log(pedido);
+
+        // }
+
+        let algo = [
+        
+        ]
     const criarPedido =
-    () => { 
+    async () => { 
         let listinha = [...itemsPedidoFormato];
         let lista2 = [...items];
+        let total = 2000;
 
-        let pedido11 = {
-            dataPedido: "2020-08-30T20:10:10Z",
-            pedidoStatus: "ENTREGUE",
-            idCliente: usuario.id,
-            nomeCliente: usuario.nome,
-            itens: itemsPedidoFormato
-        };
-        listinha.forEach(item => {
-            let produtoAtualizado = lista2.find(produto => item.idProduto === produto.id);
-            if(!produtoAtualizado) return;
-            const { qtdEstoque, ...rest } = produtoAtualizado;
-
-            produtoAtualizado = {
-                rest,
-                qtdEstoque: qtdEstoque - item.qtdItens
-            }
-            console.log(produtoAtualizado);
+        listinha.map(item => {
+            total += item.subTotal;
         })
-        console.log(pedido11);
-    }
+
+        let pedido = {
+    
+            dataPedido: "2020-09-10T12:13:12Z",
+            idCliente: 2,
+            itens: [
+              {
+                idProduto: 2,
+                nomeProduto: "Escrivaniha 1000",
+                qtdItens: 1,
+                valor: 1770.0,
+                subTotal: 1770.0
+              },
+              {
+                idProduto: 1,
+                nomeProduto: "Cadeira bx9",
+                qtdItens: 1,
+                valor: 835.0,
+                subTotal: 835.0
+              }
+            ],
+            nomeCliente: "Guilherme 167",
+            pedidoStatus: "PAGO",
+            total: 2605.0
+        };
+
+
+        try {
+            await api.post(`pedido`, pedido)
+
+            // for(let item of listinha){
+            //     let produtoAtualizado = lista2.find(produto => item.idProduto === produto.id);
+            //     if(!produtoAtualizado) return;
+    
+            //     produtoAtualizado.qtdEstoque -= item.qtdItens;
+            //     console.log(pedido);
+
+            //     const resposta = api.put(`produto/${produtoAtualizado.id}`, produtoAtualizado);
+
+            //     console.log(resposta);
+            // }
+                } catch (error) {
+                    console.log(error.message)
+                }
+            }
+
+    
 
     const remover_da_lista = (id) => {
         if(itemsPedidoFormato.length === 1) {
@@ -179,25 +232,25 @@ const Carrinho = () => {
         obterProdutos();
     }
 
-    const adicionarProduto = () => {
-        let produtos = localStorage.getItem('@ECOMMERCE:produto') ? JSON.parse(localStorage.getItem('@ECOMMERCE:produto')) : [];
-        let prod = {
-            "id": 1,
-            "nome": "Cadeira bx9",
-            "descricao": "adeira ergonomica confortavel",
-            "qtdEstoque": 5,
-            "valor": 849.9,
-            "idCategoria": 2,
-            "nomeCategoria": "ESCRITORIO",
-            "idFuncionario": 3,
-            "nomeFuncionario": "Joaquim Manoel",
-            "dataFabricacao": "2019-10-01T00:00:00Z",
-            "fotoLink": "http://residencia-ecommerce.us-east-1.elasticbeanstalk.com/produto/1/foto"
-          }
+    // const adicionarProduto = () => {
+    //     let produtos = localStorage.getItem('@ECOMMERCE:produto') ? JSON.parse(localStorage.getItem('@ECOMMERCE:produto')) : [];
+    //     let prod = {
+    //         "id": 1,
+    //         "nome": "Cadeira bx9",
+    //         "descricao": "adeira ergonomica confortavel",
+    //         "qtdEstoque": 5,
+    //         "valor": 849.9,
+    //         "idCategoria": 2,
+    //         "nomeCategoria": "ESCRITORIO",
+    //         "idFuncionario": 3,
+    //         "nomeFuncionario": "Joaquim Manoel",
+    //         "dataFabricacao": "2019-10-01T00:00:00Z",
+    //         "fotoLink": "http://residencia-ecommerce.us-east-1.elasticbeanstalk.com/produto/1/foto"
+    //       }
 
-          produtos.push(prod);
-          localStorage.setItem('@ECOMMERCE:produto', JSON.stringify(produtos));
-    }
+    //       produtos.push(prod);
+    //       localStorage.setItem('@ECOMMERCE:produto', JSON.stringify(produtos));
+    // }
     useEffect(
         () => {
             localStorage.setItem('@ECOMMERCE:produto', JSON.stringify(lista));
@@ -250,7 +303,6 @@ const Carrinho = () => {
                         <strong>{item.qtdItens}</strong>
                     <button onClick={() => {
                         somar(item);
-
                     }}
                     >+</button>
                     </div>
@@ -264,16 +316,28 @@ const Carrinho = () => {
 
             })
         }
+            <button onClick={cancelarPedido}>Cancelar Pedido</button>
+            <button onClick={criarPedido}>pedido</button>
+            {/* <button onClick={() => criarPedido2(prod)}>Criar Pedido</button> */}
+
         </Container>
 
             </div>
-            <div className="tab-pane container fade" id="pedido">Pedido</div>
+            <div className="tab-pane container fade" id="pedido">
+                {
+                    localStorage.getItem('@ECOMMERCE:pedidosCliente') ? JSON.parse(localStorage.getItem('@ECOMMERCE:pedidosCliente').split(',')).map(pedido => {
+                        return(
+                        <div>
+                        
+                            <Pedido pedido={pedido}/>
+                        </div>
+                        )
+                    }) : <h1>Nada por aqui</h1>
+                }
+            </div>
             </div>
 
-    <button onClick={cancelarPedido}>Cancelar Pedido</button>
-<button onClick={() => criarPedido()}>pedido</button>
 
-<button onClick={adicionarProduto}>Adicionar</button>
         </>
     )
 }
