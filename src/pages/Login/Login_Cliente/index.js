@@ -48,6 +48,7 @@ const Login_Cliente = () => {
             setCarregando(false);
             setCpf("");
             setNomeUsuario("");
+            localStorage.setItem("@ECOMMERCE:cliente ", JSON.stringify(usuario));
             history.push("/produto")
 
         } else {

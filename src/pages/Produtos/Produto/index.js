@@ -1,15 +1,18 @@
 import React, { useState, useEffect, useCallback } from 'react'
-// import Carousel from 'react-bootstrap/Carousel'
+import { BiUserCircle, BiCart, BiSearchAlt2 } from "react-icons/bi";
 
-// import Select from 'react-select';
+import { Link } from 'react-router-dom';
+
+import img1 from '../img/1.png'
+import img2 from '../img/2.png'
+import img3 from '../img/3.png'
 import api from '../../../services/api';
-import logoImg from '../../../assets/Logo.png';
-
-
+import logoImg from '../../../assets/Logo1.png';
 
 import {
     // Produtos,
     // ErroMensagem,
+    Container,
     Header,
     Main
 } from './styles';
@@ -21,7 +24,8 @@ const Produto_ = () => {
     const [produtoNome, setProdutoNome] = useState("");
     const [produtoFiltro, setProdutoFiltro] = useState([]);
     const [categoria, setCategoria] = useState([]);
-    // const [index, setIndex] = useState(0);
+    const [categoriaFiltro, setCategoriaFiltro] = useState([]);
+    const [categoriaNome, setCategoriaNome] = useState("");
 
     const mostraProdutos = useCallback(
         async () => {
@@ -67,13 +71,12 @@ const Produto_ = () => {
             }    
         },[]
     ); 
- 
-
-    
-
+  
     function procurarPorNome(e){
       e.preventDefault();
       setProdutoNome(e.target.value);
+      // !e.target.value ? window.location.reload(): 
+      console.log(produtoNome);
       let items = [];
 
       for (let produto of produtos){
@@ -82,118 +85,181 @@ const Produto_ = () => {
         }
       }
       setProdutoFiltro(items);
+      console.log(produtoFiltro);
     }
 
-       
-      // const handleSelect = (selectedIndex, e) => {
-      //   setIndex(selectedIndex);
-      // };
+    function procurarPorCategoria(e){
+      e.preventDefault();
+      setCategoriaFiltro(e.target.value);
+      console.log(categoriaNome);
+      let items = [];
+
+      for (let categorias of categoria){
+        if(categorias.nome.toLowerCase().indexOf(categoriaNome) != -1){
+          items.push(categorias);
+        }
+      }
+      setCategoriaFiltro(items);
+      console.log(categoriaFiltro);
+    }
 
       useEffect(() => {
         mostraProdutos();
         mostraCategoria();
-        // mostraProdutosID(3);
-        // handleSelect();
+        mostraProdutosID(3);
       }, [mostraProdutos,  mostraCategoria, mostraProdutosID]);  
+
+      
 
     return (
         <>
 
           <Header>
+            
+              <img src={logoImg} alt="Lista de Produtos" />
 
-            <img src={logoImg} alt="Lista de Produtos" />
+              <div className="meio">
+                <form onSubmit={ e => procurarPorNome(e)}>           
+                  <input 
+                    // className="filtro"
+                    value={produtoNome}
+                    onChange={e => procurarPorNome(e)}
+                    type="text" 
+                    placeholder="Digite uma busca..." 
+                  />
+                  {/* <button type="submit"><i class="BiUserCircle"></i></button> */}
+                </form>
 
-            <form onSubmit={ e => procurarPorNome(e)}>           
-              <input 
-                value={produtoNome}
-                onChange={e => procurarPorNome(e)}
-                type="text" 
-                placeholder="Digite uma busca..." 
-              />
-              <button type="submit">Buscar</button>
-            </form>
+                {/* <form>
+                <select onChange={e => console.log(e.target.value) }>
+                  {categoria.map((categoria)=> {
+                    return(
+                    <option onSelect={e => console.log(e.target.value)} value={categoria.nome}>{categoria.nome}</option>
+                    )
+                  })}
+                 </select>
+              </form> */}
 
-            <form>
-            <select value={categoria}>
-              {categoria.map((categoria)=> {
-                return(
-                <option>{categoria.nome}</option>
-                )
-              }
-                
-              )}
-                        
-            </select>
-            </form>
-          
+              <form>
+                <select 
+                  value={categoriaNome}
+                  onChange={e => procurarPorCategoria}>
+                  {categoria.map((categoria)=> {
+                    return(
+                    <option >{categoria.nome}</option>
+                    )
+                  })}
+                 </select>
+              </form>
+            </div> 
+
+            <div class="direita">      
+              <form>
+               <Link to="/"><p> <BiUserCircle size={22} />Usuário</p></Link>
+               <Link to="/carrinho"> <p> <BiCart size={22} />Carrinho</p></Link>
+              </form>
+            </div>
           </Header>
-          <Main>       
-
-      {/* <Carousel activeIndex={index} onSelect={handleSelect}>
-      <Carousel.Item>
-        <img
-          className="d-block w-100"
-          src="holder.js/800x400?text=First slide&bg=373940"
-          alt="First slide"
-        />
-        <Carousel.Caption>
-          <h3>First slide label</h3>
-          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item>
-        <img
-          className="d-block w-100"
-          src="holder.js/800x400?text=Second slide&bg=282c34"
-          alt="Second slide"
-        />
-
-        <Carousel.Caption>
-          <h3>Second slide label</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item>
-        <img
-          className="d-block w-100"
-          src="holder.js/800x400?text=Third slide&bg=20232a"
-          alt="Third slide"
-        />
-
-        <Carousel.Caption>
-          <h3>Third slide label</h3>
-          <p>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-          </p>
-        </Carousel.Caption>
-      </Carousel.Item>
-    </Carousel> 
-  
-
-     */}
-
           
+          <Container class="carrossel " id="container">
+            <div id="demo" class="carousel slide" data-ride="carousel">
+              <ul class="carousel-indicators">
+                <li data-target="#demo" data-slide-to="0" class="active"></li>
+                <li data-target="#demo" data-slide-to="1"></li>
+                <li data-target="#demo" data-slide-to="2"></li>
+              </ul>
+
+              <div class="carousel-inner ">
+                <div class="carousel-item active">
+                  <img src={img1}></img>
+                </div>
+
+                <div class="carousel-item">
+                  <img src={img2}></img>
+                </div>
+
+                <div class="carousel-item">
+                  <img src={img3}></img>
+                </div>
+              </div>
+
+              <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+              </a>
+              <a class="carousel-control-next" href="#demo" data-slide="next">
+                <span class="carousel-control-next-icon"></span>
+              </a>
+            </div>
+          </Container>
+
+          <Main>  
+
+            { categoriaFiltro.map(categoria => (
+              <div class="block" data-toggle="modal" data-target="#myModal" key={categoria.id}>
+                <img src={categoria.fotoLink}/> 
+                <strong>{categoria.nome}</strong>
+                <strong>{categoria.descricao}</strong>
+              </div>
+            ))}
+            
+            <container>  
            { produtoFiltro.map(produto => (
-              <div key={produto.id}>
-                <img src={produto.fotoLink}/> 
-                <strong>{produto.nome}</strong>
-                <strong>{produto.descricao}</strong>
+              <div class="block" data-toggle="modal" data-target="#myModal" key={produto.id}>
+                <img class="imagemId" src={produto.fotoLink}/> 
+                <p>{produto.nome}</p>
+                <p>{produto.descricao}</p>
+                <strong>Valor: R${produto.valor},00</strong>
               </div>
             ))}
 
-            <h1>{produtoId.nome}</h1>
-            { produtos.map(produto => (
-              <div key={produto.id}>
-                <img src={produto.fotoLink}/> 
-                <strong>{produto.nome}</strong>
-                <strong>{produto.descricao}</strong>
-              </div>
-            ))}
+            {/* <h1>{produtoId.nome}</h1> */}
+           
+            
+              { produtos.map(produto => (
+                <div onClick={() => mostraProdutosID(produto.id)} data-toggle="modal" data-target="#myModal"class="block" key={produto.id}>
+                  <img class="produtos" src={produto.fotoLink}/> <br/>
+                  <p>{produto.nome}</p>
+                  <p>{produto.descricao}</p><br/>
+                  <strong>Valor: R${produto.valor},00</strong>
+                </div>
+              ))}
+            </container>
           
-          </Main>
+            <div class="modal" id="myModal">
+                  <div class="modal-dialog">
+                  <div class="modal-content">
+
+            <div class="modal-header">
+              <h4 class="modal-title">{produtoId.nome}</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+
+            <div class="modal-body">
+
+              <img class="produtos" src={produtoId.fotoLink}/> <br/><br/>
+              <p className="descricao">{produtoId.descricao}</p>
+              <strong>Valor: R${produtoId.valor},00</strong>   
+                
+            </div>
+
+            <div class="modal-footer">
+                <Link to ></Link><button type="button" class="btn" >Adicionar no Carrinho</button>
+                <button type="button" class="btn" >Comprar</button>
+            </div>
+
+              </div>
+            </div>
+          </div>
+          </Main>   
           
           </>
       )
+
+      
+
+               
+            
 }
        
 export default Produto_;
