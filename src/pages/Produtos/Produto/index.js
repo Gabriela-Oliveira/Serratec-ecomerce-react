@@ -26,6 +26,7 @@ const Produto_ = () => {
     const [categoria, setCategoria] = useState([]);
     const [categoriaFiltro, setCategoriaFiltro] = useState([]);
     const [categoriaNome, setCategoriaNome] = useState("");
+    const [cliente, setCliente] = useState(JSON.parse(localStorage.getItem('@ECOMMERCE:cliente')))
 
     const mostraProdutos = useCallback(
         async () => {
@@ -90,13 +91,12 @@ const Produto_ = () => {
 
     function procurarPorCategoria(e){
       e.preventDefault();
-      setCategoriaFiltro(e.target.value);
       console.log(categoriaNome);
       let items = [];
 
-      for (let categorias of categoria){
-        if(categorias.nome.toLowerCase().indexOf(categoriaNome) != -1){
-          items.push(categorias);
+      for (let produto of produtos){
+        if(produto.categoria.indexOf(categoriaNome) != -1){
+          items.push(produto);
         }
       }
       setCategoriaFiltro(items);
@@ -114,6 +114,31 @@ const Produto_ = () => {
           produtos.push(produto);
           localStorage.setItem('@ECOMMERCE:produto', JSON.stringify(produtos));
     }
+
+    const criarPedidoUnico = (produto) => {
+
+      const { id, nome, valor} = produto;
+      let lista = [];
+      let produtoModelo = {
+        idProduto: id,
+        nomeProduto: nome,
+        qtdItens: 1,
+        valor: valor,
+        subTotal: valor
+        }
+      lista.push(produtoModelo);
+      let pedido = {
+          dataPedido: "2020-09-27T20:10:10Z",
+          pedidoStatus: "EM_ANDAMENTO",
+          idCliente: cliente.id,
+          nomeCliente: cliente.nome,
+          itens: lista
+
+      };
+
+      console.log(pedido);
+
+  }
 
       useEffect(() => {
         mostraProdutos();
@@ -142,27 +167,29 @@ const Produto_ = () => {
                   {/* <button type="submit"><i class="BiUserCircle"></i></button> */}
                 </form>
 
-                {/* <form>
-                <select onChange={e => console.log(e.target.value) }>
+                <form>
+                <select onChange={e => procurarPorCategoria(e) }>
                   {categoria.map((categoria)=> {
                     return(
-                    <option onSelect={e => console.log(e.target.value)} value={categoria.nome}>{categoria.nome}</option>
+                    <option onSelect={e => setCategoriaNome(e.target.value)} value={categoria.nome}>{categoria.nome}</option>
                     )
                   })}
                  </select>
-              </form> */}
+              </form>
 
-              <form>
+              {/* <form>
                 <select 
-                  value={categoriaNome}
-                  onChange={e => procurarPorCategoria}>
+
+                  onChange={e => procurarPorCategoria(e)}
+                  onSelect={() => setCategoriaNome(categoriaNome)}
+                  >
                   {categoria.map((categoria)=> {
                     return(
                     <option >{categoria.nome}</option>
                     )
                   })}
                  </select>
-              </form>
+              </form> */}
             </div> 
 
             <div class="direita">      
@@ -257,7 +284,7 @@ const Produto_ = () => {
 
             <div class="modal-footer">
                 <Link to ></Link><button type="button" class="btn" onClick={() => adicionarProduto(produtoId)}>Adicionar no Carrinho</button>
-                <button type="button" class="btn" >Comprar</button>
+                <button type="button" class="btn" onClick={() => criarPedidoUnico(produtoId)}>Comprar</button>
             </div>
 
               </div>

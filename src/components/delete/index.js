@@ -11,7 +11,7 @@ import { Container } from './styles';
 
 const Pedido_Unico = () => {
     const [upProdutos, setUpProdutos] = useState([]);
-    const [cliente, setCliente] = useState({ id: 1, nome: 'Lucca' });
+    const [cliente, setCliente] = useState(JSON.parse(localStorage.getItem('@ECOMMERCE:cliente')));
     const [erroMensagem, setErroMensagem] = useState("");
 
     // const [subTotal, setSubTotal] = useState(1);
@@ -43,7 +43,7 @@ const Pedido_Unico = () => {
         let todosProdutos = { upProdutos }
         let pedido = {
             dataPedido: "2020-09-27T20:10:10Z",
-            pedidoStatus: "Em Andamento",
+            pedidoStatus: "EM_ANDAMENTO",
             idCliente: cliente.id,
             nomeCliente: cliente.nome,
             itens: todosProdutos
