@@ -58,6 +58,8 @@ export const Container = styled.div`
 
 export const ErrorMessage = styled.span`
     color: red;
+    margin-top: 12px;
+    text-align: center;
 `;
 
 export const Body = styled.div`

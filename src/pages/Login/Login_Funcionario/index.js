@@ -2,17 +2,13 @@ import React, { useState } from 'react';
 
 import { Container, ErrorMessage } from "./styles";
 
-import Header from '../../../components/Topo/Header';
-
 import api from '../../../services/api';
 
 import { useHistory, Link } from 'react-router-dom';
 
-import { useAuth } from '../../../hooks/auth';
+import logo from '../../../assets/Logo1.png';
 
 import { Main_Cima, Main_Baixo, Body } from '../Login_Cliente/styles';
-
-import logo from '../../../assets/Logo1.png';
 
 const Login_Funcionario = () => {
     const history = useHistory();
@@ -52,7 +48,7 @@ const Login_Funcionario = () => {
     
             if(func.nome == nomeFuncionario && func.cpf == cpf) {
     
-                alert('tudo certo doido | pode passar');
+              alert('Login realizado com sucesso!');
                 setCarregando(false);
                 setCpf("");
                 setNomeFuncionario("");
@@ -60,7 +56,7 @@ const Login_Funcionario = () => {
                 window.location.reload();
     
             } else {
-                setErrorMessage("tu nao me trola nao nego!")
+              setErrorMessage("Usuario e senha invalidos!")
                 setCarregando(false);
                 setCpf("");
                 setNomeFuncionario("");
@@ -78,7 +74,7 @@ const Login_Funcionario = () => {
   
         <Container>
           <div id="infos">
-          <h4>Obrigado por comprar conosco : )</h4>
+          <h4>Obrigado por trabalhar conosco : )</h4>
               <input
                   value={nomeFuncionario}
                   onChange={(e) => setNomeFuncionario(e.target.value)}
@@ -104,38 +100,3 @@ const Login_Funcionario = () => {
 }
 
 export default Login_Funcionario;
-
-/*
-         <Body>
-
-      <Main_Cima>
-        <img src={logo}></img>
-        </Main_Cima>
-
-      <Container>
-        <div id="infos">
-        <h4>Obrigado por comprar conosco : )</h4>
-            <input
-                value={nomeUsuario}
-                onChange={(e) => setNomeUsuario(e.target.value)}
-                placeholder="Nome de usuario"
-            />
-            <input
-                value={cpf}
-                onChange={(e) => setCpf(e.target.value)}
-                placeholder="CPF"
-            />
-            <button onClick={(e) => logIn(e)}>{carregando ? 'Carregando...' : 'Entrar'}</button>
-            <Link to="/Ccliente">Cadastrar</Link>
-          { errorMessage &&                 
-                <ErrorMessage>
-                  <i>{errorMessage}</i>
-                </ErrorMessage>
-            }
-        </div>
-      </Container>
-      <Main_Baixo />
-    </Body>
-
-
-*/
