@@ -1,22 +1,6 @@
 import styled from 'styled-components';
 import { shade } from 'polished';
 
-export const Header = styled.form`
-    display: flex;
-    justify-content: center;
-      h2 {
-        margin: auto;
-        margin-top: 2rem;
-      }
-      a {
-        text-decoration: none;
-      }
-    .logo {
-      margin: auto;
-      margin-top: 2rem;
-    }
-  
-`
 export const Form = styled.form`
   margin-top: 25px;
   max-width: 700px;
@@ -24,7 +8,7 @@ export const Form = styled.form`
 
   input{
     flex: 1;
-    height: 50px;
+
     padding: 0 25px;
     border: 0;
     border-radius: 5px 0 0 5px;
@@ -36,11 +20,10 @@ export const Form = styled.form`
   }
 
   button {
-    width: 120px;
-    height: 50px;
+   
     background: #04d361;
     border: 0;
-    border-radius: 0 5px 5px 0;
+    border-radius: 5px;
     color: #fff;
     font-weight: bold;
     transition: background-color 0.2s;
@@ -113,7 +96,50 @@ export const Tasks = styled.div`
     color: #3d3d4d;
   }
 
+  div.formulario1 {
+    width: 100%;
+    background: #fff;
+    border-radius: 5px;
+    padding: 25px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    
+    margin-bottom: 20px;
+    & + div.formulario1{
+      margin-bottom: 20px;
+      transition: border-color 0.3s linear 0.1s ,transform 0.3s;
+    }
 
+    &:hover{
+      border-bottom: 2px solid #0158BF;
+    }
+
+    strong {
+        display: flex;
+        font-size: 20px;
+        color: #3d3d4d;
+        margin-right: 2rem;
+        margin-left: 2rem;
+      }
+
+    span {
+      display: flex;
+      justify-content:center;
+      margin-left: auto;
+      
+    }
+    p {
+        display: flex;
+        flex-wrap:wrap;
+        margin: auto;
+    }
+    svg {
+    cursor: pointer;
+    margin-right: 6rem;
+      }
+    
+  }
   div.formulario {
     width: 100%;
     background: #fff;
@@ -134,6 +160,7 @@ export const Tasks = styled.div`
     }
 
     strong {
+        display: flex;
         font-size: 20px;
         color: #3d3d4d;
         margin-right: 25px;
@@ -144,21 +171,41 @@ export const Tasks = styled.div`
       display: flex;
       justify-content:center;
       margin-left: auto;
-      flex-wrap:wrap;
+      
     }
     p {
         display: flex;
         flex-wrap:wrap;
         margin: auto;
-      }
-
-    svg {
-      color: #cbcbd6;
-      cursor: pointer;
     }
+    svg {
+    cursor: pointer;
+    margin-right: 6rem;
+      }
     
   }
   .tab-content {
     width:100%;
   }
+
+  #menu1 {
+    strong {
+      width:100%;
+    }
+  }
+
+  .modal .modal-content {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    width: 14rem;
+    pointer-events: auto;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: .3rem;
+    outline: 0;
+}
 `;
