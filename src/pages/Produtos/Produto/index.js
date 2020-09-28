@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { BiUserCircle, BiCart, BiSearchAlt2 } from "react-icons/bi";
+
+import { BiUserCircle, BiCart } from "react-icons/bi";
 
 import { Link } from 'react-router-dom';
 
@@ -8,6 +9,7 @@ import img2 from '../img/2.png'
 import img3 from '../img/3.png'
 import api from '../../../services/api';
 import logoImg from '../../../assets/Logo1.png';
+import Footer from '../../../components/Footer';
 
 import {
     // Produtos,
@@ -25,7 +27,7 @@ const Produto_ = () => {
     const [produtoFiltro, setProdutoFiltro] = useState([]);
     const [categoria, setCategoria] = useState([]);
     const [categoriaFiltro, setCategoriaFiltro] = useState([]);
-    const [categoriaNome, setCategoriaNome] = useState("");
+    // const [categoriaNome, setCategoriaNome] = useState("");
     const [cliente, setCliente] = useState(JSON.parse(localStorage.getItem('@ECOMMERCE:cliente')))
 
     const mostraProdutos = useCallback(
@@ -63,7 +65,7 @@ const Produto_ = () => {
             try {
                 const resposta = await api.get(`/produto/${idProduto}`);
                 setProdutoId(resposta.data);
-
+                
                 console.log("resposta", resposta);
                 
             } catch (error) {
@@ -119,7 +121,10 @@ const Produto_ = () => {
     }
 
     const criarPedidoUnico = (produto) => {
-
+      if(!localStorage.getItem('@ECOMMERCE:cliente')){ 
+        window.location.href = '/';
+        return;
+      }
       const { id, nome, valor} = produto;
       let lista = [];
       let produtoModelo = {
@@ -146,7 +151,7 @@ const Produto_ = () => {
       useEffect(() => {
         mostraProdutos();
         mostraCategoria();
-        // mostraProdutosID();
+        mostraProdutosID();
       }, [mostraProdutos,  mostraCategoria, mostraProdutosID]);  
 
       
@@ -172,136 +177,119 @@ const Produto_ = () => {
 
                 <form>
                 <select onChange={e => procurarPorCategoria(e.target.value)}>
+                  <option disabled selected>Categorias</option>
+                      
                   {categoria.map((categoria)=> {
                     return(
-                    <option  value={categoria.nome}>{categoria.nome}</option>
+                      <option  value={categoria.nome}>{categoria.nome}</option>
                     )
                   })}
                  </select>
               </form>
-
-              {/* <form>
-                <select 
-
-                  onChange={e => procurarPorCategoria(e)}
-                  onSelect={() => setCategoriaNome(categoriaNome)}
-                  >
-                  {categoria.map((categoria)=> {
-                    return(
-                    <option >{categoria.nome}</option>
-                    )
-                  })}
-                 </select>
-              </form> */}
             </div> 
 
-            <div class="direita">      
+            <div className="direita">      
               <form>
-               <Link to="/"><p> <BiUserCircle size={22} />Usuário</p></Link>
+                <Link onClick={() => localStorage.removeItem("@ECOMMERCE:cliente")} to="/"><p> <BiUserCircle size={22} />{cliente?cliente.nome:" Usuario"}</p></Link>
                <Link to="/carrinho"> <p> <BiCart size={22} />Carrinho</p></Link>
               </form>
             </div>
           </Header>
           
-          <Container class="carrossel " id="container">
-            <div id="demo" class="carousel slide" data-ride="carousel">
-              <ul class="carousel-indicators">
-                <li data-target="#demo" data-slide-to="0" class="active"></li>
+          <Container className="carrossel " id="container">
+            <div id="demo" className="carousel slide" data-ride="carousel">
+              <ul className="carousel-indicators">
+                <li data-target="#demo" data-slide-to="0" className="active"></li>
                 <li data-target="#demo" data-slide-to="1"></li>
                 <li data-target="#demo" data-slide-to="2"></li>
               </ul>
 
-              <div class="carousel-inner ">
-                <div class="carousel-item active">
+              <div className="carousel-inner ">
+                <div className="carousel-item active">
                   <img src={img1}></img>
                 </div>
 
-                <div class="carousel-item">
+                <div className="carousel-item">
                   <img src={img2}></img>
                 </div>
 
-                <div class="carousel-item">
+                <div className="carousel-item">
                   <img src={img3}></img>
                 </div>
               </div>
 
-              <a class="carousel-control-prev" href="#demo" data-slide="prev">
-                <span class="carousel-control-prev-icon"></span>
+              <a className="carousel-control-prev" href="#demo" data-slide="prev">
+                <span className="carousel-control-prev-icon"></span>
               </a>
-              <a class="carousel-control-next" href="#demo" data-slide="next">
-                <span class="carousel-control-next-icon"></span>
+              <a className="carousel-control-next" href="#demo" data-slide="next">
+                <span className="carousel-control-next-icon"></span>
               </a>
             </div>
           </Container>
 
           <Main>  
 
+          <container>        
             { categoriaFiltro.map(categoria => (
-              <div class="block" data-toggle="modal" data-target="#myModal" key={categoria.id}>
-                <img src={categoria.fotoLink}/> 
-                <strong>{categoria.nome}</strong>
-                <strong>{categoria.descricao}</strong>
+              <div className="block" onClick={() => mostraProdutosID(categoria.id)} data-toggle="modal" data-target="#myModal" key={categoria.id}>
+                <img className="produtos" className="imagemId" src={categoria.fotoLink}/>
+                <p>{categoria.nome}</p> 
+                <p>{categoria.descricao}</p>
+                <strong>Valor: R${categoria.valor},00</strong>
               </div>
             ))}
             
-            <container>  
-           { produtoFiltro.map(produto => (
-              <div class="block" data-toggle="modal" data-target="#myModal" key={produto.id}>
-                <img class="imagemId" src={produto.fotoLink}/> 
-                <p>{produto.nome}</p>
+          { produtoFiltro.map(produto => (
+              <div className="block" onClick={() => mostraProdutosID(produto.id)} data-toggle="modal" data-target="#myModal" key={produto.id}>
+                <img className="produtos"className="imagemId" src={produto.fotoLink}/> 
+                <p>{produto.nome}</p> 
                 <p>{produto.descricao}</p>
                 <strong>Valor: R${produto.valor},00</strong>
               </div>
             ))}
 
-            {/* <h1>{produtoId.nome}</h1> */}
-           
-            
-              { produtos.map(produto => (
-                <div onClick={() => mostraProdutosID(produto.id)} data-toggle="modal" data-target="#myModal"class="block" key={produto.id}>
-                  <img class="produtos" src={produto.fotoLink}/> <br/>
+          { produtos.map(produto => (
+                <div onClick={() => mostraProdutosID(produto.id)} className="block" data-toggle="modal" data-target="#myModal"  key={produto.id}>
+                  <img className="produtos" src={produto.fotoLink}/> <br/>
                   <p>{produto.nome}</p>
                   <p>{produto.descricao}</p><br/>
                   <strong>Valor: R${produto.valor},00</strong>
                 </div>
               ))}
+
             </container>
           
-            <div class="modal" id="myModal">
-                  <div class="modal-dialog">
-                  <div class="modal-content">
+            <div className="modal" id="myModal">
+                  <div className="modal-dialog">
+                  <div className="modal-content">
 
-            <div class="modal-header">
-              <h4 class="modal-title">{produtoId.nome}</h4>
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <div className="modal-header">
+              <h4 className="modal-title">{produtoId.nome}</h4>
+              <button type="button" className="close" data-dismiss="modal">&times;</button>
             </div>
 
 
-            <div class="modal-body">
+            <div className="modal-body">
 
-              <img class="produtos" src={produtoId.fotoLink}/> <br/><br/>
+              <img className="produtos" src={produtoId.fotoLink}/> <br/><br/>
               <p className="descricao">{produtoId.descricao}</p>
               <strong>Valor: R${produtoId.valor},00</strong>   
                 
             </div>
 
-            <div class="modal-footer">
-                <Link to ></Link><button type="button" class="btn" onClick={() => adicionarProduto(produtoId)}>Adicionar no Carrinho</button>
-                <button type="button" class="btn" onClick={() => criarPedidoUnico(produtoId)}>Comprar</button>
+            <div className="modal-footer">
+                <button type="button" className="btn" data-dismiss="modal" onClick={() => adicionarProduto(produtoId)}>Adicionar no Carrinho</button>
+                <button type="button" className="btn" data-dismiss="modal" onClick={() => criarPedidoUnico(produtoId)}>Comprar</button>
             </div>
 
               </div>
             </div>
           </div>
-          </Main>   
-          
+        </Main>  
+
+        <Footer/>  
           </>
       )
-
-      
-
-               
-            
 }
        
 export default Produto_;

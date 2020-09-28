@@ -10,23 +10,23 @@ import logo from '../../../assets/Logo1.png';
 
 import { Main_Cima, Main_Baixo, Body } from '../Login_Cliente/styles';
 
+import swal from 'sweetalert';
+
 const Login_Funcionario = () => {
     const history = useHistory();
 
     const [nomeFuncionario, setNomeFuncionario] = useState("");
     const [cpf, setCpf] = useState("");
     const [carregando, setCarregando] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
 
     let listadeFunc = [];
 
     const logIn = async (e) => {
         e.preventDefault();
         setCarregando(true);
-        setErrorMessage("");
     
         if(nomeFuncionario == "" || cpf == "") {
-            setErrorMessage("Preencha os campos por favor!");
+          swal("Atenção", "Preencha todos os campos antes de continuar", "warning");
             setCarregando(false);
             return;
         }
@@ -48,7 +48,7 @@ const Login_Funcionario = () => {
     
             if(func.nome == nomeFuncionario && func.cpf == cpf) {
     
-              alert('Login realizado com sucesso!');
+                swal("Login realizado com suceso!", "success");
                 setCarregando(false);
                 setCpf("");
                 setNomeFuncionario("");
@@ -56,7 +56,7 @@ const Login_Funcionario = () => {
                 window.location.reload();
     
             } else {
-              setErrorMessage("Usuario e senha invalidos!")
+                swal("Usuario ou senha invalido!", "error");
                 setCarregando(false);
                 setCpf("");
                 setNomeFuncionario("");
@@ -87,11 +87,7 @@ const Login_Funcionario = () => {
               />
               <button onClick={(e) => logIn(e)}>{carregando ? 'Carregando...' : 'Entrar'}</button>
               <Link to="/Cfuncionario">Cadastrar</Link>
-            { errorMessage &&                 
-                  <ErrorMessage>
-                    <i>{errorMessage}</i>
-                  </ErrorMessage>
-              }
+            
           </div>
         </Container>
         <Main_Baixo />

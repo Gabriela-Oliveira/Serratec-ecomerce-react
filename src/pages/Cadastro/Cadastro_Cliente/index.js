@@ -4,11 +4,15 @@ import { Link, useHistory } from "react-router-dom";
 
 import { TiArrowRightThick } from "react-icons/ti";
 
-import { Container, Form, Body, Footer, Infos, ErrorMessage } from "./styles";
+import { Container, Form, Body, Infos } from "./styles";
 
 import Header from '../../../components/Topo/Header';
 
 import api from "../../../services/api";
+
+import Footer from '../../../components/Footer';
+
+import swal from 'sweetalert';
 
 const Cadastro_Cliente = () => {
   const history = useHistory();
@@ -18,13 +22,13 @@ const Cadastro_Cliente = () => {
   const [cpf, setCpf] = useState("");
   const [dataNascimento, setDataNascimento] = useState("");
   const [email, setEmail] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
 
   async function cadastrar(evento) {
     evento.preventDefault();
 
     if (!nome || !nomeUsuario || !cpf || !dataNascimento || !email) {
-      setErrorMessage("Há campos vazios preencha para completar o cadastro!"); return;
+      swal("Atenção", "Preencha os campos para continuar", "warning"); 
+      return;
     }
 
     console.log(
@@ -56,12 +60,11 @@ const Cadastro_Cliente = () => {
       
       const resposta = await api.post("cliente", parametros);
       localStorage.setItem("@ECOMMERCE:cliente", JSON.stringify(resposta.data));
-      alert("cadastro realizado com sucesso!");
-      console.log("cadastro realizado com sucesso!");
+      swal("Obrigado!", "cadastro realizado com sucesso!", "success");
       history.push("/produto");
     } catch (erro) {
       console.log("Deu erro no cadastro");
-      setErrorMessage("Erro no cadastro! Algumas informações foram informadas erradas")
+      swal("Erro!", "Erro no cadastro", "error");
     }
   }
 
@@ -108,25 +111,21 @@ const Cadastro_Cliente = () => {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
           />
-        {/* 
+        
           <span>
             <input type="checkbox" />
             Aceito os Termos e condições e autorizo o uso de meus dados de
             acordo com a Declaração de privacidade
-          </span> */}
+          </span>
         </Infos>
-            { errorMessage &&                 
-                <ErrorMessage>
-                  <i>{errorMessage}</i>
-                </ErrorMessage>
-            }
-
         <button type="submit" id="link-continuar">
           Continuar
         </button>
       </Form>
 
-      <Footer>Protegido pela familia Jonsons</Footer>
+      {/* <Footer>Protegido pela familia Jonsons</Footer> */}
+
+      <Footer/> 
     </Body>
   );
 };

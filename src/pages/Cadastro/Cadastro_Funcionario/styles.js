@@ -120,11 +120,3 @@ export const Infos = styled.div`
     }
 
 `;
-
-export const ErrorMessage = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 12px;
-    color: red;
-`;

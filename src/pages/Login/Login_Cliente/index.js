@@ -2,11 +2,13 @@ import React, { useState } from "react";
 
 import api from "../../../services/api";
 
-import { Container, ErrorMessage, Body, Main_Cima, Main_Baixo } from "./styles";
+import { Container, Body, Main_Cima, Main_Baixo } from "./styles";
 
 import { useHistory, Link } from 'react-router-dom';
 
 import logo from '../../../assets/Logo1.png';
+
+import swal from 'sweetalert';
 
 const Login_Cliente = () => {
   const history = useHistory();
@@ -14,16 +16,14 @@ const Login_Cliente = () => {
   const [nomeUsuario, setNomeUsuario] = useState("");
   const [cpf, setCpf] = useState("");
   const [carregando, setCarregando] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
   let listadeUsuarios = [];
 
   const logIn = async (e) => {
     e.preventDefault();
     setCarregando(true);
-    setErrorMessage("");
 
     if(nomeUsuario == "" || cpf == "") {
-        setErrorMessage("Preencha os campos por favor!");
+        swal("Atenção", "Preencha todos os campos antes de continuar", "warning");
         setCarregando(false);
         return;
     }
@@ -33,31 +33,31 @@ const Login_Cliente = () => {
       const listaUsuarios = await api.get("cliente");
       console.log("Tudo certo!");
       listadeUsuarios = listaUsuarios;
-
+      
     } catch (erro) {
 
+      swal("Erro", "Erro no cadastro, suas informações nao foram preenchidas corretamente", "error");
       console.log("Nao peguei nada na api nao nego mals aew kkk");
-
     }
 
     listadeUsuarios.data.map((usuario) => {
 
         if(usuario.usuario == nomeUsuario && usuario.cpf == cpf) {
-
-            alert('Login realizado com sucesso!');
-            setCarregando(false);
-            setCpf("");
-            setNomeUsuario("");
-            localStorage.setItem("@ECOMMERCE:cliente", JSON.stringify(usuario));
-            history.push("/produto")
-
-        } else {
-            setErrorMessage("Usuario e senha invalidos!")
-            setCarregando(false);
-            setCpf("");
-            setNomeUsuario("");
-            return;
-        } 
+          setCarregando(false);
+          setCpf("");
+          setNomeUsuario("");
+          localStorage.setItem("@ECOMMERCE:cliente", JSON.stringify(usuario));
+          history.push("/produto")
+          swal("Tudo certo","Login realizado com suceso!", "success");
+          return;
+          
+        }
+          swal("Atenção", "Usuario ou senha invalido!", "error");
+          setCarregando(false);
+          setCpf("");
+          setNomeUsuario("");
+          return;
+           
     })
   };
 
@@ -83,16 +83,13 @@ const Login_Cliente = () => {
             />
             <button onClick={(e) => logIn(e)}>{carregando ? 'Carregando...' : 'Entrar'}</button>
             <Link to="/Ccliente">Cadastrar</Link>
-          { errorMessage &&                 
-                <ErrorMessage>
-                  <i>{errorMessage}</i>
-                </ErrorMessage>
-            }
+          
         </div>
       </Container>
       <Main_Baixo />
     </Body>
   );
 };
+
 
 export default Login_Cliente;

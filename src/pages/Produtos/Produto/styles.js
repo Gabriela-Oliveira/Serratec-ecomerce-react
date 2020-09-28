@@ -22,7 +22,7 @@ export const Header = styled.div`
 
     select {
         margin-top: 20px;
-        width: 50%;
+        width: 100%;
         border-radius: 6px;  
         border: none;
         cursor: pointer;
@@ -35,10 +35,10 @@ export const Header = styled.div`
     }    
 
     input{
-        width: 82%;
+        width: 100%;
         border-radius: 6px; 
         border: none;
-            padding-left: 2px;
+        padding-left: 2px;
     }
 
 
@@ -107,8 +107,6 @@ export const Main = styled.div`
         margin-right: 50px;
         margin-bottom: 50px;
         text-align: center;
-        /* border: 1px solid; */
-        /* box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.2); */
     }
 
     .imagemId{
@@ -151,12 +149,14 @@ export const Main = styled.div`
     }
 
 `;
- 
+
 export const ErroMensagem = styled.div`
     display: flex;`
 
 export const Form = styled.div`
-    display: flex;`    
+    display: flex;`
+
+
 
 
    
