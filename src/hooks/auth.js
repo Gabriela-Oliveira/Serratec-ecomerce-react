@@ -21,34 +21,9 @@ import React, {
       return {};
     });
   
-    const signIn = useCallback(async ({ nome, cpf, func }) => {
-      // const response = await api.get('funcionario');
-      // console.log("funcionarios", response);
-  
-      // const funcionario = response.data.filter(data => {
-      //   console.log("data", data.nome, nome);
-      //   return (data.nome === nome && data.cpf === cpf);
-      // });
-  
-      console.log("funcionario", func);
-  
-      if(func.length > 0){
-        localStorage.setItem('@ECOMMERCE:funcionario', JSON.stringify(func[0]));
-        setData({ funcionario: func[0] });
-      }else{
-        throw new Error('Usuário ou senha inválido');
-      }
-    }, []);
-  
-    const signOut = useCallback(() => {
-      localStorage.removeItem('@ECOMMERCE:funcionario');
-  
-      setData({});
-    }, []);
-  
     return (
       <AuthContext.Provider
-        value={{ funcionario: data.funcionario, signIn, signOut }}
+        value={{ funcionario: data.funcionario }}
       >
         {children}
       </AuthContext.Provider>
