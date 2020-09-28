@@ -12,7 +12,6 @@ import Login_Funcionario from '../pages/Login/Login_Funcionario';
 import Carrinho from '../pages/Carrinho';
 import Funcionario from '../pages/Funcionario';
 import Produto from '../pages/Produtos/Produto';
-import Produto_Id from '../pages/Produtos/Produto_Id';
 import Categoria from '../components/Categoria';
 import Pedido_Unico from '../components/delete';
 
@@ -33,7 +32,6 @@ const Routes = () => (
             <Route path="/carrinho" component={Carrinho} />
             <Route path="/funcionario" component={Funcionario} isPrivate={true}/>
             <Route path="/produto" component={Produto} />
-            <Route path="/produto/:id" component={Produto_Id} />
             <Route path="/categoria" component={Categoria} />
             <Route path="/pedidoU" component={Pedido_Unico} />
 
