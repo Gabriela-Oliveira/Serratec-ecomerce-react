@@ -4,7 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 
 import { TiArrowRightThick } from "react-icons/ti";
 
-import { Container, Form, Body, Footer, Infos } from "./styles";
+import { Container, Form, Body, Footer, Infos, ErrorMessage } from "./styles";
 
 import Header from '../../../components/Topo/Header';
 
@@ -18,17 +18,14 @@ const Cadastro_Cliente = () => {
   const [cpf, setCpf] = useState("");
   const [dataNascimento, setDataNascimento] = useState("");
   const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   async function cadastrar(evento) {
     evento.preventDefault();
 
-    if (!nome) return;
-    if (!nomeUsuario) return;
-    if (!cpf) return;
-    // if (!dataNascimento) return;
-    if (!email) return;
-    if (!senha) return;
+    if (!nome || !nomeUsuario || !cpf || !dataNascimento || !email) {
+      setErrorMessage("Há campos vazios preencha para completar o cadastro!"); return;
+    }
 
     console.log(
       "Cadastrado: ",
@@ -37,7 +34,6 @@ const Cadastro_Cliente = () => {
       "\nCPF: ",cpf,
       "\nData de Nascimento: ",dataNascimento,
       "\nEmail: ",email,
-      "\nSenha: ","**************"
     );
 
     const parametros = {
@@ -60,17 +56,12 @@ const Cadastro_Cliente = () => {
       
       const resposta = await api.post("cliente", parametros);
       localStorage.setItem("@ECOMMERCE:cliente", JSON.stringify(resposta.data));
-      history.push("/produto");
+      alert("cadastro realizado com sucesso!");
       console.log("cadastro realizado com sucesso!");
+      history.push("/produto");
     } catch (erro) {
       console.log("Deu erro no cadastro");
-    } finally {
-      setNome("");
-      setNomeUsuario("");
-      setCpf("");
-      setDataNascimento("");
-      setEmail("");
-      setSenha("");
+      setErrorMessage("Erro no cadastro! Algumas informações foram informadas erradas")
     }
   }
 
@@ -117,20 +108,18 @@ const Cadastro_Cliente = () => {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
           />
-
-          <input
-            value={senha}
-            type="password"
-            onChange={(e) => setSenha(e.target.value)}
-            placeholder="Senha"
-          />
-
+        {/* 
           <span>
             <input type="checkbox" />
             Aceito os Termos e condições e autorizo o uso de meus dados de
             acordo com a Declaração de privacidade
-          </span>
+          </span> */}
         </Infos>
+            { errorMessage &&                 
+                <ErrorMessage>
+                  <i>{errorMessage}</i>
+                </ErrorMessage>
+            }
 
         <button type="submit" id="link-continuar">
           Continuar

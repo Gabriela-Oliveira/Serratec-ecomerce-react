@@ -44,7 +44,7 @@ const Login_Cliente = () => {
 
         if(usuario.usuario == nomeUsuario && usuario.cpf == cpf) {
 
-            alert('tudo certo doido | pode passar');
+            alert('Login realizado com sucesso!');
             setCarregando(false);
             setCpf("");
             setNomeUsuario("");
@@ -52,7 +52,7 @@ const Login_Cliente = () => {
             history.push("/produto")
 
         } else {
-            setErrorMessage("tu nao me trola nao nego!")
+            setErrorMessage("Usuario e senha invalidos!")
             setCarregando(false);
             setCpf("");
             setNomeUsuario("");

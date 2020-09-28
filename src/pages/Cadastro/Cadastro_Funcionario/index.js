@@ -4,7 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 
 import { TiArrowRightThick } from "react-icons/ti";
 
-import { Container, Form, Body, Footer, Infos } from "./styles";
+import { Container, Form, Body, Footer, Infos, ErrorMessage } from "./styles";
 
 import Header from '../../../components/Topo/Header';
 
@@ -15,12 +15,15 @@ const Cadastro_Funcionario = () => {
 
   const [nome, setNome] = useState("");
   const [cpf, setCpf] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   async function cadastrar(evento) {
     evento.preventDefault();
 
-    if (!nome) return;
-    if (!cpf) return;
+    if (!nome || !cpf) {
+      setErrorMessage("Preencha os campos para continuar"); 
+      return;
+    } 
 
     console.log("Cadastrando... \nNome:", nome, "\nCpf: ", cpf );
 
@@ -35,14 +38,12 @@ const Cadastro_Funcionario = () => {
       localStorage.setItem("@ECOMMERCE:funcionario", JSON.stringify(resposta.data));
       window.location.reload();
       console.log("cadastro realizado com sucesso!");
+      alert("Cadastro realizado com sucesso!");
 
     } catch (erro) {
 
       console.log("Deu erro no cadastro");
-    } finally {
-
-      setNome("");
-      setCpf("");
+      setErrorMessage("Ocorreu um erro no cadastro, verifique se as informações passadas estao corretas")
     }
   }
 
@@ -53,7 +54,7 @@ const Cadastro_Funcionario = () => {
       <Container>
         <h3>Complete com seu dados</h3>
         <Link id="link-to-vendedor" to="/Ccliente">
-          Criar uma conta de vendedor <TiArrowRightThick />
+          Criar uma conta de cliente <TiArrowRightThick />
         </Link>
       </Container>
 
@@ -81,6 +82,11 @@ const Cadastro_Funcionario = () => {
         <button type="submit" id="link-continuar">
           Continuar
         </button>
+           { errorMessage &&                 
+                <ErrorMessage>
+                  <i>{errorMessage}</i>
+                </ErrorMessage>
+            }
       </Form>
 
       <Footer>Protegido pela familia Jonsons</Footer>

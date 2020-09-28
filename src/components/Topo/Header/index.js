@@ -3,7 +3,7 @@ import React from 'react';
 import { Container } from './styles';
 
 
-import logo from '../../../assets/Logo.png';
+import logo from '../../../assets/Logo1.png';
 
 const Header = (props) => {
     return(
