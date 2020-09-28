@@ -86,7 +86,7 @@ const Login_Funcionario = () => {
                   placeholder="CPF"
               />
               <button onClick={(e) => logIn(e)}>{carregando ? 'Carregando...' : 'Entrar'}</button>
-              <Link to="/Ccliente">Cadastrar</Link>
+              <Link to="/Cfuncionario">Cadastrar</Link>
             { errorMessage &&                 
                   <ErrorMessage>
                     <i>{errorMessage}</i>
