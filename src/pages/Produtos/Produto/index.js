@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { BiUserCircle, BiCart, BiSearchAlt2 } from "react-icons/bi";
 
-import Modal from 'react-bootstrap/Modal'
+import { Link } from 'react-router-dom';
 
 import img1 from '../img/1.png'
 import img2 from '../img/2.png'
@@ -75,7 +75,7 @@ const Produto_ = () => {
     function procurarPorNome(e){
       e.preventDefault();
       setProdutoNome(e.target.value);
-      !e.target.value ? window.location.reload(): 
+      // !e.target.value ? window.location.reload(): 
       console.log(produtoNome);
       let items = [];
 
@@ -103,10 +103,22 @@ const Produto_ = () => {
       console.log(categoriaFiltro);
     }
 
+    
+    const adicionarProduto = (produto) => {
+      if(!localStorage.getItem('@ECOMMERCE:cliente')){ 
+        window.location.href = '/';
+        return;
+      }
+      console.log(JSON.parse(localStorage.getItem('@ECOMMERCE:cliente')));
+        let produtos = localStorage.getItem('@ECOMMERCE:produto') ? JSON.parse(localStorage.getItem('@ECOMMERCE:produto')) : [];
+          produtos.push(produto);
+          localStorage.setItem('@ECOMMERCE:produto', JSON.stringify(produtos));
+    }
+
       useEffect(() => {
         mostraProdutos();
         mostraCategoria();
-        mostraProdutosID(3);
+        // mostraProdutosID();
       }, [mostraProdutos,  mostraCategoria, mostraProdutosID]);  
 
       
@@ -155,8 +167,8 @@ const Produto_ = () => {
 
             <div class="direita">      
               <form>
-               <p> <BiUserCircle size={22} />Usuário</p>
-               <p> <BiCart size={22} />Carrinho</p>
+               <Link to="/"><p> <BiUserCircle size={22} />Usuário</p></Link>
+               <Link to="/carrinho"> <p> <BiCart size={22} />Carrinho</p></Link>
               </form>
             </div>
           </Header>
@@ -244,8 +256,8 @@ const Produto_ = () => {
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" >Adicionar no Carrinho</button>
-                <button type="button" class="btn btn-danger" >Comprar</button>
+                <Link to ></Link><button type="button" class="btn" onClick={() => adicionarProduto(produtoId)}>Adicionar no Carrinho</button>
+                <button type="button" class="btn" >Comprar</button>
             </div>
 
               </div>

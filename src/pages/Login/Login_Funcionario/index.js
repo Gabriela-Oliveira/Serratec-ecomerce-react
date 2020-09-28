@@ -7,6 +7,7 @@ import Header from '../../../components/Topo/Header';
 import api from '../../../services/api';
 
 import { useHistory } from 'react-router-dom';
+import { useAuth } from '../../../hooks/auth';
 
 const Login_Funcionario = () => {
     const history = useHistory();
@@ -50,8 +51,8 @@ const Login_Funcionario = () => {
                 setCarregando(false);
                 setCpf("");
                 setNomeFuncionario("");
-                localStorage.setItem("@ECOMMERCE:funcionario ", JSON.stringify(func));
-                history.push("/funcionario")
+                localStorage.setItem("@ECOMMERCE:funcionario", JSON.stringify(func));
+                window.location.reload();
     
             } else {
                 setErrorMessage("tu nao me trola nao nego!")
