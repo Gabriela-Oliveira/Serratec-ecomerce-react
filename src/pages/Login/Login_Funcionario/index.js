@@ -6,8 +6,13 @@ import Header from '../../../components/Topo/Header';
 
 import api from '../../../services/api';
 
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
+
 import { useAuth } from '../../../hooks/auth';
+
+import { Main_Cima, Main_Baixo, Body } from '../Login_Cliente/styles';
+
+import logo from '../../../assets/Logo1.png';
 
 const Login_Funcionario = () => {
     const history = useHistory();
@@ -65,31 +70,72 @@ const Login_Funcionario = () => {
       };
 
     return(
-        <>
-            <Header nome="Login de funcionario"/>
-            <Container>
-            <div>
-                <span>Nome </span>
-                <input
-                    value={nomeFuncionario}
-                    onChange={(e) => setNomeFuncionario(e.target.value)}
-                    placeholder="Digite aqui.."
-                />
-                <span>CPF</span>
-                <input
-                    value={cpf}
-                    onChange={(e) => setCpf(e.target.value)}
-                    placeholder="Digite aqui.."
-                />
-                <button onClick={(e) => logIn(e)}>{carregando ? 'Carregando...' : 'Entrar'}</button>
+        <Body>
 
-                { errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage> }
-            </div>
-            
-            </Container>
-        
-        </>
+        <Main_Cima>
+          <img src={logo}></img>
+          </Main_Cima>
+  
+        <Container>
+          <div id="infos">
+          <h4>Obrigado por comprar conosco : )</h4>
+              <input
+                  value={nomeFuncionario}
+                  onChange={(e) => setNomeFuncionario(e.target.value)}
+                  placeholder="Nome de usuario"
+              />
+              <input
+                  value={cpf}
+                  onChange={(e) => setCpf(e.target.value)}
+                  placeholder="CPF"
+              />
+              <button onClick={(e) => logIn(e)}>{carregando ? 'Carregando...' : 'Entrar'}</button>
+              <Link to="/Ccliente">Cadastrar</Link>
+            { errorMessage &&                 
+                  <ErrorMessage>
+                    <i>{errorMessage}</i>
+                  </ErrorMessage>
+              }
+          </div>
+        </Container>
+        <Main_Baixo />
+      </Body>
     );
 }
 
 export default Login_Funcionario;
+
+/*
+         <Body>
+
+      <Main_Cima>
+        <img src={logo}></img>
+        </Main_Cima>
+
+      <Container>
+        <div id="infos">
+        <h4>Obrigado por comprar conosco : )</h4>
+            <input
+                value={nomeUsuario}
+                onChange={(e) => setNomeUsuario(e.target.value)}
+                placeholder="Nome de usuario"
+            />
+            <input
+                value={cpf}
+                onChange={(e) => setCpf(e.target.value)}
+                placeholder="CPF"
+            />
+            <button onClick={(e) => logIn(e)}>{carregando ? 'Carregando...' : 'Entrar'}</button>
+            <Link to="/Ccliente">Cadastrar</Link>
+          { errorMessage &&                 
+                <ErrorMessage>
+                  <i>{errorMessage}</i>
+                </ErrorMessage>
+            }
+        </div>
+      </Container>
+      <Main_Baixo />
+    </Body>
+
+
+*/

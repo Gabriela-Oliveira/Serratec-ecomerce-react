@@ -12,8 +12,8 @@ export const Container = styled.div`
     display: flex;  
     justify-content: space-between;
     align-items: center;
-    margin-top: 28px;
-    margin-bottom: 28px;
+    margin-top: 27px;
+    margin-bottom: 27px;
 
     h3 {
         color: #293845;
@@ -36,10 +36,10 @@ export const Form = styled.form`
         align-items: center;
         margin: 20px auto;
         border: 0;
-        background: brown;
+        background: blue;
         color: white;
         width: 150px;
-        height: 30px;
+        height: 25px;
         transition: 500ms;
         border-radius: 3px;
         text-decoration: none;
@@ -48,7 +48,6 @@ export const Form = styled.form`
             background: #7e00d5;
         }
     } 
-
 `;
 
 export const Footer = styled.footer`
@@ -57,14 +56,14 @@ export const Footer = styled.footer`
 `;
 
 export const Infos = styled.div`
-     max-width: 850px;
+    max-width: 850px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     margin: 0px auto;
-    background: #0158BF;
-
-     
+    background: rgb(255, 255, 255);
+    border-radius: 12px;
+    box-shadow: 2px 2px 11px #0158BF;
 
     input {
         height: 30px;
@@ -74,9 +73,21 @@ export const Infos = styled.div`
         outline: none;
         border: 0;
         text-align: center;
+        border-radius: 3px;
+        /* background: whitesmoke; */
+
+        &:hover {
+            border-bottom: 1px solid #7FA8DB;
+        }
+
+        &:focus {
+            border-bottom: 1px solid #7FA8DB;
+        }
+       
 
         & + input + input {
             margin-top: 10px;
+            
         }
     }
 
@@ -89,4 +100,11 @@ export const Infos = styled.div`
         }
     }
 
+`;
+export const ErrorMessage = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 12px;
+    color: red;
 `;
