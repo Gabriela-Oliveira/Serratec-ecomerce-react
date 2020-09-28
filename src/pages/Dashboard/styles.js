@@ -22,7 +22,8 @@ export const Container = styled.div`
        width: 100px;
        height: 80px;
        display: flex;
-       margin-left: 9rem;
+       margin-left: auto;
+       margin-right: auto;
    }
 
    ul.nav.nav-pills, a {

@@ -108,14 +108,14 @@ const Cadastro_Cliente = () => {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
           />
-
+        {/* 
           <span>
             <input type="checkbox" />
             Aceito os Termos e condições e autorizo o uso de meus dados de
             acordo com a Declaração de privacidade
-          </span>
+          </span> */}
         </Infos>
-        { errorMessage &&                 
+            { errorMessage &&                 
                 <ErrorMessage>
                   <i>{errorMessage}</i>
                 </ErrorMessage>
