@@ -2,11 +2,11 @@ import React, { useState } from "react";
 
 import api from "../../../services/api";
 
-import { Container, ErrorMessage } from "./styles";
+import { Container, ErrorMessage, Body, Main_Cima, Main_Baixo } from "./styles";
 
-import Header from "../../../components/Topo/Header";
+import { useHistory, Link } from 'react-router-dom';
 
-import { useHistory } from 'react-router-dom';
+import logo from '../../../assets/Logo1.png';
 
 const Login_Cliente = () => {
   const history = useHistory();
@@ -62,35 +62,36 @@ const Login_Cliente = () => {
   };
 
   return (
-    <>
-      <Header nome="Login de Cliente" />
+    <Body>
+
+      <Main_Cima>
+        <img src={logo}></img>
+        </Main_Cima>
+
       <Container>
-        <div>
-            <span>Nome de Usuario</span>
+        <div id="infos">
+        <h4>Obrigado por comprar conosco : )</h4>
             <input
                 value={nomeUsuario}
                 onChange={(e) => setNomeUsuario(e.target.value)}
-                placeholder="Digite aqui.."
+                placeholder="Nome de usuario"
             />
-            <span>CPF</span>
             <input
                 value={cpf}
                 onChange={(e) => setCpf(e.target.value)}
-                placeholder="Digite aqui.."
+                placeholder="CPF"
             />
             <button onClick={(e) => logIn(e)}>{carregando ? 'Carregando...' : 'Entrar'}</button>
-
-            { errorMessage &&                 
+            <Link to="/Ccliente">Cadastrar</Link>
+          { errorMessage &&                 
                 <ErrorMessage>
-                  <i class="fas fa-exclamation-triangle"></i>{errorMessage}
+                  <i>{errorMessage}</i>
                 </ErrorMessage>
             }
-            
         </div>
-
-
       </Container>
-    </>
+      <Main_Baixo />
+    </Body>
   );
 };
 
