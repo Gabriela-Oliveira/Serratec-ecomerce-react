@@ -110,8 +110,10 @@ const Produto_ = () => {
         window.location.href = '/';
         return;
       }
-      console.logp(JSON.parse(localStorage.getItem('@ECOMMERCE:cliente')));
-        let listaProdutos = localStorage.getItem('@ECOMMERCE:produto') ? JSON.parse(localStorage.getItem('@ECOMMERCE:produto')) : [];
+      console.log(JSON.parse(localStorage.getItem('@ECOMMERCE:cliente')));
+      let listaProdutos = [];
+      listaProdutos = localStorage.getItem('@ECOMMERCE:alteracoes') ? JSON.parse(localStorage.getItem('@ECOMMERCE:alteracoes')) : [];
+      listaProdutos = localStorage.getItem('@ECOMMERCE:produto') ? JSON.parse(localStorage.getItem('@ECOMMERCE:produto')) : [];
           listaProdutos.push(produto);
           localStorage.setItem('@ECOMMERCE:produto', JSON.stringify(listaProdutos));
     }
