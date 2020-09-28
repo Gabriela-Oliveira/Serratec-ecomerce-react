@@ -15,14 +15,15 @@ const Dashboard = () => {
           </header>
         <ul class="nav nav-pills">
           <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#menu1">
+            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#menu1" role="tab" aria-controls="nav-home" aria-selected="true">
               Cliente
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#menu2">
-              Funcionario
+          <a class="nav-item nav-link" id="nav-home-tab" data-toggle="tab" href="#menu2" role="tab" aria-controls="nav-home" aria-selected="true">
+          Funcionario
             </a>
+
           </li>
         </ul>
 
@@ -46,5 +47,6 @@ const Dashboard = () => {
     </Body>
   );
 };
+
 
 export default Dashboard;

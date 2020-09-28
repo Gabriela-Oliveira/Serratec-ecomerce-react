@@ -4,14 +4,16 @@ export const Container = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgb(0,87,196);
+    background: #0158BF;
     height: 20vh;
 
     
     img {
-        width: 250px;
-        height: 150px;
-        margin-top: 0;
+        /* width: 250px;
+        height: 125px;
+        margin-bottom: 12px; */
+        width: 15%;
+        margin-left: 30px;
     }
 
 

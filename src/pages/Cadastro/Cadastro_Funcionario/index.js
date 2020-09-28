@@ -10,17 +10,20 @@ import Header from '../../../components/Topo/Header';
 
 import api from "../../../services/api";
 
+import swal from 'sweetalert';
+
 const Cadastro_Funcionario = () => {
   const history = useHistory();
-
   const [nome, setNome] = useState("");
   const [cpf, setCpf] = useState("");
 
   async function cadastrar(evento) {
     evento.preventDefault();
 
-    if (!nome) return;
-    if (!cpf) return;
+    if (!nome || !cpf) {
+     swal("Preencha os campos para continuar", "warning"); 
+      return;
+    } 
 
     console.log("Cadastrando... \nNome:", nome, "\nCpf: ", cpf );
 
@@ -35,14 +38,11 @@ const Cadastro_Funcionario = () => {
       localStorage.setItem("@ECOMMERCE:funcionario", JSON.stringify(resposta.data));
       window.location.reload();
       console.log("cadastro realizado com sucesso!");
+      swal("Obrsgado!", "cadastro realizado com sucesso!", "success");
 
     } catch (erro) {
 
-      console.log("Deu erro no cadastro");
-    } finally {
-
-      setNome("");
-      setCpf("");
+      console.log("Deu erro no cadastro", "error");
     }
   }
 
@@ -53,7 +53,7 @@ const Cadastro_Funcionario = () => {
       <Container>
         <h3>Complete com seu dados</h3>
         <Link id="link-to-vendedor" to="/Ccliente">
-          Criar uma conta de vendedor <TiArrowRightThick />
+          Criar uma conta de cliente <TiArrowRightThick />
         </Link>
       </Container>
 

@@ -5,13 +5,13 @@ export const Body = styled.div`
    width: 100vw;
    height: 100vh;
    justify-content: center;
+   align-items: center;
    background: rgb(221,216,210) ;
 
 `;
 
 export const Container = styled.div`
-   margin-top: 20vh;
-   width: 40vw;
+   width: 50vw;
    height: 60vh;
    border-radius: 5px;
    background: #0158BF;
@@ -22,7 +22,8 @@ export const Container = styled.div`
        width: 100px;
        height: 80px;
        display: flex;
-       margin-left: 9rem;
+       margin-left: auto;
+       margin-right: auto;
    }
 
    ul.nav.nav-pills, a {
@@ -43,7 +44,7 @@ export const Container = styled.div`
        background: #4284fb;
        border-radius: 12px;
        transition: .3s;
-       height: 30px;
+       height: 5vh;
        display: flex;
        align-items: center;
 

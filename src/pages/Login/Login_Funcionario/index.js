@@ -2,12 +2,15 @@ import React, { useState } from 'react';
 
 import { Container, ErrorMessage } from "./styles";
 
-import Header from '../../../components/Topo/Header';
-
 import api from '../../../services/api';
 
-import { useHistory } from 'react-router-dom';
-import { useAuth } from '../../../hooks/auth';
+import { useHistory, Link } from 'react-router-dom';
+
+import logo from '../../../assets/Logo1.png';
+
+import { Main_Cima, Main_Baixo, Body } from '../Login_Cliente/styles';
+
+import swal from 'sweetalert';
 
 const Login_Funcionario = () => {
     const history = useHistory();
@@ -15,17 +18,15 @@ const Login_Funcionario = () => {
     const [nomeFuncionario, setNomeFuncionario] = useState("");
     const [cpf, setCpf] = useState("");
     const [carregando, setCarregando] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
 
     let listadeFunc = [];
 
     const logIn = async (e) => {
         e.preventDefault();
         setCarregando(true);
-        setErrorMessage("");
     
         if(nomeFuncionario == "" || cpf == "") {
-            setErrorMessage("Preencha os campos por favor!");
+          swal("Atenção", "Preencha todos os campos antes de continuar", "warning");
             setCarregando(false);
             return;
         }
@@ -47,7 +48,7 @@ const Login_Funcionario = () => {
     
             if(func.nome == nomeFuncionario && func.cpf == cpf) {
     
-                alert('tudo certo doido | pode passar');
+                swal("Login realizado com suceso!", "success");
                 setCarregando(false);
                 setCpf("");
                 setNomeFuncionario("");
@@ -55,7 +56,7 @@ const Login_Funcionario = () => {
                 window.location.reload();
     
             } else {
-                setErrorMessage("tu nao me trola nao nego!")
+                swal("Usuario ou senha invalido!", "error");
                 setCarregando(false);
                 setCpf("");
                 setNomeFuncionario("");
@@ -65,30 +66,32 @@ const Login_Funcionario = () => {
       };
 
     return(
-        <>
-            <Header nome="Login de funcionario"/>
-            <Container>
-            <div>
-                <span>Nome </span>
-                <input
-                    value={nomeFuncionario}
-                    onChange={(e) => setNomeFuncionario(e.target.value)}
-                    placeholder="Digite aqui.."
-                />
-                <span>CPF</span>
-                <input
-                    value={cpf}
-                    onChange={(e) => setCpf(e.target.value)}
-                    placeholder="Digite aqui.."
-                />
-                <button onClick={(e) => logIn(e)}>{carregando ? 'Carregando...' : 'Entrar'}</button>
+        <Body>
 
-                { errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage> }
-            </div>
+        <Main_Cima>
+          <img src={logo}></img>
+          </Main_Cima>
+  
+        <Container>
+          <div id="infos">
+          <h4>Obrigado por trabalhar conosco : )</h4>
+              <input
+                  value={nomeFuncionario}
+                  onChange={(e) => setNomeFuncionario(e.target.value)}
+                  placeholder="Nome de usuario"
+              />
+              <input
+                  value={cpf}
+                  onChange={(e) => setCpf(e.target.value)}
+                  placeholder="CPF"
+              />
+              <button onClick={(e) => logIn(e)}>{carregando ? 'Carregando...' : 'Entrar'}</button>
+              <Link to="/Cfuncionario">Cadastrar</Link>
             
-            </Container>
-        
-        </>
+          </div>
+        </Container>
+        <Main_Baixo />
+      </Body>
     );
 }
 

@@ -1,17 +1,33 @@
 import React  from 'react';
 
+import { Item as Container } from './styles';
 
-const Item = (props) => {
+
+
+const Item = ({ item, somar, subtrair, remover_da_lista }) => {
     
     return(
-        <>
-            <div key={props.produto.id}>
-            <img src={props.produto.fotoLink} alt={props.produto.nome} />
-            <h3>{props.produto.nome}</h3>
-            <p>{props.produto.descricao}</p>
-            <p>{props.produto.valor}</p>
-            </div>
-        </>
+        <Container>
+                    <strong>{item.nomeProduto}</strong>
+                    <strong>{item.valor}</strong>
+                    <strong>{item.subTotal}</strong>
+                    <div>
+                    <button onClick={ () => {
+                        subtrair(item);
+                    }}
+                    >-</button>
+                        <strong>{item.qtdItens}</strong>
+                    <button onClick={() => {
+                        somar(item);
+                    }}
+                    >+</button>
+                    </div>
+
+                    <button className="excluir" onClick={() => {
+                        
+                        remover_da_lista(item.idProduto)
+                        }}>Excluir</button>
+                    </Container>
     )
 }
 

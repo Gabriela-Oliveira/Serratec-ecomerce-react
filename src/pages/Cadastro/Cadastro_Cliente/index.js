@@ -4,11 +4,15 @@ import { Link, useHistory } from "react-router-dom";
 
 import { TiArrowRightThick } from "react-icons/ti";
 
-import { Container, Form, Body, Footer, Infos } from "./styles";
+import { Container, Form, Body, Infos } from "./styles";
 
 import Header from '../../../components/Topo/Header';
 
 import api from "../../../services/api";
+
+import Footer from '../../../components/Footer';
+
+import swal from 'sweetalert';
 
 const Cadastro_Cliente = () => {
   const history = useHistory();
@@ -18,17 +22,14 @@ const Cadastro_Cliente = () => {
   const [cpf, setCpf] = useState("");
   const [dataNascimento, setDataNascimento] = useState("");
   const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
 
   async function cadastrar(evento) {
     evento.preventDefault();
 
-    if (!nome) return;
-    if (!nomeUsuario) return;
-    if (!cpf) return;
-    // if (!dataNascimento) return;
-    if (!email) return;
-    if (!senha) return;
+    if (!nome || !nomeUsuario || !cpf || !dataNascimento || !email) {
+      swal("Atenção", "Preencha os campos para continuar", "warning"); 
+      return;
+    }
 
     console.log(
       "Cadastrado: ",
@@ -37,7 +38,6 @@ const Cadastro_Cliente = () => {
       "\nCPF: ",cpf,
       "\nData de Nascimento: ",dataNascimento,
       "\nEmail: ",email,
-      "\nSenha: ","**************"
     );
 
     const parametros = {
@@ -60,17 +60,11 @@ const Cadastro_Cliente = () => {
       
       const resposta = await api.post("cliente", parametros);
       localStorage.setItem("@ECOMMERCE:cliente", JSON.stringify(resposta.data));
+      swal("Obrigado!", "cadastro realizado com sucesso!", "success");
       history.push("/produto");
-      console.log("cadastro realizado com sucesso!");
     } catch (erro) {
       console.log("Deu erro no cadastro");
-    } finally {
-      setNome("");
-      setNomeUsuario("");
-      setCpf("");
-      setDataNascimento("");
-      setEmail("");
-      setSenha("");
+      swal("Erro!", "Erro no cadastro", "error");
     }
   }
 
@@ -117,27 +111,21 @@ const Cadastro_Cliente = () => {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
           />
-
-          <input
-            value={senha}
-            type="password"
-            onChange={(e) => setSenha(e.target.value)}
-            placeholder="Senha"
-          />
-
+        
           <span>
             <input type="checkbox" />
             Aceito os Termos e condições e autorizo o uso de meus dados de
             acordo com a Declaração de privacidade
           </span>
         </Infos>
-
         <button type="submit" id="link-continuar">
           Continuar
         </button>
       </Form>
 
-      <Footer>Protegido pela familia Jonsons</Footer>
+      {/* <Footer>Protegido pela familia Jonsons</Footer> */}
+
+      <Footer/> 
     </Body>
   );
 };
