@@ -44,19 +44,19 @@ const Login_Cliente = () => {
 
         if(usuario.usuario == nomeUsuario && usuario.cpf == cpf) {
 
-            alert('Login realizado com sucesso!');
-            setCarregando(false);
-            setCpf("");
-            setNomeUsuario("");
-            localStorage.setItem("@ECOMMERCE:cliente", JSON.stringify(usuario));
-            history.push("/produto")
-
+          alert('Login realizado com sucesso!');
+          setCarregando(false);
+          setCpf("");
+          setNomeUsuario("");
+          localStorage.setItem("@ECOMMERCE:cliente", JSON.stringify(usuario));
+          history.push("/produto")
+          
         } else {
-            setErrorMessage("Usuario e senha invalidos!")
-            setCarregando(false);
-            setCpf("");
-            setNomeUsuario("");
-            return;
+          setErrorMessage("Usuario e senha invalidos!")
+          setCarregando(false);
+          setCpf("");
+          setNomeUsuario("");
+          return;
         } 
     })
   };
