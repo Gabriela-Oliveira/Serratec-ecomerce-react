@@ -1,5 +1,96 @@
 import styled from 'styled-components';
 import { shade } from 'polished';
+export const ContainerMain = styled.div `
+
+button, input, optgroup, select, textarea {
+    margin: 0px;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    width: 100%;
+    /* margin: 4vh; */
+    margin-bottom: 1rem;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid #0158BF;
+}
+.modal-header .close {
+    padding: 1rem 1rem;
+    margin: -1rem -1rem -1rem auto;
+    display: contents;
+}
+.modal-body {
+    position: relative;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 1rem;
+
+  button{
+    border: none;
+    border-radius: 5px;
+    height: 2.4rem; 
+    transition: 1s;
+}
+button:hover {
+  background: #0158BF;
+  color: #FFF;
+}
+}
+.modal-footer {
+  .btn {
+    display: inline-block;
+    font-weight: 400;
+    color: #fff;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: rgba(1,88,191, .6);
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 5px;
+    transition: 1s;
+}
+ .btn:hover {
+  background: #0158BF;
+  color: #FFF;
+ }
+
+}
+/* esse aqui sao os botoes do formulario */
+.gbxoBG div.formulario span {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    margin-left: 43px;
+    button{
+      border: none;
+      width: 100px;
+      border-radius: 5px;
+      height: 32px;
+      transition: 1s;
+      margin-bottom: 0rem;
+      }
+      button:hover {
+        background: #0158BF;
+        color: #FFF;
+      }
+      
+}
+
+
+
+`
+
 
 export const Form = styled.form`
   margin-top: 25px;
@@ -164,7 +255,7 @@ export const Tasks = styled.div`
         font-size: 20px;
         color: #3d3d4d;
         margin-right: 25px;
-        margin-left: 4rem;
+        margin-left: 2rem;
       }
 
     span {

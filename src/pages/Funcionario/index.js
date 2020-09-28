@@ -1,4 +1,5 @@
 import React , { useState, useCallback , useEffect } from 'react';
+import { Container } from 'react-bootstrap';
 import { FiCircle,  FiDelete } from "react-icons/fi";
 import {GrDocumentUpdate} from "react-icons/gr";
 import {IoMdAddCircle} from 'react-icons/io';
@@ -6,7 +7,7 @@ import { Link } from 'react-router-dom';
 import api from '../../services/api';
 // import Header from '../../components/Topo/Header';
 
-import { Form , Tasks } from './styles';
+import { ContainerMain, Form , Tasks } from './styles';
 const Funcionario = () => {
 
     const [ mostrarCliente, setMostrarCliente ] = useState([]);
@@ -221,13 +222,13 @@ const Funcionario = () => {
        const [resetarF, setReseteF] = useState(null);
        
       return (
-        <>
-        <Header title="Lista de Tarefas">
+        <ContainerMain>
+        <header title="Lista de Tarefas">
             <h2>LOGO</h2>
             <Link className="logo" to="/" onClick={() => {localStorage.removeItem('@ECOMMERCE:funcionario'); window.location.reload()}}>
               Logout
             </Link>
-            </Header>
+            </header>
             <Tasks>
             <ul class="nav nav-tabs">
               <li class="nav-item teste">
@@ -259,11 +260,13 @@ const Funcionario = () => {
                   <span>
                     { cliente.nome ? (
                       <>
-                        <FiDelete size={22} onClick={() => removerCliente(cliente)} style={{marginRight: 10}} />
+                        <button size={22} onClick={() => removerCliente(cliente)} style={{marginRight: 10}} >
+                          Excluir
+                          </button>
                 
-                        <GrDocumentUpdate onClick={() => setResete(cliente.id)} type="button" data-toggle="modal" data-target="#cliente">
+                        <button onClick={() => setResete(cliente.id)} type="button" data-toggle="modal" data-target="#cliente">
                         Atualizar
-                        </GrDocumentUpdate>
+                        </button>
                       </>
                       
                     ) : (
@@ -287,15 +290,15 @@ const Funcionario = () => {
                 <span>
                   { funcinario.nome ? (
                     <>
-                      <IoMdAddCircle onClick={() => setReseteF(funcinario.id)} type="button" data-toggle="modal" href="#adcionar-Produto">
+                      <button onClick={() => setReseteF(funcinario.id)} type="button" data-toggle="modal" href="#adcionar-Produto">
                         Adcionar Produto
-                      </IoMdAddCircle>
+                      </button>
 
-                      <FiDelete size={22} onClick={() => removerFuncionario(funcinario)} style={{marginRight: 10}} />
+                      <button size={22} onClick={() => removerFuncionario(funcinario)} style={{marginRight: 10}} />
 
-                      <GrDocumentUpdate onClick={() => setReseteF(funcinario.id)} type="button" data-toggle="modal" href="#funcionario">
+                      <button onClick={() => setReseteF(funcinario.id)} type="button" data-toggle="modal" href="#funcionario">
                         Atualizar
-                      </GrDocumentUpdate>
+                      </button>
                     </>
                   ) : (
                     <FiCircle size={22} onClick={() => alert('helllo world')} />
@@ -341,39 +344,43 @@ const Funcionario = () => {
               </form>
             </div>
             </Tasks>
-            <div class="modal" id="cliente">
-
-            <div class="modal-dialog">
+            <div class="modal fade" id="cliente" tabindex="-1" role="dialog" aria-labelledby="TituloModalLongoExemplo" aria-hidden="true">
+              <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Cliente</h4>
+                  <div class="modal-header">
+          <h4 class="modal-title">Atualizando Cliente </h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                   </div>
                   <div class="modal-body">
                     <form>
+                      Nome:
                       <input 
+                          aria-describedby="inputGroup-sizing-default"
                           value={nome} 
                           onChange={e => setNome(e.target.value)}
                           type="text"
                           placeholder="Nome" 
                         />
+                        Usuario:
                         <input 
                           value={nomeUsuario} 
                           onChange={e => setNomeUsuario(e.target.value)}
                           type="text"
                           placeholder="Usuario" 
                         />
+                        CPF:
                         <input 
                           value={cpf} 
                           onChange={e => setCpf(e.target.value)}
                           type="text"
                           placeholder="CPF" 
                         />
+                        E-mail
                         <input 
                           value={email} 
                           onChange={e => setEmail(e.target.value)}
-                          type="text"
-                          placeholder="Email" 
+                          type="email"
+                          placeholder="E-mail" 
                         />
                       <button type="button" onClick={() => atualizarCliente(resetar)}> 
                             atualizar
@@ -481,7 +488,7 @@ const Funcionario = () => {
                 </div>
               </div>
             </div>
-        </>
+        </ContainerMain>
       )
 }
 
