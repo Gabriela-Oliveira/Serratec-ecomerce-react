@@ -1,69 +1,60 @@
 import styled from 'styled-components';
 
 export const Body = styled.div`
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas: "ac af" ;
-    
-
-    a {
-        display: flex;
-        height: 60px;
-        width: 200px;
-        border-radius: 5px;
-        color: black;
-        font-weight: bold;
-        text-decoration: none;
-        justify-content: center;
-        align-items: center;
-        margin: 20px auto;
-        margin-top: 40px;
-        transition: .5s;        
-    }
-`;
-
-export const Area_Cliente = styled.div`
-    grid-area: ac;
-    height: 100vh;
-    background: #0158BF;
-    
-
-    h1{
-        margin-top: 25%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #131314;
-    }
-
-    a:hover {
-        background: #0237C1;
-        outline: none;
-        text-decoration: none;
-        border: 1px solid blue;
-    }
+   display: flex;
+   width: 100vw;
+   height: 100vh;
+   justify-content: center;
+   background: rgb(221,216,210) ;
 
 `;
 
-export const Area_Funcionario = styled.div`
-    grid-area: af;
-    background: #0237C1;
-    
+export const Container = styled.div`
+   margin-top: 20vh;
+   width: 40vw;
+   height: 60vh;
+   border-radius: 5px;
+   background: #0158BF;
+   box-shadow: 2px 3px 7px rgba(0, 0, 255, 0.7);
+   
 
-    h1{
-        margin-top: 25%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #131314;
-        
-    }
+   img {
+       width: 100px;
+       height: 80px;
+       display: flex;
+       margin-left: 9rem;
+   }
 
-    a:hover {
-        background: #0158BF;
-        outline: none;
-        text-decoration: none;
-        border: 1px solid blue;
-    }
+   ul.nav.nav-pills, a {
+       margin-top: 12px;
+       display: flex;
+       justify-content: center;
+       color: white;
+   }
+
+   h3 {
+       margin-top: 20px;
+       color: white;
+       text-align: center;
+   }
+
+   div.tab-content a {
+       margin-top: 40px;
+       background: #4284fb;
+       border-radius: 12px;
+       transition: .3s;
+       height: 30px;
+       display: flex;
+       align-items: center;
+
+       & + a {
+           margin-top: 20px;
+       }
+
+       &:hover {
+           text-decoration: none;
+           background: rgba(255, 255, 251, .5);
+       }
+   }
 
 `;

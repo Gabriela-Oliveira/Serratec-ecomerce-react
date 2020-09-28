@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { BiUserCircle, BiCart } from "react-icons/bi";
+import { BiUserCircle, BiCart, BiSearchAlt2 } from "react-icons/bi";
+
+import { Link } from 'react-router-dom';
 
 import img1 from '../img/1.png'
 import img2 from '../img/2.png'
 import img3 from '../img/3.png'
 import api from '../../../services/api';
-import logoImg from '../../../assets/Logo.png';
+import logoImg from '../../../assets/Logo1.png';
 
 import {
     // Produtos,
@@ -24,6 +26,7 @@ const Produto_ = () => {
     const [categoria, setCategoria] = useState([]);
     const [categoriaFiltro, setCategoriaFiltro] = useState([]);
     const [categoriaNome, setCategoriaNome] = useState("");
+    const [cliente, setCliente] = useState(JSON.parse(localStorage.getItem('@ECOMMERCE:cliente')))
 
     const mostraProdutos = useCallback(
         async () => {
@@ -73,6 +76,7 @@ const Produto_ = () => {
     function procurarPorNome(e){
       e.preventDefault();
       setProdutoNome(e.target.value);
+      // !e.target.value ? window.location.reload(): 
       console.log(produtoNome);
       let items = [];
 
@@ -87,24 +91,62 @@ const Produto_ = () => {
 
     function procurarPorCategoria(e){
       e.preventDefault();
-      setCategoriaFiltro(e.target.value);
       console.log(categoriaNome);
       let items = [];
 
-      for (let categorias of categoria){
-        if(categorias.nome.toLowerCase().indexOf(categoriaNome) != -1){
-          items.push(categorias);
+      for (let produto of produtos){
+        if(produto.categoria.indexOf(categoriaNome) != -1){
+          items.push(produto);
         }
       }
       setCategoriaFiltro(items);
       console.log(categoriaFiltro);
     }
 
+    
+    const adicionarProduto = (produto) => {
+      if(!localStorage.getItem('@ECOMMERCE:cliente')){ 
+        window.location.href = '/';
+        return;
+      }
+      console.log(JSON.parse(localStorage.getItem('@ECOMMERCE:cliente')));
+        let produtos = localStorage.getItem('@ECOMMERCE:produto') ? JSON.parse(localStorage.getItem('@ECOMMERCE:produto')) : [];
+          produtos.push(produto);
+          localStorage.setItem('@ECOMMERCE:produto', JSON.stringify(produtos));
+    }
+
+    const criarPedidoUnico = (produto) => {
+
+      const { id, nome, valor} = produto;
+      let lista = [];
+      let produtoModelo = {
+        idProduto: id,
+        nomeProduto: nome,
+        qtdItens: 1,
+        valor: valor,
+        subTotal: valor
+        }
+      lista.push(produtoModelo);
+      let pedido = {
+          dataPedido: "2020-09-27T20:10:10Z",
+          pedidoStatus: "EM_ANDAMENTO",
+          idCliente: cliente.id,
+          nomeCliente: cliente.nome,
+          itens: lista
+
+      };
+
+      console.log(pedido);
+
+  }
+
       useEffect(() => {
         mostraProdutos();
         mostraCategoria();
-        // mostraProdutosID(3);
+        // mostraProdutosID();
       }, [mostraProdutos,  mostraCategoria, mostraProdutosID]);  
+
+      
 
     return (
         <>
@@ -122,36 +164,38 @@ const Produto_ = () => {
                     type="text" 
                     placeholder="Digite uma busca..." 
                   />
-                  <button type="submit">Buscar</button>
+                  {/* <button type="submit"><i class="BiUserCircle"></i></button> */}
                 </form>
 
-                {/* <form>
-                <select onChange={e => console.log(e.target.value) }>
+                <form>
+                <select onChange={e => procurarPorCategoria(e) }>
                   {categoria.map((categoria)=> {
                     return(
-                    <option onSelect={e => console.log(e.target.value)} value={categoria.nome}>{categoria.nome}</option>
+                    <option onSelect={e => setCategoriaNome(e.target.value)} value={categoria.nome}>{categoria.nome}</option>
                     )
                   })}
                  </select>
-              </form> */}
+              </form>
 
-              <form>
+              {/* <form>
                 <select 
-                  value={categoriaNome}
-                  onChange={e => procurarPorCategoria}>
+
+                  onChange={e => procurarPorCategoria(e)}
+                  onSelect={() => setCategoriaNome(categoriaNome)}
+                  >
                   {categoria.map((categoria)=> {
                     return(
                     <option >{categoria.nome}</option>
                     )
                   })}
                  </select>
-              </form>
+              </form> */}
             </div> 
 
             <div class="direita">      
               <form>
-               <p> <BiUserCircle size={22} />Usuário</p>
-               <p> <BiCart size={22} />Carrinho</p>
+               <Link to="/"><p> <BiUserCircle size={22} />Usuário</p></Link>
+               <Link to="/carrinho"> <p> <BiCart size={22} />Carrinho</p></Link>
               </form>
             </div>
           </Header>
@@ -190,36 +234,71 @@ const Produto_ = () => {
           <Main>  
 
             { categoriaFiltro.map(categoria => (
-              <div class="blockId" key={categoria.id}>
+              <div class="block" data-toggle="modal" data-target="#myModal" key={categoria.id}>
                 <img src={categoria.fotoLink}/> 
                 <strong>{categoria.nome}</strong>
                 <strong>{categoria.descricao}</strong>
               </div>
-            ))}   
+            ))}
+            
+            <container>  
            { produtoFiltro.map(produto => (
-              <div class="blockId" key={produto.id}>
-                <img src={produto.fotoLink}/> 
-                <strong>{produto.nome}</strong>
-                <strong>{produto.descricao}</strong>
-                <strong>{produto.valor}</strong>
+              <div class="block" data-toggle="modal" data-target="#myModal" key={produto.id}>
+                <img class="imagemId" src={produto.fotoLink}/> 
+                <p>{produto.nome}</p>
+                <p>{produto.descricao}</p>
+                <strong>Valor: R${produto.valor},00</strong>
               </div>
             ))}
 
             {/* <h1>{produtoId.nome}</h1> */}
-            <container>
-            { produtos.map(produto => (
-              <div class="block" key={produto.id}>
-                <img class="produtos" src={produto.fotoLink}/> <br/>
-                <strong>{produto.nome}</strong><br/>
-                <strong>{produto.descricao}</strong><br/>
-                <strong>{produto.valor}</strong>
+           
+            
+              { produtos.map(produto => (
+                <div onClick={() => mostraProdutosID(produto.id)} data-toggle="modal" data-target="#myModal"class="block" key={produto.id}>
+                  <img class="produtos" src={produto.fotoLink}/> <br/>
+                  <p>{produto.nome}</p>
+                  <p>{produto.descricao}</p><br/>
+                  <strong>Valor: R${produto.valor},00</strong>
+                </div>
+              ))}
+            </container>
+          
+            <div class="modal" id="myModal">
+                  <div class="modal-dialog">
+                  <div class="modal-content">
+
+            <div class="modal-header">
+              <h4 class="modal-title">{produtoId.nome}</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+
+            <div class="modal-body">
+
+              <img class="produtos" src={produtoId.fotoLink}/> <br/><br/>
+              <p className="descricao">{produtoId.descricao}</p>
+              <strong>Valor: R${produtoId.valor},00</strong>   
+                
+            </div>
+
+            <div class="modal-footer">
+                <Link to ></Link><button type="button" class="btn" onClick={() => adicionarProduto(produtoId)}>Adicionar no Carrinho</button>
+                <button type="button" class="btn" onClick={() => criarPedidoUnico(produtoId)}>Comprar</button>
+            </div>
+
               </div>
-            ))}
-          </container>
-          </Main>
+            </div>
+          </div>
+          </Main>   
           
           </>
       )
+
+      
+
+               
+            
 }
        
 export default Produto_;

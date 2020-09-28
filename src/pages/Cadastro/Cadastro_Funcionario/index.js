@@ -31,9 +31,9 @@ const Cadastro_Funcionario = () => {
 
     try {
 
-      await api.post("funcionario", parametros);
-      localStorage.setItem("@ECOMMERCE:funcionario", JSON.stringify(parametros));
-      history.push("/funcionario");
+      const resposta = await api.post("funcionario", parametros);
+      localStorage.setItem("@ECOMMERCE:funcionario", JSON.stringify(resposta.data));
+      window.location.reload();
       console.log("cadastro realizado com sucesso!");
 
     } catch (erro) {

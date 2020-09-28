@@ -2,10 +2,13 @@ import React from 'react';
 
 import { Container } from './styles';
 
+
+import logo from '../../../assets/Logo.png';
+
 const Header = (props) => {
     return(
         <Container>
-            <h1>Logo</h1>
+            <img src={logo}></img>
             <h2>{props.nome}</h2>
         </Container>
     )

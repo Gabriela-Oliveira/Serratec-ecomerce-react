@@ -222,11 +222,12 @@ const Funcionario = () => {
        
       return (
         <>
-        <header title="Lista de Tarefas">
-            <Link className="logo" to="/">
-              Sair
+        <Header title="Lista de Tarefas">
+            <h2>LOGO</h2>
+            <Link className="logo" to="/" onClick={() => {localStorage.removeItem('@ECOMMERCE:funcionario'); window.location.reload()}}>
+              Logout
             </Link>
-            </header>
+            </Header>
             <Tasks>
             <ul class="nav nav-tabs">
               <li class="nav-item teste">
