@@ -129,6 +129,7 @@ const Carrinho = () => {
     const criarPedido =
     async () => { 
         if(!localStorage.getItem('@ECOMMERCE:cliente')) {window.location.href = '/'; return}
+        if(!localStorage.getItem('@ECOMMERCE:listaPedido')){alert('Um pedido não pode ser feito sem items'); return}
         let listinha = [...itemsPedidoFormato];
         let lista2 = [...items];
         let total = total;
@@ -206,6 +207,7 @@ const Carrinho = () => {
     }
 
     const cancelarPedido = () => {
+        if(!itemsPedidoFormato) {alert('Não se pode cancelar algo que não existe'); return}
         items.splice(0, items.length);
         itemsPedidoFormato.splice(0, itemsPedidoFormato.length);
         localStorage.removeItem('@ECOMMERCE:produto');

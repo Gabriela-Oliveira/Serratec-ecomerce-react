@@ -89,18 +89,19 @@ const Produto_ = () => {
       console.log(produtoFiltro);
     }
 
-    function procurarPorCategoria(e){
-      e.preventDefault();
-      console.log(categoriaNome);
+    function procurarPorCategoria(nome){
+    
+      console.log(nome);
       let items = [];
 
       for (let produto of produtos){
-        if(produto.categoria.indexOf(categoriaNome) != -1){
+        if(produto.nomeCategoria.toUpperCase() === nome.toUpperCase()){
           items.push(produto);
         }
+
       }
       setCategoriaFiltro(items);
-      console.log(categoriaFiltro);
+      console.log(items);
     }
 
     
@@ -109,10 +110,10 @@ const Produto_ = () => {
         window.location.href = '/';
         return;
       }
-      console.log(JSON.parse(localStorage.getItem('@ECOMMERCE:cliente')));
-        let produtos = localStorage.getItem('@ECOMMERCE:produto') ? JSON.parse(localStorage.getItem('@ECOMMERCE:produto')) : [];
-          produtos.push(produto);
-          localStorage.setItem('@ECOMMERCE:produto', JSON.stringify(produtos));
+      console.logp(JSON.parse(localStorage.getItem('@ECOMMERCE:cliente')));
+        let listaProdutos = localStorage.getItem('@ECOMMERCE:produto') ? JSON.parse(localStorage.getItem('@ECOMMERCE:produto')) : [];
+          listaProdutos.push(produto);
+          localStorage.setItem('@ECOMMERCE:produto', JSON.stringify(listaProdutos));
     }
 
     const criarPedidoUnico = (produto) => {
@@ -168,10 +169,10 @@ const Produto_ = () => {
                 </form>
 
                 <form>
-                <select onChange={e => procurarPorCategoria(e) }>
+                <select onChange={e => procurarPorCategoria(e.target.value)}>
                   {categoria.map((categoria)=> {
                     return(
-                    <option onSelect={e => setCategoriaNome(e.target.value)} value={categoria.nome}>{categoria.nome}</option>
+                    <option  value={categoria.nome}>{categoria.nome}</option>
                     )
                   })}
                  </select>

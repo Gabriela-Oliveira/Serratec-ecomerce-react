@@ -16,7 +16,6 @@ const Categoria = () => {
 
 
 
-    // const [pedido, setPedido] = useState(new Pedido());
     const mostrarCategorias = useCallback(
         async () => {
             try {
