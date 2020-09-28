@@ -1,14 +1,15 @@
 import React , { useState, useCallback , useEffect } from 'react';
 import { FiCircle,  FiDelete } from "react-icons/fi";
 import {GrDocumentUpdate} from "react-icons/gr";
+import {IoMdAddCircle} from 'react-icons/io';
 import { Link } from 'react-router-dom';
 import api from '../../services/api';
-// import { Link } from 'react-router-dom';
-import { Form, Header , Tasks } from './styles';
+// import Header from '../../components/Topo/Header';
+
+import { Form , Tasks } from './styles';
 const Funcionario = () => {
 
     const [ mostrarCliente, setMostrarCliente ] = useState([]);
-    const [ mostrarClienteID, setMostrarClienteID ] = useState({});
     const [ mostrarFuncionario, setMostrarFuncionario ] = useState([]);
     const [ nomeFuncionario, setNomeFuncionario ] = useState('');
     const [ cpfFuncionario, setCpfFuncionario ] = useState('');
@@ -98,10 +99,10 @@ const Funcionario = () => {
                 try {
                     const resposta = await api.get(`funcionario`);
                     console.log("Funcionario encontrado com sucesso");
-                    setMostrarFuncionario(resposta.data);
+                    setMostrarFuncionario(resposta.data);                      
                 } catch (error) {
                     console.log("Erro ao encontrar Funcionario");
-                    erroMensagem(error);
+                    setErroMensagem(error);
                 }
           }
        const adcionarFuncionario = useCallback(
@@ -134,8 +135,9 @@ const Funcionario = () => {
           cpf: cpfFuncionario
         }
         try {
-          await api.put(`funcionario/${funcionario}`, parametros)
-          console.log("tamos tentando familia",parametros)
+          const resposta = await api.put(`funcionario/${funcionario}`, parametros);
+          localStorage.setItem("@ECOMMERCE:funcionario-cadastro",resposta);
+          console.log("tamos tentando familia",parametros);
       } catch (error) {
           setErroMensagem(error);
       }finally{
@@ -151,12 +153,15 @@ const Funcionario = () => {
         }
         mostrarTodosFuncionarios();
         }
-
-
-
         //aqui vai entrar a lista de produtos
         const [produto,setProduto] = useState([]);
         const [produtoNome,setProdutoNome] = useState('');
+        const [produtoDescricao,setProdutoDescricao] = useState('');
+        const [produtoEstoque,setProdutoEstoque] = useState(0);
+        const [produtoValor,setProdutovalor] = useState(0);
+        const [produtoImg,setProdutoImg] = useState('');
+        const [numeroCategoria,setNumeroCategoria] = useState(Number);
+
           const listaProdutos = 
             async () => {
                 try {
@@ -169,18 +174,24 @@ const Funcionario = () => {
                 }
           }
        const adcionarProduto = useCallback(
-           async (e) => {
-               e.preventDefault();
+           async (id) => {
+               id.preventDefault();
 
-               const parametros = {
-                
-              } 
+               const parametros =  {
+                nome: produtoNome,
+                descricao: produtoDescricao,
+                qtdEstoque: produtoEstoque,
+                valor: produtoValor,
+                idCategoria: 2,
+                idFuncionario: 3,
+                dataFabricacao: "2020-09-17T00:00:00Z",
+                fotoLink: produtoImg
+              }
               try {
-                  await api.post(`produto`, parametros);
-                  produto();
-
+                  const response = await api.post(`produto`, parametros);
+                  console.log("Adcionado com sucesso",response.data)
               } catch (error) {
-                  erroMensagem('Erro Funcionario ')
+                  setErroMensagem('Erro Funcionario ',error)
               }
            }
        )
@@ -206,11 +217,8 @@ const Funcionario = () => {
         }
   
       }
-        
-           
        const [resetar, setResete] = useState(null);
        const [resetarF, setReseteF] = useState(null);
-       const [resetarP, setReseteP] = useState(null);
        
       return (
         <>
@@ -220,21 +228,18 @@ const Funcionario = () => {
               Logout
             </Link>
             </Header>
-
             <Tasks>
-
             <ul class="nav nav-tabs">
               <li class="nav-item teste">
-                <a class="nav-link active" data-toggle="tab" href="#home">Home</a>
+                <a class="nav-link active" data-toggle="tab" href="#home">Clientes</a>
               </li>
               <li class="nav-item teste1">
-                <a class="nav-link" data-toggle="tab" href="#menu1">Menu 1</a>
+                <a class="nav-link" data-toggle="tab" href="#menu1">Funcionario</a>
               </li>
               <li class="nav-item teste2">
-                <a class="nav-link" data-toggle="tab" href="#menu2">Menu 2</a>
+                <a class="nav-link" data-toggle="tab" href="#menu2">Produtos</a>
               </li>
             </ul>
-
             <div class="tab-content">
               <form class="tab-pane container active" id="home">
               { mostrarCliente.map((cliente) => (
@@ -282,13 +287,16 @@ const Funcionario = () => {
                 <span>
                   { funcinario.nome ? (
                     <>
+                      <IoMdAddCircle onClick={() => setReseteF(funcinario.id)} type="button" data-toggle="modal" href="#adcionar-Produto">
+                        Adcionar Produto
+                      </IoMdAddCircle>
+
                       <FiDelete size={22} onClick={() => removerFuncionario(funcinario)} style={{marginRight: 10}} />
-                 
+
                       <GrDocumentUpdate onClick={() => setReseteF(funcinario.id)} type="button" data-toggle="modal" href="#funcionario">
                         Atualizar
                       </GrDocumentUpdate>
                     </>
-                    
                   ) : (
                     <FiCircle size={22} onClick={() => alert('helllo world')} />
                   )}
@@ -296,23 +304,31 @@ const Funcionario = () => {
               </div>
               )
             })}
-
               </form>
               <form class="tab-pane container fade" id="menu2">
               {produto.map( produto =>{
               return (
-                <div className="formulario" key={produto.id}>
+                <div className="formulario1" key={produto.id}>
                 <strong>Nome<br/>
                   {produto.nome}
-                </strong>             
+                </strong> 
+                <strong>descição<br/>
+                  {produto.descricao}
+                </strong> 
+                <strong>categoria<br/>
+                  {produto.nomeCategoria}
+                </strong> 
+                <strong>valor<br/>
+                  {produto.valor}
+                </strong> 
+                <strong>estoque<br/>
+                  {produto.qtdEstoque}
+                </strong> 
+                         
                 <span>
                   { produto.nome ? (
                     <>
                       <FiDelete size={22} onClick={() => removerProduto(produto)} style={{marginRight: 10}} />
-                 
-                      <GrDocumentUpdate onClick={() => setReseteP(produto.id)} type="button" data-toggle="modal" href="#produto">
-                        Atualizar
-                      </GrDocumentUpdate>
                     </>
                     
                   ) : (
@@ -325,7 +341,6 @@ const Funcionario = () => {
               </form>
             </div>
             </Tasks>
-            
             <div class="modal" id="cliente">
 
             <div class="modal-dialog">
@@ -409,35 +424,60 @@ const Funcionario = () => {
                 </div>
               </div>
             </div>
-            <div class="modal fade" id="produto">
+            <div class="modal fade" id="adcionar-Produto">
                 <div class="modal-dialog">
                 <div class="modal-content">
-
                   <div class="modal-header">
                     <h4 class="modal-title">Produto</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-
                   </div>
                   <div class="modal-body">
                     <form>
-
                     <input 
                         value={produtoNome} 
                         onChange={e => setProdutoNome(e.target.value)}
                         type="text"
-                        placeholder="Nome" 
+                        placeholder="Nome Produto" 
                       />
-                     <button type="button" onClick={() => atualizarProduto(resetarP)}> 
-                          atualizar
-                     </button>
+                    <input 
+                        value={produtoDescricao} 
+                        onChange={e => setProdutoDescricao(e.target.value)}
+                        type="text"
+                        placeholder="Nome Descricao" 
+                      />
+                    <input 
+                        value={produtoValor} 
+                        onChange={e => setProdutovalor(e.target.value)}
+                        type="number"
+                        placeholder="Valor Produto" 
+                      />
+                    <input 
+                        value={produtoEstoque} 
+                        onChange={e => setProdutoEstoque(e.target.value)}
+                        type="number"
+                        placeholder="produto estoque" 
+                      />
+                    <input 
+                        value={numeroCategoria} 
+                        onChange={e => setNumeroCategoria(e.target.value)}
+                        type="number"
+                        placeholder="numero da categoria(1 a 13)" 
+                      />
+                    <input
+                        id="img" 
+                        value={produtoImg} 
+                        onChange={e => {setProdutoImg(e.target.value)}}
+                        type="file"
+                        placeholder="Coloque aqui a URL da imagem" 
+                      />
+                     <button type="button" onClick={e => adcionarProduto(e)}> 
+                          Adcionar Produto
+                     </button> 
                     </form>
                   </div>
-
-
                   <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                   </div>
-
                 </div>
               </div>
             </div>
