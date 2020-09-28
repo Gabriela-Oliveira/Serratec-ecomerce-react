@@ -38,7 +38,7 @@ export const Header = styled.div`
         width: 100%;
         border-radius: 6px; 
         border: none;
-            padding-left: 2px;
+        padding-left: 2px;
     }
 
 

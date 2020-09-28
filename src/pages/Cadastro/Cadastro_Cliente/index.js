@@ -4,11 +4,13 @@ import { Link, useHistory } from "react-router-dom";
 
 import { TiArrowRightThick } from "react-icons/ti";
 
-import { Container, Form, Body, Footer, Infos } from "./styles";
+import { Container, Form, Body, Infos } from "./styles";
 
 import Header from '../../../components/Topo/Header';
 
 import api from "../../../services/api";
+
+import Footer from '../../../components/Footer';
 
 import swal from 'sweetalert';
 
@@ -121,7 +123,9 @@ const Cadastro_Cliente = () => {
         </button>
       </Form>
 
-      <Footer>Protegido pela familia Jonsons</Footer>
+      {/* <Footer>Protegido pela familia Jonsons</Footer> */}
+
+      <Footer/> 
     </Body>
   );
 };

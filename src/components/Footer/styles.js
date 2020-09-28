@@ -26,7 +26,7 @@ export const Footer = styled.div`
     }    
        
     img{
-        width: 10%;
+        width: 7%;
     }
 
     a:visited{

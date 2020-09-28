@@ -50,10 +50,10 @@ export const Form = styled.form`
     } 
 `;
 
-export const Footer = styled.footer`
-    display: flex;
-    justify-content: center;
-`;
+// export const Footer = styled.footer`
+//     display: flex;
+//     justify-content: center;
+// `;
 
 export const Infos = styled.div`
     max-width: 850px;

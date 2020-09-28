@@ -190,7 +190,7 @@ const Produto_ = () => {
 
             <div className="direita">      
               <form>
-               <Link to="/"><p> <BiUserCircle size={22} />Usuário</p></Link>
+                <Link onClick={() => localStorage.removeItem("@ECOMMERCE:cliente")} to="/"><p> <BiUserCircle size={22} />{cliente?cliente.nome:" Usuario"}</p></Link>
                <Link to="/carrinho"> <p> <BiCart size={22} />Carrinho</p></Link>
               </form>
             </div>
@@ -278,8 +278,8 @@ const Produto_ = () => {
             </div>
 
             <div className="modal-footer">
-                <button type="button" className="btn" onClick={() => adicionarProduto(produtoId)}>Adicionar no Carrinho</button>
-                <button type="button" className="btn" onClick={() => criarPedidoUnico(produtoId)}>Comprar</button>
+                <button type="button" className="btn" data-dismiss="modal" onClick={() => adicionarProduto(produtoId)}>Adicionar no Carrinho</button>
+                <button type="button" className="btn" data-dismiss="modal" onClick={() => criarPedidoUnico(produtoId)}>Comprar</button>
             </div>
 
               </div>
