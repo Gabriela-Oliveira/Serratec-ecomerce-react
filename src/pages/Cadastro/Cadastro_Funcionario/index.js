@@ -4,24 +4,24 @@ import { Link, useHistory } from "react-router-dom";
 
 import { TiArrowRightThick } from "react-icons/ti";
 
-import { Container, Form, Body, Footer, Infos, ErrorMessage } from "./styles";
+import { Container, Form, Body, Footer, Infos } from "./styles";
 
 import Header from '../../../components/Topo/Header';
 
 import api from "../../../services/api";
 
+import swal from 'sweetalert';
+
 const Cadastro_Funcionario = () => {
   const history = useHistory();
-
   const [nome, setNome] = useState("");
   const [cpf, setCpf] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
 
   async function cadastrar(evento) {
     evento.preventDefault();
 
     if (!nome || !cpf) {
-      setErrorMessage("Preencha os campos para continuar"); 
+     swal("Preencha os campos para continuar", "warning"); 
       return;
     } 
 
@@ -38,12 +38,11 @@ const Cadastro_Funcionario = () => {
       localStorage.setItem("@ECOMMERCE:funcionario", JSON.stringify(resposta.data));
       window.location.reload();
       console.log("cadastro realizado com sucesso!");
-      alert("Cadastro realizado com sucesso!");
+      swal("Obrsgado!", "cadastro realizado com sucesso!", "success");
 
     } catch (erro) {
 
-      console.log("Deu erro no cadastro");
-      setErrorMessage("Ocorreu um erro no cadastro, verifique se as informações passadas estao corretas")
+      console.log("Deu erro no cadastro", "error");
     }
   }
 
@@ -82,11 +81,6 @@ const Cadastro_Funcionario = () => {
         <button type="submit" id="link-continuar">
           Continuar
         </button>
-           { errorMessage &&                 
-                <ErrorMessage>
-                  <i>{errorMessage}</i>
-                </ErrorMessage>
-            }
       </Form>
 
       <Footer>Protegido pela familia Jonsons</Footer>

@@ -22,7 +22,8 @@
     "react-slick": "^0.27.11",
     "react-styled-components": "^0.1.11",
     "styled": "^1.0.0",
-    "styled-components": "^5.2.0"
+    "styled-components": "^5.2.0",
+    "sweetalert": "^2.1.2"
   },
   "scripts": {
     "start": "react-scripts start",
