@@ -91,20 +91,13 @@ export const Infos = styled.div`
         }
     }
 
-    /* span {
+    span {
 
         input {
             margin:20px 0;
             height: 15px;
             width: 20px;
         }
-    } */
+    }
 
-`;
-export const ErrorMessage = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-    color: red;
 `;
