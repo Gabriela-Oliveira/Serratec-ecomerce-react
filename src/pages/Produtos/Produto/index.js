@@ -103,10 +103,22 @@ const Produto_ = () => {
       console.log(categoriaFiltro);
     }
 
+    
+    const adicionarProduto = (produto) => {
+      if(!localStorage.getItem('@ECOMMERCE:cliente')){ 
+        window.location.href = '/';
+        return;
+      }
+      console.log(JSON.parse(localStorage.getItem('@ECOMMERCE:cliente')));
+        let produtos = localStorage.getItem('@ECOMMERCE:produto') ? JSON.parse(localStorage.getItem('@ECOMMERCE:produto')) : [];
+          produtos.push(produto);
+          localStorage.setItem('@ECOMMERCE:produto', JSON.stringify(produtos));
+    }
+
       useEffect(() => {
         mostraProdutos();
         mostraCategoria();
-        mostraProdutosID(3);
+        // mostraProdutosID();
       }, [mostraProdutos,  mostraCategoria, mostraProdutosID]);  
 
       
@@ -244,7 +256,7 @@ const Produto_ = () => {
             </div>
 
             <div class="modal-footer">
-                <Link to ></Link><button type="button" class="btn" >Adicionar no Carrinho</button>
+                <Link to ></Link><button type="button" class="btn" onClick={() => adicionarProduto(produtoId)}>Adicionar no Carrinho</button>
                 <button type="button" class="btn" >Comprar</button>
             </div>
 

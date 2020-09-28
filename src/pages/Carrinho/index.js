@@ -8,7 +8,7 @@ import Header from '../../components/Topo/Header';
 import Pedido from '../../components/Pedido';
 
 const Carrinho = () => {
-    const [usuario, setUsuario] = useState({id: 1, nome: 'salve rapaziada'});
+    const [usuario, setUsuario] = useState(JSON.parse(localStorage.getItem('@ECOMMERCE:cliente')));
     const [pedidos, setPedidos] = useState([]);
     const [items, setItems] = useState([]);
     const [itemsPedidoFormato, setItemsPedidoFormato] = useState([]);
@@ -125,14 +125,13 @@ const Carrinho = () => {
 
         // }
 
-        let algo = [
-        
-        ]
+
     const criarPedido =
     async () => { 
+        if(!localStorage.getItem('@ECOMMERCE:cliente')) {window.location.href = '/'; return}
         let listinha = [...itemsPedidoFormato];
         let lista2 = [...items];
-        let total = 2000;
+        let total = total;
 
         listinha.map(item => {
             total += item.subTotal;
@@ -141,45 +140,30 @@ const Carrinho = () => {
         let pedido = {
     
             dataPedido: "2020-09-10T12:13:12Z",
-            idCliente: 2,
-            itens: [
-              {
-                idProduto: 2,
-                nomeProduto: "Escrivaniha 1000",
-                qtdItens: 1,
-                valor: 1770.0,
-                subTotal: 1770.0
-              },
-              {
-                idProduto: 1,
-                nomeProduto: "Cadeira bx9",
-                qtdItens: 1,
-                valor: 835.0,
-                subTotal: 835.0
-              }
-            ],
-            nomeCliente: "Guilherme 167",
+            idCliente: usuario.id,
+            itens: itemsPedidoFormato,
+            nomeCliente: usuario.nome,
             pedidoStatus: "PAGO",
-            total: 2605.0
+            total: total
         };
 
 
         try {
             await api.post(`pedido`, pedido)
 
-            // for(let item of listinha){
-            //     let produtoAtualizado = lista2.find(produto => item.idProduto === produto.id);
-            //     if(!produtoAtualizado) return;
+            for(let item of listinha){
+                let produtoAtualizado = lista2.find(produto => item.idProduto === produto.id);
+                if(!produtoAtualizado) return;
     
-            //     produtoAtualizado.qtdEstoque -= item.qtdItens;
-            //     console.log(pedido);
+                produtoAtualizado.qtdEstoque -= item.qtdItens;
+                console.log(pedido);
 
-            //     const resposta = api.put(`produto/${produtoAtualizado.id}`, produtoAtualizado);
+                const resposta = api.put(`produto/${produtoAtualizado.id}`, produtoAtualizado);
 
-            //     console.log(resposta);
-            // }
+                console.log(resposta);
+            }
                 } catch (error) {
-                    console.log(error.message)
+                    console.log(error.message);
                 }
             }
 
@@ -232,28 +216,8 @@ const Carrinho = () => {
         obterProdutos();
     }
 
-    // const adicionarProduto = () => {
-    //     let produtos = localStorage.getItem('@ECOMMERCE:produto') ? JSON.parse(localStorage.getItem('@ECOMMERCE:produto')) : [];
-    //     let prod = {
-    //         "id": 1,
-    //         "nome": "Cadeira bx9",
-    //         "descricao": "adeira ergonomica confortavel",
-    //         "qtdEstoque": 5,
-    //         "valor": 849.9,
-    //         "idCategoria": 2,
-    //         "nomeCategoria": "ESCRITORIO",
-    //         "idFuncionario": 3,
-    //         "nomeFuncionario": "Joaquim Manoel",
-    //         "dataFabricacao": "2019-10-01T00:00:00Z",
-    //         "fotoLink": "http://residencia-ecommerce.us-east-1.elasticbeanstalk.com/produto/1/foto"
-    //       }
-
-    //       produtos.push(prod);
-    //       localStorage.setItem('@ECOMMERCE:produto', JSON.stringify(produtos));
-    // }
     useEffect(
         () => {
-            localStorage.setItem('@ECOMMERCE:produto', JSON.stringify(lista));
             if(!localStorage.getItem('@ECOMMERCE:produto')) return;
 
             obterProdutos();

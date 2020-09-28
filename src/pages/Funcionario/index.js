@@ -216,7 +216,7 @@ const Funcionario = () => {
         <>
         <Header title="Lista de Tarefas">
             <h2>LOGO</h2>
-            <Link className="logo" to="/">
+            <Link className="logo" to="/" onClick={() => {localStorage.removeItem('@ECOMMERCE:funcionario'); window.location.reload()}}>
               Logout
             </Link>
             </Header>
