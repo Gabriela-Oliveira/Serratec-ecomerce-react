@@ -78,7 +78,7 @@ const Carrinho = () => {
         if(!localStorage.getItem('@ECOMMERCE:listaPedido')){alert('Um pedido não pode ser feito sem items'); return}
         let listinha = [...itemsPedidoFormato];
         let lista2 = [...items];
-        let total = total;
+        let total = 0;
 
         listinha.map(item => {
             total += item.subTotal;
@@ -124,7 +124,9 @@ const Carrinho = () => {
 
         let itemASerRemovido = itemsPedidoFormato.find(item => item.idProduto === id);
         itemsPedidoFormato.splice(itemsPedidoFormato.indexOf(itemASerRemovido), 1);
+        items.splice(items.indexOf(itemASerRemovido), 1);
         localStorage.setItem('@ECOMMERCE:alteracoes', JSON.stringify(itemsPedidoFormato));
+        localStorage.setItem('@ECOMMERCE:listaPedido', JSON.stringify(itemsPedidoFormato));
         localStorage.setItem('@ECOMMERCE:produto', JSON.stringify(items));
     
         obterProdutos();
@@ -175,16 +177,46 @@ const Carrinho = () => {
 
     useEffect(
         () => {
-            setItemsPedidoFormato(JSON.parse(localStorage.getItem('@ECOMMERCE:listaPedido')));
+            // setItemsPedidoFormato(JSON.parse(localStorage.getItem('@ECOMMERCE:listaPedido')));
 
            criarModeloProduto();
 
         }, [items]
     )
 
+    useEffect(
+
+        () => {
+            if(!localStorage.getItem('@ECOMMERCE:alteracoes')) return;
+            
+            let listaAlteracoes = JSON.parse(localStorage.getItem('@ECOMMERCE:alteracoes'));
+            let listaPedido = JSON.parse(localStorage.getItem('@ECOMMERCE:listaPedido'));
+
+            let listaRecebidos = [];
+            let listaTotal = [];
+
+            if(listaAlteracoes.length === listaPedido.length) return;
+            for(let count = listaAlteracoes.length; count < listaPedido.length; count++){
+                            console.log(count);
+                            listaRecebidos.push(listaPedido[count]);                
+                }
+                console.log(listaRecebidos);
+
+                listaTotal = [...listaAlteracoes, ...listaRecebidos];
+
+                console.log(listaTotal);
+
+                localStorage.setItem('@ECOMMERCE:alteracoes', JSON.stringify(listaTotal));
+
+            setItemsPedidoFormato(JSON.parse(localStorage.getItem('@ECOMMERCE:alteracoes')));
+
+                
+        }, [items]
+    )
+
     return(
         <>
-        <Header nome='Página de pedidos'/>
+        <Header nome='Página de pedidos' />
         <ul className="nav nav-tabs">
             <li className="nav-item">
                 <a className="nav-link active" data-toggle="tab" href="#carrinho">Carrinho</a>
@@ -199,39 +231,21 @@ const Carrinho = () => {
             <div className="tab-pane container active" id="carrinho">
 
             <Container>
+                <a className="voltar" href="/produto">Voltar as compras</a>
         {
             !localStorage.getItem('@ECOMMERCE:listaPedido') ? <h1> Nada por aqui </h1> :
             itemsPedidoFormato.map(item => {
                 return(
-                    // <Item>
-                    // <strong>{item.nomeProduto}</strong>
-                    // <strong>{item.valor}</strong>
-                    // <strong>{item.subTotal}</strong>
-                    // <div>
-                    // <button onClick={ () => {
-                    //     subtrair(item);
-                    // }}
-                    // >-</button>
-                    //     <strong>{item.qtdItens}</strong>
-                    // <button onClick={() => {
-                    //     somar(item);
-                    // }}
-                    // >+</button>
-                    // </div>
-
-                    // <button className="excluir" onClick={() => {
-                        
-                    //     remover_da_lista(item.idProduto)
-                    //     }}>Excluir</button>
-                    // </Item>
 
                     <Item item={item} somar={somar} subtrair={subtrair} remover_da_lista={remover_da_lista} />
                 )
 
             })
         }
-            <button onClick={cancelarPedido}>Cancelar Pedido</button>
-            <button onClick={criarPedido}>pedido</button>
+        <div className="buttons">
+            <button onClick={cancelarPedido}>Limpar carrinho</button>
+            <button onClick={criarPedido}>Concluir compras</button>
+        </div>
 
         </Container>
 
@@ -241,7 +255,6 @@ const Carrinho = () => {
                     localStorage.getItem('@ECOMMERCE:pedidosCliente') ? JSON.parse(localStorage.getItem('@ECOMMERCE:pedidosCliente').split(',')).map(pedido => {
                         return(
                         <div>
-                        
                             <Pedido pedido={pedido}/>
                         </div>
                         )

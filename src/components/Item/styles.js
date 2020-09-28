@@ -19,8 +19,7 @@ export const Item = styled.div`
         height: 100%;
         border-radius: 5px;
 
-        button{
-            background-color: green;
+        button{        
             width: 30px;
             height: 41px;
             border: 0;
