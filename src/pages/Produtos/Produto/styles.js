@@ -1,9 +1,14 @@
 import styled from 'styled-components';
 
 export const ContainerMain = styled.div`
-    .jEfpl{
-        position: static;
-    }
+    
+.feaOEz {
+    overflow-x: auto;
+    display: flex;
+    border: 1px solid;
+    position: static;
+    width: 100%;
+}
 `;
 
 export const Header = styled.div`
