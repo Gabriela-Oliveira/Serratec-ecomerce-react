@@ -76,7 +76,7 @@ const Carrinho = () => {
     const criarPedido =
     async () => { 
         if(!localStorage.getItem('@ECOMMERCE:cliente')) {window.location.href = '/'; return}
-        if(!localStorage.getItem('@ECOMMERCE:listaPedido')){alert('Um pedido não pode ser feito sem items'); return}
+        if(!localStorage.getItem('@ECOMMERCE:listaPedido')){swal('Atenção', 'Um pedido não pode ser feito sem items', 'warning'); return}
         let listinha = [...itemsPedidoFormato];
         let lista2 = [...items];
         let total = 0;
