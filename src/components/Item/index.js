@@ -8,9 +8,9 @@ const Item = ({ item, somar, subtrair, remover_da_lista }) => {
     
     return(
         <Container>
-                    <strong>{item.nomeProduto}</strong>
-                    <strong>{item.valor}</strong>
-                    <strong>{item.subTotal}</strong>
+                    <strong>Nome: {item.nomeProduto}</strong>
+                    <strong>Valor: {item.valor}</strong>
+                    <strong>Subtotal: {item.subTotal}</strong>
                     <div>
                     <button onClick={ () => {
                         subtrair(item);

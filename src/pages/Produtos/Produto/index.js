@@ -3,6 +3,8 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { BiUserCircle, BiCart } from "react-icons/bi";
 
 import { Link } from 'react-router-dom';
+import swal from 'sweetalert';
+
 
 import img1 from '../img/1.png'
 import img2 from '../img/2.png'
@@ -120,13 +122,13 @@ const Produto_ = () => {
           localStorage.setItem('@ECOMMERCE:produto', JSON.stringify(listaProdutos));
     }
 
-    const criarPedidoUnico = (produto) => {
+    const criarPedidoUnico = async (produto) => {
       if(!localStorage.getItem('@ECOMMERCE:cliente')){ 
         window.location.href = '/';
         return;
       }
+
       const { id, nome, valor} = produto;
-      let lista = [];
       let produtoModelo = {
         idProduto: id,
         nomeProduto: nome,
@@ -134,17 +136,24 @@ const Produto_ = () => {
         valor: valor,
         subTotal: valor
         }
-      lista.push(produtoModelo);
+      let lista = [produtoModelo];
+      
       let pedido = {
           dataPedido: "2020-09-27T20:10:10Z",
-          pedidoStatus: "EM_ANDAMENTO",
           idCliente: cliente.id,
+          itens: lista,
           nomeCliente: cliente.nome,
-          itens: lista
-
+          pedidoStatus: "PAGO",
+          total: produtoModelo.subTotal,
       };
 
-      console.log(pedido);
+    try{
+      await api.post(`pedido`, pedido);
+    } catch(error){
+      console.log(error.message);
+    } finally{
+      swal('Pedido feito com sucesso', 'Compra realizada, parabéns!', 'success');
+    }
 
   }
 

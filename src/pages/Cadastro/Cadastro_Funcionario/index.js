@@ -38,7 +38,7 @@ const Cadastro_Funcionario = () => {
       localStorage.setItem("@ECOMMERCE:funcionario", JSON.stringify(resposta.data));
       window.location.reload();
       console.log("cadastro realizado com sucesso!");
-      swal("Obrsgado!", "cadastro realizado com sucesso!", "success");
+      swal("Obrigado!", "cadastro realizado com sucesso!", "success");
 
     } catch (erro) {
 

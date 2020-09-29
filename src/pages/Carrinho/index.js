@@ -190,6 +190,12 @@ const Carrinho = () => {
     )
 
     useEffect(
+        () => {
+            buscarPedidos()
+        }, [buscarPedidos]
+    )
+
+    useEffect(
 
         () => {
             if(!localStorage.getItem('@ECOMMERCE:alteracoes')) return;
