@@ -6,7 +6,7 @@ import api from '../../services/api'
 import { /*Item*/ Carrinho as Container } from './styles';
 import Header from '../../components/Topo/Header';
 import Pedido from '../../components/Pedido';
-
+import Footer from '../../components/Footer';
 import Item from '../../components/Item';
 
 const Carrinho = () => {
@@ -263,7 +263,7 @@ const Carrinho = () => {
             </div>
             </div>
 
-
+        <Footer/>        
         </>
     )
 }

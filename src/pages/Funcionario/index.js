@@ -5,6 +5,7 @@ import {GrDocumentUpdate} from "react-icons/gr";
 import {IoMdAddCircle} from 'react-icons/io';
 import { Link } from 'react-router-dom';
 import api from '../../services/api';
+import Footer from '../../components/Footer';
 // import Header from '../../components/Topo/Header';
 
 import { ContainerMain, Form , Tasks } from './styles';
@@ -222,6 +223,7 @@ const Funcionario = () => {
        const [resetarF, setReseteF] = useState(null);
        
       return (
+        
         <ContainerMain>
         <header title="Lista de Tarefas">
             <h2>LOGO</h2>
@@ -488,7 +490,10 @@ const Funcionario = () => {
                 </div>
               </div>
             </div>
+
+         <Footer id="footer"/>     
         </ContainerMain>
+      
       )
 }
 

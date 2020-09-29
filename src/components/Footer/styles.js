@@ -11,6 +11,11 @@ export const Footer = styled.div`
     justify-content: center;
     align-items: center;
 
+    bottom: 0;
+    position: fixed;
+    width: 100%;
+    text-align: center;
+
     p:hover{
         transform:translateX(0.1px);
         transition: 0.4s;

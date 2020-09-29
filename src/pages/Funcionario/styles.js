@@ -2,6 +2,12 @@ import styled from 'styled-components';
 import { shade } from 'polished';
 export const ContainerMain = styled.div `
 
+.feaOEz{
+        position: static;
+        margin-top: 40px;
+    }
+    
+
 button, input, optgroup, select, textarea {
     margin: 0px;
     font-family: inherit;
@@ -90,7 +96,6 @@ button:hover {
 
 
 `
-
 
 export const Form = styled.form`
   margin-top: 25px;
