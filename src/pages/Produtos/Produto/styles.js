@@ -104,6 +104,7 @@ export const Main = styled.div`
     overflow-x: auto;
     display:flex;
     
+    
 
     .produtos{
         width: 200px;
@@ -131,6 +132,7 @@ export const Main = styled.div`
     }
 
     .block:hover{
+        transition: .4s;
         box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.2);
     }
 
