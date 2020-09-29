@@ -35,37 +35,33 @@ const Login_Funcionario = () => {
     
         try {
     
-          const listaFuncionario = await api.get("funcionario");
+          const resposta = await api.get("funcionario");
           console.log("Tudo certo!");
-          listadeFunc = listaFuncionario;
+          listadeFunc = resposta.data;
           console.log(listadeFunc.data)
     
         } catch (erro) {
     
-          console.log("Nao peguei nada na api nao nego mals aew kkk");
+          console.log(erro.message);
     
         }
     
-        listadeFunc.data.map((func) => {
-    
-            if(func.nome == nomeFuncionario && func.cpf == cpf) {
-    
-                swal("Login realizado com suceso!", "success");
-                setCarregando(false);
-                setCpf("");
-                setNomeFuncionario("");
-                localStorage.setItem("@ECOMMERCE:funcionario", JSON.stringify(func));
-                window.location.reload();
-    
-            } else {
-                swal("Usuario ou senha invalido!", "error");
+        let funcionarioAchado = listadeFunc.find(funcionario => funcionario.nome === nomeFuncionario && funcionario.cpf === cpf)    
+            if(!funcionarioAchado) {
+              swal("Erro", "Usuario ou senha invalido!", "error");
                 setCarregando(false);
                 setCpf("");
                 setNomeFuncionario("");
                 return;
-            } 
-        })
-      };
+                
+            }               
+                swal("Tudo Certo!","Login realizado com suceso!", "success");
+                setCarregando(false);
+                setCpf("");
+                setNomeFuncionario("");
+                localStorage.setItem("@ECOMMERCE:funcionario", JSON.stringify(funcionarioAchado));
+                window.location.reload();
+        };
 
     return(
       <>
