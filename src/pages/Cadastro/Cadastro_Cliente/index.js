@@ -41,20 +41,21 @@ const Cadastro_Cliente = () => {
     );
 
     const parametros = {
-      nome: nome,
-      usuario: nomeUsuario,
-      cpf: cpf,
-      email: email,
+      nome: nome.toString(),
+      usuario: nomeUsuario.toString(),
+      cpf: cpf.toString(),
+      email: email.toString(),
       dataNascimento: "1992-02-01T00:00:00Z",
-      endereco: { 
-        rua: "Rua Jonsons", 
-        numero: "0", 
-        complemento: "Casa", 
-        bairro: "Parque do Ingá", 
-        cidade: "Teresopolis", 
-        estado: "RJ", 
-        cep: "25961225"
-    }};    
+      endereco: {
+        rua: "Rua dos Bobos",
+        numero: "0",
+        complemento: "",
+        bairro: "Castanheira",
+        cidade: "Metropolis",
+        estado: "SP",
+        cep: "23451234"
+      }
+    };    
 
     try {
       
@@ -63,7 +64,7 @@ const Cadastro_Cliente = () => {
       swal("Obrigado!", "cadastro realizado com sucesso!", "success");
       history.push("/produto");
     } catch (erro) {
-      console.log("Deu erro no cadastro");
+      console.log(erro.message);
       swal("Erro!", "Erro no cadastro", "error");
     }
   }

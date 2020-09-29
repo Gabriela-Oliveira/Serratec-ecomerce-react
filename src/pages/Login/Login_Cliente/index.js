@@ -16,11 +16,11 @@ const Login_Cliente = () => {
   const [nomeUsuario, setNomeUsuario] = useState("");
   const [cpf, setCpf] = useState("");
   const [carregando, setCarregando] = useState(false);
-  let listadeUsuarios = [];
-
+  let listaUsuarios = [];
   const logIn = async (e) => {
     e.preventDefault();
     setCarregando(true);
+   
 
     if(nomeUsuario == "" || cpf == "") {
         swal("Atenção", "Preencha todos os campos antes de continuar", "warning");
@@ -30,35 +30,32 @@ const Login_Cliente = () => {
 
     try {
 
-      const listaUsuarios = await api.get("cliente");
+      const resposta = await api.get("cliente");
       console.log("Tudo certo!");
-      listadeUsuarios = listaUsuarios;
+      listaUsuarios = resposta.data;
+      console.log(listaUsuarios);
       
     } catch (erro) {
 
       swal("Erro", "Erro no cadastro, suas informações nao foram preenchidas corretamente", "error");
-      console.log("Nao peguei nada na api nao nego mals aew kkk");
+      console.log(erro.message);
     }
 
-    listadeUsuarios.data.map((usuario) => {
 
-        if(usuario.usuario == nomeUsuario && usuario.cpf == cpf) {
-          setCarregando(false);
-          setCpf("");
-          setNomeUsuario("");
-          localStorage.setItem("@ECOMMERCE:cliente", JSON.stringify(usuario));
-          history.push("/produto")
-          swal("Tudo certo","Login realizado com suceso!", "success");
-          return;
-          
-        }
-          swal("Atenção", "Usuario ou senha invalido!", "error");
-          setCarregando(false);
-          setCpf("");
-          setNomeUsuario("");
-          return;
-           
-    })
+    let usuarioAchado = listaUsuarios.find(usuario => usuario.usuario === nomeUsuario && usuario.cpf === cpf);
+    if(!usuarioAchado){
+      swal("Atenção", "Usuario ou senha invalido!", "error");
+      setCarregando(false);
+      setCpf("");
+      setNomeUsuario("");
+      return;
+    }
+    setCarregando(false);
+    setCpf("");
+    setNomeUsuario("");
+    localStorage.setItem("@ECOMMERCE:cliente", JSON.stringify(usuarioAchado));
+    history.push("/produto")
+    swal("Tudo certo","Login realizado com suceso!", "success");
   };
 
   return (

@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
 // import moment from 'moment';
+import swal from 'sweetalert';
 
 import api from '../../services/api'
 
@@ -111,6 +112,10 @@ const Carrinho = () => {
             }
                 } catch (error) {
                     console.log(error.message);
+                } 
+                finally{
+                    swal('Pedido feito!', 'Parabéns seu pedido foi feito!', 'success');
+                    cancelarPedido();
                 }
             }
 

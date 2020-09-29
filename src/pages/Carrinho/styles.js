@@ -20,6 +20,7 @@ export const Carrinho = styled.div`
             border: 0;
             width: 200px;
             height: 40px;
+            outline: none;
 
             &:nth-child(2){
                 background-color: blue;
