@@ -123,7 +123,7 @@ const Carrinho = () => {
 
     const remover_da_lista = (id) => {
         if(itemsPedidoFormato.length === 1) {
-            alert('Se deixa excluir todos os items do pedido, por favor cancele o mesmo!');
+            swal('Atenção!', 'Se deixa excluir todos os items do pedido, por favor cancele o mesmo!', 'warning');
             return;
         }
 
@@ -160,7 +160,7 @@ const Carrinho = () => {
     }
 
     const cancelarPedido = () => {
-        if(!itemsPedidoFormato) {alert('Não se pode cancelar algo que não existe'); return}
+        if(!itemsPedidoFormato) {swal('Atenção!', 'Não se pode cancelar algo que não existe', 'warning'); return}
         items.splice(0, items.length);
         itemsPedidoFormato.splice(0, itemsPedidoFormato.length);
         localStorage.removeItem('@ECOMMERCE:produto');

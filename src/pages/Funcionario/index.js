@@ -5,7 +5,7 @@ import {IoMdAddCircle} from 'react-icons/io';
 import { Link } from 'react-router-dom';
 import api from '../../services/api';
 import Footer from '../../components/Footer';
-// import Header from '../../components/Topo/Header';
+import Header from '../../components/Topo/Header';
 
 import { ContainerMain, Form , Tasks } from './styles';
 const Funcionario = () => {
@@ -78,7 +78,8 @@ const Funcionario = () => {
           }
           
         }
-       const removerCliente = async (cliente) => {
+       const removerCliente = async (cliente, e) => {
+         e.preventDefault();
             try {
                 await api.delete(`/cliente/${cliente.id}`);
                 console.log("Cliente deletado com sucesso")
@@ -122,7 +123,8 @@ const Funcionario = () => {
         mostrarTodosFuncionarios();
       }
       }
-       const removerFuncionario = async (funcinario) => {
+       const removerFuncionario = async (funcinario, e) => {
+         e.preventDefault();
         try {
             await api.delete(`funcionario/${funcinario.id}`);
             console.log("funcionario deletado com sucesso")
@@ -198,7 +200,8 @@ const Funcionario = () => {
     }
 
      
-       const removerProduto = async (produto) => {
+       const removerProduto = async (produto, e) => {
+        e.preventDefault();
         try {
             await api.delete(`produto/${produto.id}`);
             console.log("produto deletado com sucesso")
@@ -216,12 +219,10 @@ const Funcionario = () => {
       return (
         
         <ContainerMain>
-        <header title="Lista de Tarefas">
-            <h2>LOGO</h2>
-            <Link className="logo" to="/" onClick={() => {localStorage.removeItem('@ECOMMERCE:funcionario'); window.location.reload()}}>
+        <Header nome={<Link className="logo" to="/" onClick={() => {localStorage.removeItem('@ECOMMERCE:funcionario'); window.location.reload()}}>
               Logout
-            </Link>
-            </header>
+            </Link>}>
+            </Header>
             <Tasks>
             <ul class="nav nav-tabs">
               <li class="nav-item teste">
@@ -253,7 +254,7 @@ const Funcionario = () => {
                   <span>
                     { cliente.nome ? (
                       <>
-                        <button size={22} onClick={() => removerCliente(cliente)} style={{marginRight: 10}} >
+                        <button size={22} onClick={(e) => removerCliente(cliente, e)} style={{marginRight: 10}} >
                           Excluir
                           </button>
                 
@@ -290,7 +291,7 @@ const Funcionario = () => {
                       <IoMdAddCircle onClick={() => setReseteF(funcinario.id)} type="button" data-toggle="modal" href="#adcionar-Produto">
                       </IoMdAddCircle>
 
-                      <button size={22} onClick={() => removerFuncionario(funcinario)} style={{marginRight: 10}}>
+                      <button size={22} onClick={(e) => removerFuncionario(funcinario, e)} style={{marginRight: 10}}>
                         Deletar
                         </button>
 
@@ -331,7 +332,7 @@ const Funcionario = () => {
                     <button onClick={() => setReseteP(produto.id)} type="button" data-toggle="modal" href="#atualizar-Produto">
                         Atualizar
                       </button>
-                      <FiDelete size={22} onClick={() => removerProduto(produto)} style={{marginRight: 10}} />
+                      <FiDelete size={22} onClick={(e) => removerProduto(produto, e)} style={{marginRight: 10}} />
 
                     </>
                     

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { shade } from 'polished';
 export const ContainerMain = styled.div `
-a {
+a{
   color: #fff;
 }
 button, input, optgroup, select, textarea {

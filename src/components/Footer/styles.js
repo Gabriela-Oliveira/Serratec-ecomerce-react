@@ -12,7 +12,7 @@ export const Footer = styled.div`
     align-items: center;
 
     bottom: 0;
-    position: fixed;
+    position: static;
     width: 100%;
     text-align: center;
 
