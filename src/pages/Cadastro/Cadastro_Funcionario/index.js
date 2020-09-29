@@ -23,7 +23,7 @@ const Cadastro_Funcionario = () => {
     evento.preventDefault();
 
     if (!nome || !cpf) {
-     swal("Preencha os campos para continuar", "warning"); 
+     swal("", "Preencha os campos para continuar", "warning"); 
       return;
     } 
 
@@ -43,8 +43,8 @@ const Cadastro_Funcionario = () => {
       swal("Obrigado!", "cadastro realizado com sucesso!", "success");
 
     } catch (erro) {
-
       console.log("Deu erro no cadastro", "error");
+      swal("Erro", "Erro no cadastro, campos nao preenchidos corretamentes", "error");
     }
   }
 
