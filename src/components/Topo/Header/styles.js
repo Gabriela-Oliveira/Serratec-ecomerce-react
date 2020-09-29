@@ -9,9 +9,6 @@ export const Container = styled.div`
 
     
     img {
-        /* width: 250px;
-        height: 125px;
-        margin-bottom: 12px; */
         width: 15%;
         margin-left: 30px;
     }

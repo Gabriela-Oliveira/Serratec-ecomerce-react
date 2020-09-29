@@ -124,8 +124,6 @@ const Cadastro_Cliente = () => {
         </button>
       </Form>
 
-      {/* <Footer>Protegido pela familia Jonsons</Footer> */}
-
       <Footer/> 
     </Body>
   );

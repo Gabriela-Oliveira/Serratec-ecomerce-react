@@ -1,19 +1,32 @@
 import styled from 'styled-components';
 import { shade } from 'polished';
 export const ContainerMain = styled.div `
-
+a {
+  color: #fff;
+}
 button, input, optgroup, select, textarea {
-    margin: 0px;
+  margin: 0px;
     font-family: inherit;
     font-size: inherit;
     line-height: inherit;
     width: 100%;
-    /* margin: 4vh; */
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     outline: none;
     border: none;
     border-bottom: 1px solid #0158BF;
+    border-radius: 5px;
+    text-align: center;
+
+    ::placeholder {
+      color: rgba(0, 0, 0, .5);
+    }
 }
+.modal-title {
+    margin-bottom: 0;
+    line-height: 1.5;
+    margin: auto;
+}
+
 .modal-header .close {
     padding: 1rem 1rem;
     margin: -1rem -1rem -1rem auto;
@@ -90,7 +103,6 @@ button:hover {
 
 
 `
-
 
 export const Form = styled.form`
   margin-top: 25px;
@@ -195,6 +207,20 @@ export const Tasks = styled.div`
     text-decoration: none;
     display: flex;
     align-items: center;
+    transition: 1s;
+    button{
+      border: none;
+      width: 100px;
+      border-radius: 5px;
+      height: 32px;
+      transition: 1s;
+      margin-bottom: 0rem;
+      margin-right: 17px;
+      }
+      button:hover {
+        background: #0158BF;
+        color: #FFF;
+      }
     
     margin-bottom: 20px;
     & + div.formulario1{
@@ -239,8 +265,20 @@ export const Tasks = styled.div`
     text-decoration: none;
     display: flex;
     align-items: center;
-    
     margin-bottom: 20px;
+    transition: 1s;
+    button{
+      border: none;
+      width: 100px;
+      border-radius: 5px;
+      height: 32px;
+      transition: 1s;
+      margin-bottom: 0rem;
+      }
+      button:hover {
+        background: #0158BF;
+        color: #FFF;
+      }
     & + div.formulario{
       margin-bottom: 20px;
       transition: border-color 0.3s linear 0.1s ,transform 0.3s;

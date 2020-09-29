@@ -1,10 +1,10 @@
 import React , { useState, useCallback , useEffect } from 'react';
 // import { Container } from 'react-bootstrap';
 import { FiCircle,  FiDelete } from "react-icons/fi";
-import {GrDocumentUpdate} from "react-icons/gr";
 import {IoMdAddCircle} from 'react-icons/io';
 import { Link } from 'react-router-dom';
 import api from '../../services/api';
+import Footer from '../../components/Footer';
 // import Header from '../../components/Topo/Header';
 
 import { ContainerMain, Form , Tasks } from './styles';
@@ -59,8 +59,8 @@ const Funcionario = () => {
             dataNascimento: "1992-02-01T00:00:00Z",
             endereco: {
               rua: "Rua dos Bobos",
-              numero: "0",
-              complemento: "",
+              numero: "152",
+              complemento: "perdido no espaço",
               bairro: "Castanheira",
               cidade: "Metropolis",
               estado: "SP",
@@ -88,15 +88,14 @@ const Funcionario = () => {
             mostrarClientes();
         }
   
-    useEffect(() => {
-      mostrarClientes();
-      mostrarTodosFuncionarios();
-      listaProdutos();
-     },[mostrarClientes])
-
-       const mostrarTodosFuncionarios = 
-
-            async () => {
+          useEffect(() => {
+          mostrarClientes();
+          mostrarTodosFuncionarios();
+          listaProdutos();
+         },[mostrarClientes])
+        
+       const mostrarTodosFuncionarios =
+         async () => {
                 try {
                     const resposta = await api.get(`funcionario`);
                     console.log("Funcionario encontrado com sucesso");
@@ -105,32 +104,10 @@ const Funcionario = () => {
                     console.log("Erro ao encontrar Funcionario");
                     setErroMensagem(error);
                 }
-          }
-       const adcionarFuncionario = useCallback(
-           async (e) => {
-               e.preventDefault();
+          };
 
-               const parametros = {
-                nome: nomeFuncionario,
-                cpf: cpfFuncionario
-              } 
-
-              if(!nomeFuncionario && !cpfFuncionario){
-                setErroMensagem("Nome ou CPF vazios !")
-                return;
-              }
-              setErroMensagem('');
-
-              try {
-                  await api.post(`/funcionario`, parametros);
-                  mostrarFuncionario();
-
-              } catch (error) {
-                  erroMensagem('Erro Funcionario ')
-              }
-           }
-       )
-       const atualizarFuncionario = async (funcionario) => {
+       const atualizarFuncionario = 
+       async (funcionario) => {
         const parametros = {
           nome: nomeFuncionario,
           cpf: cpfFuncionario
@@ -158,8 +135,8 @@ const Funcionario = () => {
         const [produto,setProduto] = useState([]);
         const [produtoNome,setProdutoNome] = useState('');
         const [produtoDescricao,setProdutoDescricao] = useState('');
-        const [produtoEstoque,setProdutoEstoque] = useState(0);
-        const [produtoValor,setProdutovalor] = useState(0);
+        const [produtoEstoque,setProdutoEstoque] = useState(Number);
+        const [produtoValor,setProdutovalor] = useState(Number);
         const [produtoImg,setProdutoImg] = useState('');
         const [numeroCategoria,setNumeroCategoria] = useState(Number);
 
@@ -171,42 +148,56 @@ const Funcionario = () => {
                     setProduto(resposta.data);
                 } catch (error) {
                     console.log("Erro ao encontrar Funcionario");
-                    erroMensagem(error);
+                    setErroMensagem(error);
                 }
           }
-       const adcionarProduto = useCallback(
-           async (id) => {
-               id.preventDefault();
 
-               const parametros =  {
-                nome: produtoNome,
-                descricao: produtoDescricao,
-                qtdEstoque: produtoEstoque,
-                valor: produtoValor,
-                idCategoria: 2,
-                idFuncionario: 3,
-                dataFabricacao: "2020-09-17T00:00:00Z",
-                fotoLink: produtoImg
-              }
-              try {
-                  const response = await api.post(`produto`, parametros);
-                  console.log("Adcionado com sucesso",response.data)
-              } catch (error) {
-                  setErroMensagem('Erro Funcionario ',error)
-              }
-           }
-       )
+          const adcionarProduto = useCallback(
+            async () => {
+             
+
+                const parametros = {
+                  "nome": produtoNome,
+                  "descricao": produtoDescricao,
+                  "qtdEstoque": produtoEstoque,
+                  "valor": produtoValor,
+                  "idCategoria":2,
+                  "idFuncionario": 1,
+                  "dataFabricacao": "2012-12-15T00:00:00Z",
+                  "fotoLink": "http://residencia-ecommerce.us-east-1.elasticbeanstalk.com/produto/7/foto"
+                }
+              //  console.log(parametros);
+               try {
+                   const response = await api.post(`produto`,parametros);
+                   console.log("Adcionado com sucesso", response.data);
+               } catch (error) {
+                   setErroMensagem('Erro Funcionario ',error);
+               } finally {
+                 listaProdutos();
+               }
+            }
+        )
        const atualizarProduto = async (produto) => {
-        const parametros = {
-          
+        const parametros =     {
+          "nome": produtoNome,
+          "descricao": produtoDescricao,
+          "qtdEstoque": produtoEstoque,
+          "valor": produtoValor,
+          "idCategoria": 2,
+          "idFuncionario": 1,
+          "dataFabricacao": "2012-12-15T00:00:00Z",
+          "fotoLink": "http://residencia-ecommerce.us-east-1.elasticbeanstalk.com/produto/7/foto"
         }
+        console.log(parametros);
         try {
-          await api.put(`produto/${produto}`, parametros)
-          console.log("tamos tentando familia",parametros)
+          const response = await api.put(`produto/${produto}`, parametros);
+          console.log("Produto atualizado", response);
       } catch (error) {
           setErroMensagem(error);
-      }
-      }
+      } 
+    }
+
+     
        const removerProduto = async (produto) => {
         try {
             await api.delete(`produto/${produto.id}`);
@@ -220,8 +211,10 @@ const Funcionario = () => {
       }
        const [resetar, setResete] = useState(null);
        const [resetarF, setReseteF] = useState(null);
+       const [resetarP, setReseteP] = useState(null);
        
       return (
+        
         <ContainerMain>
         <header title="Lista de Tarefas">
             <h2>LOGO</h2>
@@ -277,8 +270,8 @@ const Funcionario = () => {
               )
             ) }
               </form>
-              <form class="tab-pane container fade" id="menu1">
-              {mostrarFuncionario.map( funcinario =>{
+              <form class="tab-pane container fade " id="menu1">
+              {mostrarFuncionario.map( (funcinario) =>{
               return (
                 <div className="formulario" key={funcinario.id}>
                 <strong>Nome<br/>
@@ -287,14 +280,19 @@ const Funcionario = () => {
                 <strong>CPF<br/>
                   {funcinario.cpf}
                 </strong>                 
+                <strong>Cadastrar Produto<br/>
+                  
+                </strong>                 
                 <span>
                   { funcinario.nome ? (
                     <>
-                      <button onClick={() => setReseteF(funcinario.id)} type="button" data-toggle="modal" href="#adcionar-Produto">
-                        Adcionar Produto
-                      </button>
+                      
+                      <IoMdAddCircle onClick={() => setReseteF(funcinario.id)} type="button" data-toggle="modal" href="#adcionar-Produto">
+                      </IoMdAddCircle>
 
-                      <button size={22} onClick={() => removerFuncionario(funcinario)} style={{marginRight: 10}} />
+                      <button size={22} onClick={() => removerFuncionario(funcinario)} style={{marginRight: 10}}>
+                        Deletar
+                        </button>
 
                       <button onClick={() => setReseteF(funcinario.id)} type="button" data-toggle="modal" href="#funcionario">
                         Atualizar
@@ -308,8 +306,8 @@ const Funcionario = () => {
               )
             })}
               </form>
-              <form class="tab-pane container fade" id="menu2">
-              {produto.map( produto =>{
+              <form class="tab-pane container fade" id="menu2"> 
+              {produto.map((produto) => {
               return (
                 <div className="formulario1" key={produto.id}>
                 <strong>Nome<br/>
@@ -327,11 +325,14 @@ const Funcionario = () => {
                 <strong>estoque<br/>
                   {produto.qtdEstoque}
                 </strong> 
-                         
                 <span>
                   { produto.nome ? (
                     <>
+                    <button onClick={() => setReseteP(produto.id)} type="button" data-toggle="modal" href="#atualizar-Produto">
+                        Atualizar
+                      </button>
                       <FiDelete size={22} onClick={() => removerProduto(produto)} style={{marginRight: 10}} />
+
                     </>
                     
                   ) : (
@@ -348,12 +349,12 @@ const Funcionario = () => {
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-          <h4 class="modal-title">Atualizando Cliente </h4>
+                    <h4 class="modal-title">Atualizando Cliente </h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                   </div>
                   <div class="modal-body">
                     <form>
-                      Nome:
+                      
                       <input 
                           aria-describedby="inputGroup-sizing-default"
                           value={nome} 
@@ -361,21 +362,21 @@ const Funcionario = () => {
                           type="text"
                           placeholder="Nome" 
                         />
-                        Usuario:
+                
                         <input 
                           value={nomeUsuario} 
                           onChange={e => setNomeUsuario(e.target.value)}
                           type="text"
                           placeholder="Usuario" 
                         />
-                        CPF:
+               
                         <input 
                           value={cpf} 
                           onChange={e => setCpf(e.target.value)}
                           type="text"
                           placeholder="CPF" 
                         />
-                        E-mail
+            
                         <input 
                           value={email} 
                           onChange={e => setEmail(e.target.value)}
@@ -450,20 +451,26 @@ const Funcionario = () => {
                         value={produtoDescricao} 
                         onChange={e => setProdutoDescricao(e.target.value)}
                         type="text"
-                        placeholder="Nome Descricao" 
+                        placeholder="Descricão do produto" 
                       />
+                      <strong>Valor do Produto
+                      </strong> 
                     <input 
                         value={produtoValor} 
                         onChange={e => setProdutovalor(e.target.value)}
                         type="number"
                         placeholder="Valor Produto" 
                       />
+                      <strong>Produto Estoque
+                      </strong> 
                     <input 
                         value={produtoEstoque} 
                         onChange={e => setProdutoEstoque(e.target.value)}
                         type="number"
                         placeholder="produto estoque" 
                       />
+                      <strong>Numero da categoria(1 a 13)
+                      </strong> 
                     <input 
                         value={numeroCategoria} 
                         onChange={e => setNumeroCategoria(e.target.value)}
@@ -471,13 +478,12 @@ const Funcionario = () => {
                         placeholder="numero da categoria(1 a 13)" 
                       />
                     <input
-                        id="img" 
                         value={produtoImg} 
                         onChange={e => {setProdutoImg(e.target.value)}}
-                        type="file"
+                        type="url"
                         placeholder="Coloque aqui a URL da imagem" 
                       />
-                     <button type="button" onClick={e => adcionarProduto(e)}> 
+                     <button type="button" onClick={(e) => adcionarProduto()}> 
                           Adcionar Produto
                      </button> 
                     </form>
@@ -488,7 +494,59 @@ const Funcionario = () => {
                 </div>
               </div>
             </div>
+            <div class="modal fade" id="atualizar-Produto">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title">Produto</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
+                  <div class="modal-body">
+                    <form>
+                    <input 
+                        value={produtoNome} 
+                        onChange={e => setProdutoNome(e.target.value)}
+                        type="text"
+                        placeholder="Nome Produto" 
+                      />
+                    <input 
+                        value={produtoDescricao} 
+                        onChange={e => setProdutoDescricao(e.target.value)}
+                        type="text"
+                        placeholder="Descricão do produto" 
+                      />
+                      <strong>Valor do Produto
+                      </strong> 
+                    <input 
+                        value={produtoValor} 
+                        onChange={e => setProdutovalor(e.target.value)}
+                        type="number"
+                        placeholder="Valor Produto" 
+                      />
+                      <strong>Produto Estoque
+                      </strong> 
+                    <input 
+                        value={produtoEstoque} 
+                        onChange={e => setProdutoEstoque(e.target.value)}
+                        type="number"
+                        placeholder="produto estoque" 
+                      />
+                    
+                     <button type="button" onClick={() => atualizarProduto(resetarP)}> 
+                          Adcionar Produto
+                     </button> 
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+         <Footer id="footer"/>     
         </ContainerMain>
+      
       )
 }
 

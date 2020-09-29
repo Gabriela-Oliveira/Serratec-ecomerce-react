@@ -14,8 +14,7 @@ import logoImg from '../../../assets/Logo1.png';
 import Footer from '../../../components/Footer';
 
 import {
-    // Produtos,
-    // ErroMensagem,
+    ContainerMain,
     Container,
     Header,
     Main
@@ -29,7 +28,6 @@ const Produto_ = () => {
     const [produtoFiltro, setProdutoFiltro] = useState([]);
     const [categoria, setCategoria] = useState([]);
     const [categoriaFiltro, setCategoriaFiltro] = useState([]);
-    // const [categoriaNome, setCategoriaNome] = useState("");
     const [cliente, setCliente] = useState(JSON.parse(localStorage.getItem('@ECOMMERCE:cliente')))
 
     const mostraProdutos = useCallback(
@@ -80,7 +78,6 @@ const Produto_ = () => {
     function procurarPorNome(e){
       e.preventDefault();
       setProdutoNome(e.target.value);
-      // !e.target.value ? window.location.reload(): 
       console.log(produtoNome);
       let items = [];
 
@@ -166,7 +163,7 @@ const Produto_ = () => {
       
 
     return (
-        <>
+        <ContainerMain>
 
           <Header>
             
@@ -181,7 +178,7 @@ const Produto_ = () => {
                     type="text" 
                     placeholder="Digite uma busca..." 
                   />
-                  {/* <button type="submit"><i class="BiUserCircle"></i></button> */}
+                  
                 </form>
 
                 <form>
@@ -296,8 +293,8 @@ const Produto_ = () => {
           </div>
         </Main>  
 
-        <Footer/>  
-          </>
+        <Footer id="footer"/>  
+          </ContainerMain>
       )
 }
        

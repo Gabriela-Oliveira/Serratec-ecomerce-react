@@ -6,8 +6,11 @@ import { Body, Container } from "./styles";
 
 import logo from '../../assets/Logo1.png';
 
+import Footer from '../../components/Footer';
+
 const Dashboard = () => {
   return (
+    <>
     <Body>
       <Container>
           <header>
@@ -45,6 +48,8 @@ const Dashboard = () => {
         </div>
       </Container>
     </Body>
+    <Footer/>
+    </>
   );
 };
 

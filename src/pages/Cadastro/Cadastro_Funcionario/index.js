@@ -4,7 +4,9 @@ import { Link, useHistory } from "react-router-dom";
 
 import { TiArrowRightThick } from "react-icons/ti";
 
-import { Container, Form, Body, Footer, Infos } from "./styles";
+import { Container, Form, Body, Infos } from "./styles";
+
+import Footer from '../../../components/Footer';
 
 import Header from '../../../components/Topo/Header';
 
@@ -47,6 +49,7 @@ const Cadastro_Funcionario = () => {
   }
 
   return (
+    <>
     <Body>
       <Header nome={"Cadastro de funcionario"} />
 
@@ -82,9 +85,10 @@ const Cadastro_Funcionario = () => {
           Continuar
         </button>
       </Form>
-
-      <Footer>Protegido pela familia Jonsons</Footer>
+      
     </Body>
+    <Footer/>
+    </>
   );
 };
 

@@ -8,6 +8,8 @@ import { useHistory, Link } from 'react-router-dom';
 
 import logo from '../../../assets/Logo1.png';
 
+import Footer from '../../../components/Footer';
+
 import swal from 'sweetalert';
 
 const Login_Cliente = () => {
@@ -59,6 +61,7 @@ const Login_Cliente = () => {
   };
 
   return (
+    <>
     <Body>
 
       <Main_Cima>
@@ -85,6 +88,8 @@ const Login_Cliente = () => {
       </Container>
       <Main_Baixo />
     </Body>
+    <Footer/>
+    </>
   );
 };
 
