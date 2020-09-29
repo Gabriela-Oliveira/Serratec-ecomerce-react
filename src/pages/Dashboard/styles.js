@@ -3,10 +3,11 @@ import styled from 'styled-components';
 export const Body = styled.div`
    display: flex;
    width: 100vw;
-   height: 100vh;
+   height: 91.6vh;
    justify-content: center;
    align-items: center;
    background: rgb(221,216,210) ;
+   
 
 `;
 
@@ -59,3 +60,4 @@ export const Container = styled.div`
    }
 
 `;
+
